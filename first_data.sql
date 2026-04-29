@@ -8,6 +8,7 @@
     email VARCHAR(200) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     isAdmin boolean,
+    usuario_funcionario VARCHAR(200) NOT NULL,
     telefone INT NOT NULL
     );
 
