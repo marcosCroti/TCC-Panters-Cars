@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recuperar Senha - Passo 2</title>
+  <link rel="stylesheet" href="../CSS/style_2.css" />
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="icon-wrap">
+      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="chave" />
+    </div>
+
+    <h1 class="title">Recuperar <span>Senha</span></h1>
+    <p class="subtitle">Redefina seu acesso ao sistema</p>
+
+    <div class="dots">
+      <span class="dot done"></span>
+      <span class="dot active"></span>
+      <span class="dot"></span>
+    </div>
+
+    <h2 class="step-title">Verificar código</h2>
+    <p class="step-sub">Digite o código recebido por e-mail</p>
+
+    <div class="form-group">
+      <label>CÓDIGO DE VERIFICAÇÃO</label>
+      <div class="input-box">
+        <span class="input-icon">🛡</span>
+        <div class="code-inputs">
+          <input class="code-digit" type="text" maxlength="1" id="d1" />
+          <input class="code-digit" type="text" maxlength="1" id="d2" />
+          <input class="code-digit" type="text" maxlength="1" id="d3" />
+          <input class="code-digit" type="text" maxlength="1" id="d4" />
+          <input class="code-digit" type="text" maxlength="1" id="d5" />
+          <input class="code-digit" type="text" maxlength="1" id="d6" />
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="verificar()">&#10003; Verificar</button>
+
+    <a href="#" class="link-resend">Reenviar código</a>
+    <a href="step1.html" class="link-back">&#8592; Voltar ao login</a>
+
+  </div>
+
+  <script>
+    const digits = document.querySelectorAll('.code-digit');
+
+    digits.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/g, '');
+        if (input.value && index < digits.length - 1) {
+          digits[index + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && index > 0) {
+          digits[index - 1].focus();
+        }
+      });
+    });
+
+    function verificar() {
+      let code = '';
+      digits.forEach(d => code += d.value);
+      if (code.length < 6) {
+        alert('Digite o código completo de 6 dígitos.');
+        return;
+      }
+      window.location.href = 'step3.html';
+    }
+  </script>
+
+</body>
+</html>

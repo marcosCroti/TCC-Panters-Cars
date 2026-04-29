@@ -238,28 +238,11 @@ function clearErrors() {
 
 function submitForm() {
     const btn = document.querySelector('.btn-register');
-    const form = document.getElementById('registerForm');
     
-    // Estado de loading visual
+    // Estado de loading
     btn.disabled = true;
     btn.classList.add('loading');
     btn.innerHTML = '<div class="spinner"></div> Criando conta...';
-    
-    // 1. Criar um campo escondido para o perfil (Admin/Funcionário) dentro do form
-    let perfilInput = document.getElementById('perfil_hidden');
-    if (!perfilInput) {
-        perfilInput = document.createElement('input');
-        perfilInput.type = 'hidden';
-        perfilInput.name = 'isAdmin';
-        perfilInput.id = 'perfil_hidden';
-        form.appendChild(perfilInput);
-    }
-    // Define 1 para admin e 0 para employee
-    perfilInput.value = (selectedProfile === 'admin') ? '1' : '0';
-
-    // 2. O COMANDO MÁGICO: Envia o formulário de verdade para o PHP
-    form.submit(); 
-}
     
     // Coletar dados
     const formData = {
@@ -284,73 +267,4 @@ function submitForm() {
             window.location.href = 'login.html';
         }, 1500);
     }, 2000);
-
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    const senhaInput = document.getElementById('senha');
-    const strengthText = document.getElementById('strengthText');
-    const strengthFill = document.querySelector('.strength-fill');
-
-    senhaInput.addEventListener('input', () => {
-        const senha = senhaInput.value;
-        let score = 0;
-
-        if (senha.length === 0) {
-            strengthText.innerText = 'Fraca';
-            strengthFill.style.width = '0%';
-            strengthFill.style.backgroundColor = '#ddd';
-            return;
-        }
-
-        // Critérios
-        if (senha.length >= 8) score++;
-        if (senha.length >= 12) score++;
-        if (/[A-Z]/.test(senha)) score++; 
-        if (/[0-9]/.test(senha)) score++;
-        if (/[^A-Za-z0-9]/.test(senha)) score++;
-
-        // Atualização da UI baseada no Score
-        switch (score) {
-            case 0:
-            case 1:
-            case 2:
-                strengthText.innerText = 'Fraca';
-                strengthText.style.color = '#ff4d4d'; // Vermelho
-                strengthFill.style.width = '33%';
-                strengthFill.style.backgroundColor = '#ff4d4d';
-                break;
-            case 3:
-            case 4:
-                strengthText.innerText = 'Regular';
-                strengthText.style.color = '#ffa500'; // Laranja
-                strengthFill.style.width = '66%';
-                strengthFill.style.backgroundColor = '#ffa500';
-                break;
-            case 5:
-                strengthText.innerText = 'Boa';
-                strengthText.style.color = '#2ecc71'; // Verde
-                strengthFill.style.width = '100%';
-                strengthFill.style.backgroundColor = '#2ecc71';
-                break;
-        }
-    });
-
-    // Lógica para mostrar/esconder senha (já que você tem os botões no HTML)
-    const toggles = document.querySelectorAll('.password-toggle');
-    toggles.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetId = btn.getAttribute('data-target');
-            const input = document.getElementById(targetId);
-            const icon = btn.querySelector('i');
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        });
-    });
-});
-*/
+}

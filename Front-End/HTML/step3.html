@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recuperar Senha - Passo 3</title>
+  <link rel="stylesheet" href="../CSS/style_3.css" />
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="icon-wrap">
+      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="chave" />
+    </div>
+
+    <h1 class="title">Recuperar <span>Senha</span></h1>
+    <p class="subtitle">Redefina seu acesso ao sistema</p>
+
+    <div class="dots">
+      <span class="dot done"></span>
+      <span class="dot done"></span>
+      <span class="dot active"></span>
+    </div>
+
+    <h2 class="step-title">Nova senha</h2>
+    <p class="step-sub">Defina sua nova senha de acesso</p>
+
+    <div class="form-group">
+      <label>NOVA SENHA</label>
+      <div class="input-box">
+        <span class="input-icon">🔒</span>
+        <input type="password" placeholder="Mínimo 6 caracteres" id="senha" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>CONFIRMAR SENHA</label>
+      <div class="input-box">
+        <span class="input-icon">🔒</span>
+        <input type="password" placeholder="Repita a senha" id="confirmar" />
+      </div>
+    </div>
+
+    <div class="msg" id="msg"></div>
+
+    <button class="btn-primary" onclick="salvar()">&#128190; Salvar Nova Senha</button>
+
+    <a href="step1.html" class="link-back">&#8592; Voltar ao login</a>
+
+  </div>
+
+  <script>
+    function salvar() {
+      const senha = document.getElementById('senha').value;
+      const confirmar = document.getElementById('confirmar').value;
+      const msg = document.getElementById('msg');
+
+      if (senha.length < 6) {
+        msg.textContent = 'A senha deve ter no mínimo 6 caracteres.';
+        msg.style.color = '#e03030';
+        return;
+      }
+      if (senha !== confirmar) {
+        msg.textContent = 'As senhas não coincidem.';
+        msg.style.color = '#e03030';
+        return;
+      }
+
+      msg.textContent = '✔ Senha salva com sucesso! Redirecionando...';
+      msg.style.color = '#22c55e';
+
+      setTimeout(() => {
+        window.location.href = 'step1.html';
+      }, 1800);
+    }
+  </script>
+
+</body>
+</html>

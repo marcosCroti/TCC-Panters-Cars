@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recuperar Senha - Passo 1</title>
+  <link rel="stylesheet" href="../CSS/style_1.css" />
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="icon-wrap">
+      <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="chave" />
+    </div>
+
+    <h1 class="title">Recuperar <span>Senha</span></h1>
+    <p class="subtitle">Redefina seu acesso ao sistema</p>
+
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <h2 class="step-title">Digite seu e-mail</h2>
+    <p class="step-sub">Enviaremos um código de verificação</p>
+
+    <div class="form-group">
+      <label>E-MAIL</label>
+      <div class="input-box">
+        <span class="input-icon">✉</span>
+        <input type="email" placeholder="seu@email.com" id="email" />
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="irParaStep2()">&#9992; Enviar Código</button>
+
+    <a href="index.html" class="link-back">&#8592; Voltar ao login</a>
+
+  </div>
+
+  <script>
+    function irParaStep2() {
+      const email = document.getElementById('email').value.trim();
+      if (!email) {
+        alert('Por favor, digite seu e-mail.');
+        return;
+      }
+      window.location.href = 'step2.html';
+    }
+  </script>
+
+</body>
+</html>
