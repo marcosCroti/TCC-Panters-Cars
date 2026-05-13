@@ -50,6 +50,6 @@
     insert into funcionario(nome_fun, CPF, email, setor, quantidade_pecas_no_dia, status_fun)
     values('João Silva', '111.111.111-11','joao@empresa.com', 'Montagem', '47', 'Ativo'),
     ('Maria Santos', '222.222.222-22','maria@empresa.com', 'Qualidade', '35', 'Ativo'),
-    ('João Silva', '333.333.333-33','carlos@empresa.com', 'Expedição', '52', 'Ativo'),
-    ('João Silva', '444.444.444-44','ana@empresa.com', 'Inspeção', '28', 'Inativo'),
-    ('João Silva', '555.555.555-55','pedro@empresa.com', 'Montagem', '61', 'Ativo');
+    ('Carlos Ramos', '333.333.333-33','carlos@empresa.com', 'Expedição', '52', 'Ativo'),
+    ('Ana Gabriela', '444.444.444-44','ana@empresa.com', 'Inspeção', '28', 'Inativo'),
+    ('Pedro Pimenteira', '555.555.555-55','pedro@empresa.com', 'Montagem', '61', 'Ativo');
