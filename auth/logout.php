@@ -10,5 +10,5 @@ session_unset();
 session_destroy();
 
 
-header("Location: ../first_data/auth/login.php");
+header("Location: ../auth/login.php");
 exit;
