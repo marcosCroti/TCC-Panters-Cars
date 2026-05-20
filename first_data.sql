@@ -19,8 +19,9 @@
     grupo_peca VARCHAR(200) NOT NULL,
     id_pecas INT AUTO_INCREMENT UNIQUE PRIMARY KEY,
     quantidade_pecas INT NOT NULL,
+    quantidade_pecas_setor INT NOT NULL,
     quantidade_pecas_no_dia INT NOT NULL,
-    local_peca VARCHAR (200) NOT NULL,
+    setor VARCHAR (200) NOT NULL,
     entrada_peca TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -31,7 +32,7 @@
     );
 
     
-    insert into pecas(ima_peca, nome_tipo, grupo_peca, id_pecas, quantidade_pecas, quantidade_pecas_no_dia, local_peca)
+    insert into pecas(ima_peca, nome_tipo, grupo_peca, id_pecas, quantidade_pecas, quantidade_pecas_no_dia, setor)
     values('img1', 'Pistão','Motor e Transmissão','00000001', 0, 0, 'Setor 1'),
     ('img2', 'Pastilhas', 'Freios', '00000002', 0, 0, 'Setor 1'), 
     ('img3', 'Amortecedores', 'Suspensão e Direção', '00000003', 0, 0, 'Setor 2'), 
@@ -60,3 +61,18 @@
     ('Carlos Ramos', '333.333.333-33','carlos@empresa.com', 'Expedição', '52', 'Ativo'),
     ('Ana Gabriela', '444.444.444-44','ana@empresa.com', 'Inspeção', '28', 'Inativo'),
     ('Pedro Pimenteira', '555.555.555-55','pedro@empresa.com', 'Montagem', '61', 'Ativo');
+
+    create table pecas_por_funcionario(
+    nome_fun VARCHAR(200) NOT NULL,
+    setor VARCHAR(200),
+    quantidade_pecas_no_dia INT NOT NULL
+    );
+    
+    create table examinar_pecas(
+    pecas_aprovadas INT NOT NULL,
+    pecas_rejeitadas INT NOT NULL,
+    pecas_examinadas INT NOT NULL,
+    quantidade_pecas INT NOT NULL,
+    quantidade_pecas_setor INT NOT NULL,
+    quantidade_pecas_no_dia INT NOT NULL
+    );
