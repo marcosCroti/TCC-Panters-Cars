@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoScanPro - Scanner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../CSS/scanner.css">
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">🚗</div>
+        <span class="logo-text">AutoScan<span>Pro</span></span>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Principal</div>
+        <a href="./Dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="./scanner.html" class="nav-item" onclick="setActive(this, 'Scanner')">
+            <i class="fas fa-qrcode"></i> Scanner
+        </a>
+        <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
+            <i class="fas fa-boxes"></i> Inventário
+        </a>
+        <a href="./Controle_Qualidade.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-chart-line"></i> Controle de Qualidade
+        </a>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Administração</div>
+        <a href="#" class="nav-item" onclick="setActive(this, 'Funcionários')">
+            <i class="fas fa-users"></i> Funcionários
+        </a>
+        <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
+            <i class="fas fa-bell"></i> Alertas
+            <span class="badge">3</span>
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="avatar">G</div>
+        <div class="user-info">
+            <p>Gerente Admin</p>
+            <span>Administrador</span>
+        </div>
+    </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h2 id="topbar-title">Scanner de Peças</h2>
+        <div class="topbar-actions">
+            <button class="topbar-btn red" onclick="showToast('🔴 Status: Online')">
+                <i class="fas fa-circle" style="font-size:10px"></i>
+            </button>
+            <button class="topbar-btn ghost" onclick="showToast('🔔 3 alertas pendentes')" style="position:relative">
+                <i class="fas fa-bell"></i>
+                <span class="notif-dot"></span>
+            </button>
+            <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Scanner de Peças</h1>
+            <p id="sessionLabel">Sessão: <span id="sessionCount">0</span> peças escaneadas</p>
+        </div>
+
+        <div class="scanner-wrapper">
+
+            <!-- Scanner Box -->
+            <div class="scanner-box" id="scannerBox">
+                <div class="scan-line" id="scanLine"></div>
+                <div class="scan-corners" id="scanCorners"></div>
+                <div class="scan-corners-2" id="scanCorners2"></div>
+
+                <div class="qr-icon-wrap" id="qrIdle">
+                    <div class="qr-grid" id="qrGrid">
+                        <div class="qr-cell" id="qc1"></div>
+                        <div class="qr-cell" id="qc2"></div>
+                        <div class="qr-cell" id="qc3"></div>
+                        <div class="qr-cell" id="qc4"></div>
+                    </div>
+                    <div class="scanner-label" id="scannerLabel">Pronto para escanear</div>
+                    <div class="scanner-sublabel" id="scannerSub">Clique em "Escanear Peça" abaixo</div>
+                </div>
+
+                <!-- Result Card (oculto por padrão) -->
+                <div class="result-card" id="resultCard">
+                    <h3 id="resultName">—</h3>
+                    <div class="result-row">
+                        <span class="rl">Código</span>
+                        <span class="rv" id="rCode">—</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="rl">Categoria</span>
+                        <span class="rv" id="rCat">—</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="rl">Localização</span>
+                        <span class="rv" id="rLoc">—</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="rl">Quantidade</span>
+                        <span class="rv" id="rQty">—</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="rl">Status</span>
+                        <span class="rv" id="rStatus">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Buttons -->
+            <div class="bottom-actions">
+                <button class="btn-scan" onclick="startScan()">
+                    <i class="fas fa-qrcode"></i>
+                    Escanear Peça
+                </button>
+                <button class="btn-cancel" onclick="cancelScan()">
+                    <i class="fas fa-times-circle"></i>
+                    Cancelar
+                </button>
+                <button class="btn-alert" onclick="openAlertModal()">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Alerta
+                </button>
+            </div>
+
+            <!-- Session Counters -->
+            <div class="session-counter">
+                <div class="counter-card">
+                    <div class="counter-icon green"><i class="fas fa-check"></i></div>
+                    <div class="counter-info">
+                        <p>Escaneadas</p>
+                        <h4 id="cntScanned">0</h4>
+                    </div>
+                </div>
+                <div class="counter-card">
+                    <div class="counter-icon red"><i class="fas fa-exclamation"></i></div>
+                    <div class="counter-info">
+                        <p>Alertas</p>
+                        <h4 id="cntAlerts">0</h4>
+                    </div>
+                </div>
+                <div class="counter-card">
+                    <div class="counter-icon blue"><i class="fas fa-clock"></i></div>
+                    <div class="counter-info">
+                        <p>Tempo sessão</p>
+                        <h4 id="cntTime">00:00</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ===== MODAL ALERTA ===== -->
+<div class="modal-overlay" id="alertModal" onclick="closeModalOutside(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>⚠️ Registrar Alerta</h3>
+            <button class="modal-close" onclick="closeAlertModal()">✕</button>
+        </div>
+        <p style="font-size:13px;color:#6b7280;margin-bottom:12px;">
+            Descreva o problema identificado na peça:
+        </p>
+        <textarea id="alertText" placeholder="Ex: Peça danificada, código ilegível, estoque incorreto..."></textarea>
+        <div class="modal-actions">
+            <button class="modal-btn secondary" onclick="closeAlertModal()">Cancelar</button>
+            <button class="modal-btn primary" onclick="submitAlert()">Registrar Alerta</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // ===== DADOS SIMULADOS =====
+    const fakeParts = [
+        { name: 'Motor V8 5.0L', code: 'MOT-001', cat: 'Motor', loc: 'A1-01', qty: 15, status: '🟢 Bom' },
+        { name: 'Transmissão Automática 8V', code: 'TRN-002', cat: 'Transmissão', loc: 'B2-04', qty: 8, status: '🟢 Bom' },
+        { name: 'Amortecedor Dianteiro', code: 'SUS-003', cat: 'Suspensão', loc: 'C3-07', qty: 32, status: '🟡 Atenção' },
+        { name: 'Disco de Freio Ventilado', code: 'FRE-004', cat: 'Freios', loc: 'D1-02', qty: 24, status: '🟢 Bom' },
+        { name: 'Módulo de Ignição', code: 'ELE-005', cat: 'Elétrica', loc: 'E2-03', qty: 6, status: '🔴 Crítico' },
+        { name: 'Caixa de Direção Hidráulica', code: 'DIR-006', cat: 'Direção', loc: 'F1-05', qty: 19, status: '🟢 Bom' },
+    ];
+
+    let scanning = false;
+    let scannedCount = 0;
+    let alertCount = 0;
+    let sessionSeconds = 0;
+    let sessionTimer = null;
+
+    // Inicia timer de sessão ao carregar
+    startSessionTimer();
+
+    function startSessionTimer() {
+        sessionTimer = setInterval(() => {
+            sessionSeconds++;
+            const m = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+            const s = String(sessionSeconds % 60).padStart(2, '0');
+            document.getElementById('cntTime').textContent = `${m}:${s}`;
+        }, 1000);
+    }
+
+    // ===== SCAN =====
+    function startScan() {
+        if (scanning) return;
+        scanning = true;
+
+        const box = document.getElementById('scannerBox');
+        const scanLine = document.getElementById('scanLine');
+        const scanCorners = document.getElementById('scanCorners');
+        const scanCorners2 = document.getElementById('scanCorners2');
+        const qrIdle = document.getElementById('qrIdle');
+        const resultCard = document.getElementById('resultCard');
+        const label = document.getElementById('scannerLabel');
+        const sub = document.getElementById('scannerSub');
+
+        // Reset
+        resultCard.style.display = 'none';
+        qrIdle.style.display = 'flex';
+        box.classList.remove('success');
+        box.classList.add('scanning');
+
+        // Mostra animações de scan
+        scanLine.style.display = 'block';
+        scanCorners.style.display = 'block';
+        scanCorners2.style.display = 'block';
+
+        label.textContent = 'Escaneando...';
+        sub.textContent = 'Aguarde o resultado';
+
+        // Anima células do QR
+        animateQRCells();
+
+        // Simula tempo de scan (2s)
+        setTimeout(() => {
+            const part = fakeParts[Math.floor(Math.random() * fakeParts.length)];
+            showResult(part);
+        }, 2000);
+    }
+
+    function animateQRCells() {
+        const cells = ['qc1','qc2','qc3','qc4'];
+        let i = 0;
+        const interval = setInterval(() => {
+            document.querySelectorAll('.qr-cell').forEach(c => c.classList.remove('active'));
+            if (i < cells.length) {
+                document.getElementById(cells[i]).classList.add('active');
+                i++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 200);
+    }
+
+    function showResult(part) {
+        const box = document.getElementById('scannerBox');
+        const scanLine = document.getElementById('scanLine');
+        const scanCorners = document.getElementById('scanCorners');
+        const scanCorners2 = document.getElementById('scanCorners2');
+        const qrIdle = document.getElementById('qrIdle');
+        const resultCard = document.getElementById('resultCard');
+
+        scanLine.style.display = 'none';
+        scanCorners.style.display = 'none';
+        scanCorners2.style.display = 'none';
+        box.classList.remove('scanning');
+        box.classList.add('success');
+
+        // Preenche resultado
+        document.getElementById('resultName').textContent = part.name;
+        document.getElementById('rCode').textContent = part.code;
+        document.getElementById('rCat').textContent = part.cat;
+        document.getElementById('rLoc').textContent = part.loc;
+        document.getElementById('rQty').textContent = part.qty + ' unidades';
+        document.getElementById('rStatus').textContent = part.status;
+
+        qrIdle.style.display = 'none';
+        resultCard.style.display = 'block';
+
+        scannedCount++;
+        document.getElementById('sessionCount').textContent = scannedCount;
+        document.getElementById('cntScanned').textContent = scannedCount;
+
+        scanning = false;
+        showToast('✅ Peça escaneada: ' + part.name);
+    }
+
+    // ===== CANCEL =====
+    function cancelScan() {
+        if (!scanning) {
+            resetScanner();
+            showToast('❌ Scanner reiniciado');
+            return;
+        }
+        scanning = false;
+        resetScanner();
+        showToast('❌ Scan cancelado');
+    }
+
+    function resetScanner() {
+        const box = document.getElementById('scannerBox');
+        const scanLine = document.getElementById('scanLine');
+        const scanCorners = document.getElementById('scanCorners');
+        const scanCorners2 = document.getElementById('scanCorners2');
+        const qrIdle = document.getElementById('qrIdle');
+        const resultCard = document.getElementById('resultCard');
+        const label = document.getElementById('scannerLabel');
+        const sub = document.getElementById('scannerSub');
+
+        box.classList.remove('scanning', 'success');
+        scanLine.style.display = 'none';
+        scanCorners.style.display = 'none';
+        scanCorners2.style.display = 'none';
+        resultCard.style.display = 'none';
+        qrIdle.style.display = 'flex';
+        label.textContent = 'Pronto para escanear';
+        sub.textContent = 'Clique em "Escanear Peça" abaixo';
+
+        document.querySelectorAll('.qr-cell').forEach(c => {
+            c.classList.remove('active', 'success-c');
+        });
+    }
+
+    // ===== ALERT MODAL =====
+    function openAlertModal() {
+        document.getElementById('alertModal').classList.add('open');
+    }
+
+    function closeAlertModal() {
+        document.getElementById('alertModal').classList.remove('open');
+        document.getElementById('alertText').value = '';
+    }
+
+    function closeModalOutside(e) {
+        if (e.target === document.getElementById('alertModal')) closeAlertModal();
+    }
+
+    function submitAlert() {
+        const text = document.getElementById('alertText').value.trim();
+        if (!text) {
+            showToast('⚠️ Descreva o problema antes de registrar');
+            return;
+        }
+        alertCount++;
+        document.getElementById('cntAlerts').textContent = alertCount;
+        closeAlertModal();
+        showToast('🚨 Alerta registrado com sucesso!');
+    }
+
+    // ===== SIDEBAR =====
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    // ===== ACTIVE NAV =====
+    function setActive(el, name) {
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('topbar-title').textContent = name;
+        showToast('📂 ' + name);
+    }
+
+    // ===== TOAST =====
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(t._timeout);
+        t._timeout = setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    // ===== ESC =====
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeAlertModal();
+        if (e.key === 'Enter') startScan();
+    });
+</script>
+</body>
+</html>
