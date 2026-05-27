@@ -594,15 +594,6 @@
             font-size: 22px;
             color: #374151;
         }
-        
-        .btn-cancel.btn-ligar {
-            background: #38a169; /* Verde para ligar */
-            animation: pulse-green 2s infinite;
-        }
-
-        .btn-cancel.btn-ligar:hover {
-            background: #2f855a;
-        }
 
         .btn-alert {
             flex: 1;
@@ -828,7 +819,3 @@
             .sidebar.open { transform: translateX(0); }
             .main { margin-left: 0; }
         }
-
-.hidden {
-    display: none !important;
-}
