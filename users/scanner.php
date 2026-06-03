@@ -1,4 +1,25 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+require_once __DIR__ . "/../config/db.php";
+require_once __DIR__ . "/../config/auth.php";
+require_login();
+
+// Pega o nome guardado na sessão pelo login.php
+$nome_sessao = $_SESSION["user"] ?? ""; 
+
+$stmt = $pdo->prepare("SELECT usuario_nome FROM first_data.usuarios WHERE usuario_nome = ?");
+$stmt->execute([$nome_sessao]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($user) {
+    // CORREÇÃO: Pega o valor real trazido do banco de dados
+    $nome = $user["usuario_nome"]; 
+} else {
+    $nome = "Usuário não encontrado";
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +70,7 @@
     <div class="sidebar-footer">
         <div class="avatar">G</div>
         <div class="user-info">
-            <p>Gerente Admin</p>
+            <p><?= $nome ?></p>
             <span>Administrador</span>
         </div>
     </div>
@@ -72,9 +93,7 @@
                 <i class="fas fa-bell"></i>
                 <span class="notif-dot"></span>
             </button>
-            <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
+            <a href="./../auth/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt" ></i></a>
         </div>
     </header>
 
