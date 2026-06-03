@@ -344,17 +344,7 @@
             overflow: hidden;
         }
 
-        .scanner-box.scanning {
-            border-color: #e53e3e;
-            background: #fff5f5;
-            box-shadow: 0 0 0 4px rgba(229,62,62,0.1);
-        }
-
-        .scanner-box.success {
-            border-color: #48bb78;
-            background: #f0fff4;
-            box-shadow: 0 0 0 4px rgba(72,187,120,0.1);
-        }
+    
 
         /* QR Code icon */
         .qr-icon-wrap {

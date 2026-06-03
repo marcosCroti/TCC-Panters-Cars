@@ -1,4 +1,7 @@
 // Link do seu modelo (mantenha a barra ao final)
+const botaoscan = document.getElementById("btn-scan");
+botaoscan.addEventListener("click", capturarEProcessar);
+botaoscan.A
 const gerenciarBotao = document.getElementById("btn-cancel");
 gerenciarBotao.addEventListener("click", ligaDesliga);
 
@@ -49,7 +52,7 @@ function desligar() {
     webcam.stop(); // 2. Desliga a captura da câmera no hardware
     // 3. Limpa o elemento HTML onde o canvas foi inserido
     //   document.getElementById("scannerBox").innerHTML = "";
-    document.getElementById("scannerBox").removeChild(webcam.canvas);
+    document.getElementById("webcam-container").removeChild(webcam.canvas);
     logo.style.display = "";
   }
   statusCam = "desligado";
@@ -92,14 +95,17 @@ async function init() {
     await webcam.play();
 
     // Adiciona o canvas da webcam na tela
-    document.getElementById("scannerBox").appendChild(webcam.canvas);
+    document.getElementById("webcam-container").appendChild(webcam.canvas);
 
     // Inicia o loop e salva o ID dele
     animationFrameId = window.requestAnimationFrame(loop);
+    
   } catch (e) {
     console.error("Erro ao iniciar:", e);
     alert("Erro ao acessar a webcam ou carregar o modelo.");
   }
+  isModelReady = true;
+
 }
 
 // 2. Loop visual (atualizado para registrar o ID da animação)
@@ -126,6 +132,8 @@ async function capturarEProcessar() {
   }
 
   // Atualiza a interface com o resultado
+  console.log(maiorValor);
+  console.log(melhorClasse);
   document.getElementById("resultado-vencedor").innerText = melhorClasse;
   document.getElementById("probabilidade").innerText =
     (maiorValor * 100).toFixed(1) + "% de certeza";

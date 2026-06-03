@@ -68,7 +68,7 @@ if ($user) {
     </div>
 
     <div class="sidebar-footer">
-        <div class="avatar">G</div>
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
             <p><?= $nome ?></p>
             <span>Administrador</span>
@@ -163,6 +163,9 @@ if ($user) {
                     Alerta
                 </button>
             </div>
+
+            <p id="resultado-vencedor"></p>
+            <p id="probabilidade"></p>
 
             <!-- Session Counters -->
             <div class="session-counter">

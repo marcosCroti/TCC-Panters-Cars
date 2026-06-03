@@ -68,7 +68,7 @@ if ($user) {
     </div>
 
     <div class="sidebar-footer">
-        <div class="avatar">G</div>
+    <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
             <p><?= $nome?></p>
             <span>Administrador</span>
