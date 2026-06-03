@@ -22,7 +22,7 @@
         <a href="./Dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
             <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scaner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
+        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
             <i class="fas fa-qrcode"></i> Scanner
         </a>
         <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
@@ -91,7 +91,7 @@
         </div>
 
         <!-- Quick Access -->
-        <div class="quick-cards">
+        <!-- <div class="quick-cards">
             <a href="#" class="qcard" onclick="showToast('📷 Abrindo Scanner...')">
                 <div class="qcard-icon"><i class="fas fa-qrcode"></i></div>
                 <span class="qcard-label">Scanner</span>
@@ -118,6 +118,7 @@
                 <span class="qcard-sub">3 ativos</span>
             </a>
         </div>
+-->
 
         <!-- Stats Row -->
         <div class="stats-row">

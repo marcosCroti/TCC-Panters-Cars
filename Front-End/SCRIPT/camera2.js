@@ -18,7 +18,8 @@ function alternarCor() {
       " <i class='fa-solid fa-camera'></i> Ligar Câmera ";
     icone.classList.add();
   } else if (statusCam === "desligado") {
-    gerenciarBotao.innerText = "Desligar Camêra";
+    gerenciarBotao.innerHTML = 
+    "<i class='fa-solid fa-power-off'></i> Desligar Câmera";
   }
 }
 

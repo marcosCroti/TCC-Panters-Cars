@@ -1,6 +1,4 @@
 <?php
-
-
 ?>
 
 <!DOCTYPE html>
@@ -23,10 +21,10 @@
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./Dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
+        <a href="./index.php" class="nav-item" onclick="setActive(this, 'Dashboard')">
             <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scanner.html" class="nav-item" onclick="setActive(this, 'Scanner')">
+        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
             <i class="fas fa-qrcode"></i> Scanner
         </a>
         <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
