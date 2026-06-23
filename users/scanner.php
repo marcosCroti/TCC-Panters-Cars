@@ -10,13 +10,20 @@ require_login();
 // Pega o nome guardado na sessão pelo login.php
 $nome_sessao = $_SESSION["user"] ?? ""; 
 
-$stmt = $pdo->prepare("SELECT usuario_nome FROM first_data.usuarios WHERE usuario_nome = ?");
+
+$stmt = $pdo->prepare("SELECT usuario_nome, isAdmin FROM first_data.usuarios WHERE usuario_nome = ?");
 $stmt->execute([$nome_sessao]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 if ($user) {
     // CORREÇÃO: Pega o valor real trazido do banco de dados
     $nome = $user["usuario_nome"]; 
+    if($user["isAdmin"]){
+        $func = "Administrador";
+    }else{
+        $func = "Funcionario";
+    }
 } else {
     $nome = "Usuário não encontrado";
 }
@@ -56,7 +63,7 @@ if ($user) {
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="#" class="nav-item" onclick="setActive(this, 'Funcionários')">
+        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
             <i class="fas fa-users"></i> Funcionários
         </a>
         <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
@@ -65,11 +72,11 @@ if ($user) {
         </a>
     </div>
 
-    <div class="sidebar-footer">
+  <div class="sidebar-footer">
         <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
             <p><?= $nome ?></p>
-            <span>Administrador</span>
+            <span><?= $func ?></span>
         </div>
     </div>
 </aside>
