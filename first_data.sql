@@ -64,7 +64,7 @@
 
     create table pecas_por_funcionario(
     nome_fun VARCHAR(200) NOT NULL,
-    setor VARCHAR(200),
+    setor VARCHAR(200) NOT NUll,
     quantidade_pecas_no_dia INT NOT NULL
     );
     
