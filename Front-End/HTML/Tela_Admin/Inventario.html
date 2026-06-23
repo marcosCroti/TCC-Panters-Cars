@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoScanPro - Inventário</title>
+    <title>Panthers Cars - Inventário</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../CSS/inventario.css">
 </head>
@@ -13,7 +13,7 @@
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
         <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
+        <span class="logo-text">Panthers<span>Cars</span></span>
     </div>
 
     <div class="sidebar-section">
@@ -27,8 +27,8 @@
         <a href="./Inventario.html" class="nav-item active" onclick="setActive(this, 'Inventário')">
             <i class="fas fa-boxes"></i> Inventário
         </a>
-        <a href="./Controle_Qualidade.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
-            <i class="fas fa-chart-line"></i> Controle de Qualidade
+        <a href="./Inspecao.html" class="nav-item" onclick="setActive(this, 'Inspeção')">
+            <i class="fas fa-boxes"></i> Inspeção
         </a>
     </div>
 
@@ -130,7 +130,7 @@
                     <i class="fas fa-cog bg-icon"></i>
                     <i class="fas fa-wrench bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
+                        <span class="status-dot bom"></span> 
                     </div>
                     <div class="code-badge">MOT-001</div>
                 </div>
@@ -143,7 +143,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>15</span></span>
-                        <button class="info-btn" onclick="openModal('Motor V8 5.0L','MOT-001','Motor','A1-01',15,'bom')">
+                        <button class="info-btn" onclick="openModal('Motor V8 5.0L','MOT-001','Motor','A1-01',15)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -155,7 +155,7 @@
                     <i class="fas fa-cogs bg-icon"></i>
                     <i class="fas fa-cog bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
+                        <span class="status-dot bom"></span> 
                     </div>
                     <div class="code-badge">TRN-002</div>
                 </div>
@@ -168,7 +168,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>8</span></span>
-                        <button class="info-btn" onclick="openModal('Transmissão Automática 8V','TRN-002','Transmissão','B2-04',8,'bom')">
+                        <button class="info-btn" onclick="openModal('Transmissão Automática 8V','TRN-002','Transmissão','B2-04',8)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -180,7 +180,7 @@
                     <i class="fas fa-compress-alt bg-icon"></i>
                     <i class="fas fa-arrows-alt bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot atencao"></span> atenção
+                        <span class="status-dot atencao"></span> 
                     </div>
                     <div class="code-badge">SUS-003</div>
                 </div>
@@ -193,7 +193,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>32</span></span>
-                        <button class="info-btn" onclick="openModal('Amortecedor Dianteiro','SUS-003','Suspensão','C3-07',32,'atencao')">
+                        <button class="info-btn" onclick="openModal('Amortecedor Dianteiro','SUS-003','Suspensão','C3-07',32)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -205,7 +205,7 @@
                     <i class="fas fa-circle-notch bg-icon"></i>
                     <i class="fas fa-dot-circle bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
+                        <span class="status-dot bom"></span> 
                     </div>
                     <div class="code-badge">FRE-004</div>
                 </div>
@@ -218,7 +218,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>24</span></span>
-                        <button class="info-btn" onclick="openModal('Disco de Freio Ventilado','FRE-004','Freios','D1-02',24,'bom')">
+                        <button class="info-btn" onclick="openModal('Disco de Freio Ventilado','FRE-004','Freios','D1-02',24)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -230,7 +230,7 @@
                     <i class="fas fa-bolt bg-icon"></i>
                     <i class="fas fa-plug bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot critico"></span> crítico
+                        <span class="status-dot critico"></span> 
                     </div>
                     <div class="code-badge">ELE-005</div>
                 </div>
@@ -243,7 +243,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>6</span></span>
-                        <button class="info-btn" onclick="openModal('Módulo de Ignição','ELE-005','Elétrica','E2-03',6,'critico')">
+                        <button class="info-btn" onclick="openModal('Módulo de Ignição','ELE-005','Elétrica','E2-03',6)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -255,7 +255,7 @@
                     <i class="fas fa-sync-alt bg-icon"></i>
                     <i class="fas fa-redo bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
+                        <span class="status-dot bom"></span> 
                     </div>
                     <div class="code-badge">DIR-006</div>
                 </div>
@@ -268,7 +268,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>19</span></span>
-                        <button class="info-btn" onclick="openModal('Caixa de Direção Hidráulica','DIR-006','Direção','F1-05',19,'bom')">
+                        <button class="info-btn" onclick="openModal('Caixa de Direção Hidráulica','DIR-006','Direção','F1-05',19)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -280,7 +280,7 @@
                     <i class="fas fa-wind bg-icon"></i>
                     <i class="fas fa-stream bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
+                        <span class="status-dot bom"></span> 
                     </div>
                     <div class="code-badge">EXA-007</div>
                 </div>
@@ -293,7 +293,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>11</span></span>
-                        <button class="info-btn" onclick="openModal('Catalisador de Escape','EXA-007','Escapamento','G3-01',11,'bom')">
+                        <button class="info-btn" onclick="openModal('Catalisador de Escape','EXA-007','Escapamento','G3-01',11)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -305,7 +305,7 @@
                     <i class="fas fa-cog bg-icon"></i>
                     <i class="fas fa-tools bg-icon-2"></i>
                     <div class="status-badge">
-                        <span class="status-dot atencao"></span> atenção
+                        <span class="status-dot atencao"></span>
                     </div>
                     <div class="code-badge">CAR-008</div>
                 </div>
@@ -318,7 +318,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="qty-text">Qtd: <span>4</span></span>
-                        <button class="info-btn" onclick="openModal('Carburador Universal','CAR-008','Motor','H2-06',4,'atencao')">
+                        <button class="info-btn" onclick="openModal('Carburador Universal','CAR-008','Motor','H2-06',4)">
                             <i class="fas fa-info"></i>
                         </button>
                     </div>
@@ -352,10 +352,10 @@
             <span class="label">Quantidade</span>
             <span class="value" id="mQty">—</span>
         </div>
-        <div class="modal-row">
+        <!-- <div class="modal-row">
             <span class="label">Status</span>
             <span class="value" id="mStatus">—</span>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -480,8 +480,8 @@
         document.getElementById('mCat').textContent = cat;
         document.getElementById('mLoc').textContent = loc;
         document.getElementById('mQty').textContent = qty + ' unidades';
-        const statusMap = { bom: '🟢 Bom', atencao: '🟡 Atenção', critico: '🔴 Crítico' };
-        document.getElementById('mStatus').textContent = statusMap[status] || status;
+        // const statusMap = { bom: '🟢 Bom', atencao: '🟡 Atenção', critico: '🔴 Crítico' };
+        // document.getElementById('mStatus').textContent = statusMap[status] || status;
         document.getElementById('modalOverlay').classList.add('open');
     }
 
