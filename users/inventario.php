@@ -1,19 +1,130 @@
 <?php
-
 require_once __DIR__ . "/../config/db.php";
 
-$nome_tipo = "";
+/*
+    Inventário dinâmico com PDO
+    Inventário dinâmico com filtros no SELECT do banco:
+    - ?filtro=todos       => SELECT * FROM pecas
+    - ?filtro=motor       => WHERE grupo_peca = "Motor e Transmissão"
+    - ?filtro=transmissao => WHERE grupo_peca = "Motor e Transmissão"
+    - ?filtro=suspensao   => WHERE grupo_peca = "Suspensão e Direção"
 
-$stmt = $pdo->prepare("SELECT nome_tipo FROM first_data.pecas WHERE nome_tipo = ?");
-$stmt->execute([$nome_tipo]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+    O restante do visual foi mantido o mais próximo possível do arquivo original.
+*/
 
-if ($user){
-    $nome_tipo = $user["nome_tipo"];
+$filtro = $_GET["filtro"] ?? "todos";
+
+$grupos = [
+    "motor"       => "Motor e Transmissão",
+    "transmissao" => "Motor e Transmissão",
+    "suspensao"   => "Suspensão e Direção",
+    "freios"   => "Freios", 
+    "eletrica"   => "Eletrica", 
+    "carroca"   => "Carroceria/Acabamento", 
+    "seguranca"   => "Componentes de Segurança", 
+];
+
+if ($filtro !== "todos" && isset($grupos[$filtro])) {
+    $stmt = $pdo->prepare("SELECT * FROM first_data.pecas WHERE grupo_peca = ? ORDER BY id_pecas ASC");
+    $stmt->execute([$grupos[$filtro]]);
 } else {
-    $nome_tipo = "Peça não encontrada";
+    $filtro = "todos";
+    $stmt = $pdo->query("SELECT * FROM first_data.pecas ORDER BY id_pecas ASC");
 }
 
+$pecas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+function h($valor) {
+    return htmlspecialchars((string)$valor, ENT_QUOTES, "UTF-8");
+}
+
+function statusPeca($quantidade) {
+    if ($quantidade <= 0) {
+        return "critico";
+    }
+
+    if ($quantidade <= 10) {
+        return "atencao";
+    }
+
+    return "bom";
+}
+
+function textoStatus($status) {
+    if ($status === "critico") {
+        return "crítico";
+    }
+
+    if ($status === "atencao") {
+        return "atenção";
+    }
+
+    return "bom";
+}
+
+function categoriaCard($grupo) {
+    if ($grupo === "Motor e Transmissão") {
+        return "motor";
+    }
+
+    if ($grupo === "Freios") {
+        return "freios";
+    }
+
+    if ($grupo === "Suspensão e Direção") {
+        return "suspensao";
+    }
+
+    if ($grupo === "Elétrica") {
+        return "eletrica";
+    }
+
+    if ($grupo === "Carroceria/Acabamento") {
+        return "carroceria";
+    }
+
+    if ($grupo === "Componentes de Segurança") {
+        return "seguranca";
+    }
+
+    if ($grupo === "Escapamento") {
+        return "escapamento";
+    }
+
+    return "outros";
+}
+
+function gradienteCard($grupo) {
+    if ($grupo === "Motor e Transmissão") {
+        return "grad-red";
+    }
+
+    if ($grupo === "Freios") {
+        return "grad-purple";
+    }
+
+    if ($grupo === "Suspensão e Direção") {
+        return "grad-blue";
+    }
+
+    if ($grupo === "Elétrica") {
+        return "grad-orange";
+    }
+
+    if ($grupo === "Carroceria/Acabamento") {
+        return "grad-green";
+    }
+
+    if ($grupo === "Componentes de Segurança") {
+        return "grad-teal";
+    }
+
+    return "grad-red";
+}
+
+function codigoPeca($id) {
+    return "PEC-" . str_pad((string)$id, 3, "0", STR_PAD_LEFT);
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,17 +147,14 @@ if ($user){
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./Dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
+        <a href="./index.php" class="nav-item" onclick="setActive(this, 'Dashboard')">
             <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scanner.html" class="nav-item" onclick="setActive(this, 'Scanner')">
+        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
             <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a href="./Inventario.html" class="nav-item active" onclick="setActive(this, 'Inventário')">
+        <a href="./inventario.php?filtro=todos" class="nav-item active" onclick="setActive(this, 'Inventário')">
             <i class="fas fa-boxes"></i> Inventário
-        </a>
-        <a href="./Controle_Qualidade.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
-            <i class="fas fa-chart-line"></i> Controle de Qualidade
         </a>
     </div>
 
@@ -86,9 +194,7 @@ if ($user){
                 <i class="fas fa-bell"></i>
                 <span class="notif-dot"></span>
             </button>
-            <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
+<a href="./../auth/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt"></i></a>
         </div>
     </header>
 
@@ -130,218 +236,89 @@ if ($user){
 
         <!-- FILTER TAGS -->
         <div class="filter-tags">
-            <button class="tag-btn active" onclick="filterTag(this, 'todos')">Todos</button>
-            <button class="tag-btn" onclick="filterTag(this, 'motor')">Motor</button>
-            <button class="tag-btn" onclick="filterTag(this, 'transmissao')">Transmissão</button>
-            <button class="tag-btn" onclick="filterTag(this, 'suspensao')">Suspensão</button>
-            <button class="tag-btn" onclick="filterTag(this, 'freios')">Freios</button>
-            <button class="tag-btn" onclick="filterTag(this, 'eletrica')">Elétrica</button>
-            <button class="tag-btn" onclick="filterTag(this, 'direcao')">Direção</button>
-            <button class="tag-btn" onclick="filterTag(this, 'escapamento')">Escapamento</button>
+            <a href="?filtro=todos"><button class="tag-btn <?= $filtro === 'todos' ? 'active' : '' ?>" type="button">Todos</button></a>
+            <a href="?filtro=motor"><button class="tag-btn <?= $filtro === 'motor' ? 'active' : '' ?>" type="button">Motor</button></a>
+            <a href="?filtro=transmissao"><button class="tag-btn <?= $filtro === 'transmissao' ? 'active' : '' ?>" type="button">Transmissão</button></a>
+            <a href="?filtro=suspensao"><button class="tag-btn <?= $filtro === 'suspensao' ? 'active' : '' ?>" type="button">Suspensão</button></a>
+            <a href="?filtro=freios"><button class="tag-btn <?= $filtro === 'freios' ? 'active' : '' ?>" type="button">Freios</button></a>
+            <a href="?filtro=eletrica"><button class="tag-btn <?= $filtro === 'eletrica' ? 'active' : '' ?>" type="button">Eletrica</button></a>
+            <a href="?filtro=carroca"><button class="tag-btn <?= $filtro === 'carroca' ? 'active' : '' ?>" type="button">Carroceria</button></a>
+            <a href="?filtro=seguranca"><button class="tag-btn <?= $filtro === 'seguranca' ? 'active' : '' ?>" type="button">Segurança</button></a>
         </div>
 
         <!-- CARDS GRID -->
         <div class="cards-grid" id="cardsContainer">
 
-            <div class="card" data-cat="motor" data-name="Motor V8 5.0L" data-qty="15">
-                <div class="card-banner grad-red">
-                    <i class="fas fa-cog bg-icon"></i>
-                    <i class="fas fa-wrench bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
+            <?php if (count($pecas) === 0) { ?>
+                <div class="card" data-cat="vazio" data-name="Nenhuma peça encontrada" data-qty="0" data-status="critico">
+                    <div class="card-banner grad-red">
+                        <i class="fas fa-box-open bg-icon"></i>
+                        <i class="fas fa-search bg-icon-2"></i>
+                        <div class="status-badge">
+                            <span class="status-dot critico"></span> vazio
+                        </div>
+                        <div class="code-badge">---</div>
                     </div>
-                    <div class="code-badge">MOT-001</div>
+                    <div class="card-body">
+                        <div class="card-title">Nenhuma peça encontrada</div>
+                        <div class="card-meta">
+                            <i class="fas fa-industry"></i> Sem categoria
+                            <span class="dot"></span>
+                            <i class="fas fa-map-marker-alt"></i> Sem setor
+                        </div>
+                        <div class="card-footer">
+                            <span class="qty-text">Qtd: <span>0</span></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="card-title">Motor V8 5.0L</div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Motor
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> A1-01
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>15</span></span>
-                        <button class="info-btn" onclick="openModal('Motor V8 5.0L','MOT-001','Motor','A1-01',15,'bom')">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
 
-            <div class="card" data-cat="transmissao" data-name="Transmissão Automática 8V" data-qty="8">
-                <div class="card-banner grad-gold">
-                    <i class="fas fa-cogs bg-icon"></i>
-                    <i class="fas fa-cog bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
-                    </div>
-                    <div class="code-badge">TRN-002</div>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Transmissão Automática 8V</div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Transmissão
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> B2-04
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>8</span></span>
-                        <button class="info-btn" onclick="openModal('Transmissão Automática 8V','TRN-002','Transmissão','B2-04',8,'bom')">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <?php foreach ($pecas as $peca) { 
+                $id = $peca["id_pecas"] ?? "";
+                $nome = $peca["nome_tipo"] ?? "";
+                $grupo = $peca["grupo_peca"] ?? "";
+                $setor = $peca["setor"] ?? "";
+                $quantidade = (int)($peca["quantidade_pecas"] ?? 0);
+                $status = statusPeca($quantidade);
+                $statusTexto = textoStatus($status);
+                $cat = categoriaCard($grupo);
+                $grad = gradienteCard($grupo);
+                $codigo = codigoPeca($id);
 
-            <div class="card" data-cat="suspensao" data-name="Amortecedor Dianteiro" data-qty="32">
-                <div class="card-banner grad-blue">
-                    <i class="fas fa-compress-alt bg-icon"></i>
-                    <i class="fas fa-arrows-alt bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot atencao"></span> atenção
+                $modalArgs = [
+                    $nome,
+                    $codigo,
+                    $grupo,
+                    $setor,
+                    $quantidade,
+                    $status
+                ];
+            ?>
+                <div class="card" data-cat="<?= h($cat) ?>" data-name="<?= h($nome) ?>" data-qty="<?= h($quantidade) ?>" data-status="<?= h($status) ?>">
+                    <div class="card-banner <?= h($grad) ?>">
+                        <i class="fas fa-cog bg-icon"></i>
+                        <i class="fas fa-wrench bg-icon-2"></i>
+                        <div class="status-badge">
+                            <span class="status-dot <?= h($status) ?>"></span> <?= h($statusTexto) ?>
+                        </div>
+                        <div class="code-badge"><?= h($codigo) ?></div>
                     </div>
-                    <div class="code-badge">SUS-003</div>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Amortecedor Dianteiro</div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Suspensão
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> C3-07
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>32</span></span>
-                        <button class="info-btn" onclick="openModal('Amortecedor Dianteiro','SUS-003','Suspensão','C3-07',32,'atencao')">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-cat="freios" data-name="Disco de Freio Ventilado" data-qty="24">
-                <div class="card-banner grad-purple">
-                    <i class="fas fa-circle-notch bg-icon"></i>
-                    <i class="fas fa-dot-circle bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
-                    </div>
-                    <div class="code-badge">FRE-004</div>
-                </div>
-                <div class="card-body">
-                    <div class="card-title"><?= $nome_tipo ?></div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Freios
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> D1-02
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>24</span></span>
-                        <button class="info-btn" onclick="openModal('Disco de Freio Ventilado','FRE-004','Freios','D1-02',24,'bom')">
-                            <i class="fas fa-info"></i>
-                        </button>
+                    <div class="card-body">
+                        <div class="card-title"><?= h($nome) ?></div>
+                        <div class="card-meta">
+                            <i class="fas fa-industry"></i> <?= h($grupo) ?>
+                            <span class="dot"></span>
+                            <i class="fas fa-map-marker-alt"></i> <?= h($setor) ?>
+                        </div>
+                        <div class="card-footer">
+                            <span class="qty-text">Qtd: <span><?= h($quantidade) ?></span></span>
+                            <button class="info-btn" onclick='openModal(...<?= json_encode($modalArgs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>)'>
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="card" data-cat="eletrica" data-name="Módulo de Ignição" data-qty="6">
-                <div class="card-banner grad-orange">
-                    <i class="fas fa-bolt bg-icon"></i>
-                    <i class="fas fa-plug bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot critico"></span> crítico
-                    </div>
-                    <div class="code-badge">ELE-005</div>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Módulo de Ignição</div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Elétrica
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> E2-03
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>6</span></span>
-                        <button class="info-btn" onclick="openModal('Módulo de Ignição','ELE-005','Elétrica','E2-03',6,'critico')">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-cat="direcao" data-name="Caixa de Direção Hidráulica" data-qty="19">
-                <div class="card-banner grad-green">
-                    <i class="fas fa-sync-alt bg-icon"></i>
-                    <i class="fas fa-redo bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
-                    </div>
-                    <div class="code-badge">DIR-006</div>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Caixa de Direção Hidráulica</div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Direção
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> F1-05
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>19</span></span>
-                        <button class="info-btn" onclick="openModal('Caixa de Direção Hidráulica','DIR-006','Direção','F1-05',19,'bom')">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-cat="escapamento" data-name="Catalisador de Escape" data-qty="11">
-                <div class="card-banner grad-teal">
-                    <i class="fas fa-wind bg-icon"></i>
-                    <i class="fas fa-stream bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot bom"></span> bom
-                    </div>
-                    <div class="code-badge">EXA-007</div>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Catalisador de Escape</div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Escapamento
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> G3-01
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>11</span></span>
-                        <button class="info-btn" onclick="openModal('Catalisador de Escape','EXA-007','Escapamento','G3-01',11,'bom')">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" data-cat="motor" data-name="Carburador Universal" data-qty="4">
-                <div class="card-banner grad-darkred">
-                    <i class="fas fa-cog bg-icon"></i>
-                    <i class="fas fa-tools bg-icon-2"></i>
-                    <div class="status-badge">
-                        <span class="status-dot atencao"></span> atenção
-                    </div>
-                    <div class="code-badge">CAR-008</div>
-                </div>
-                <div class="card-body">
-                    <div class="card-title">Carburador Universal</div>
-                    <div class="card-meta">
-                        <i class="fas fa-industry"></i> Motor
-                        <span class="dot"></span>
-                        <i class="fas fa-map-marker-alt"></i> H2-06
-                    </div>
-                    <div class="card-footer">
-                        <span class="qty-text">Qtd: <span>4</span></span>
-                        <button class="info-btn" onclick="openModal('Carburador Universal','CAR-008','Motor','H2-06',4,'atencao')">
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
 
         </div>
     </div>
@@ -406,7 +383,7 @@ if ($user){
             container.className = 'cards-grid';
             gridBtn.classList.add('active');
             listBtn.classList.remove('active');
-            renderCards();
+            location.reload();
         } else {
             container.className = 'cards-list';
             gridBtn.classList.remove('active');
@@ -415,25 +392,15 @@ if ($user){
         }
     }
 
-    // ====== FILTER BY TAG ======
-    let activeTag = 'todos';
-    function filterTag(btn, tag) {
-        document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeTag = tag;
-        filterCards();
-    }
-
     // ====== SEARCH & FILTER ======
     function filterCards() {
         const query = document.getElementById('searchInput').value.toLowerCase();
         const cards = document.querySelectorAll('.card, .list-item');
         cards.forEach(card => {
             const name = (card.dataset.name || '').toLowerCase();
-            const cat = card.dataset.cat || '';
-            const matchTag = activeTag === 'todos' || cat === activeTag;
-            const matchSearch = name.includes(query);
-            card.style.display = (matchTag && matchSearch) ? '' : 'none';
+            const cat = (card.dataset.cat || '').toLowerCase();
+            const matchSearch = name.includes(query) || cat.includes(query);
+            card.style.display = matchSearch ? '' : 'none';
         });
     }
 
@@ -457,6 +424,7 @@ if ($user){
             if (type === 'qtd-asc') return parseInt(a.dataset.qty) - parseInt(b.dataset.qty);
             if (type === 'qtd-desc') return parseInt(b.dataset.qty) - parseInt(a.dataset.qty);
             if (type === 'status') return (a.dataset.status || '').localeCompare(b.dataset.status || '');
+            return 0;
         });
         cards.forEach(c => container.appendChild(c));
         document.getElementById('sortDropdown').classList.remove('open');
@@ -472,12 +440,14 @@ if ($user){
             const name = card.dataset.name;
             const qty = card.dataset.qty;
             const cat = card.dataset.cat;
+            const status = card.dataset.status;
             const grad = card.querySelector('.card-banner').className.split(' ').find(c => c.startsWith('grad-'));
             const item = document.createElement('div');
             item.className = 'list-item';
             item.dataset.cat = cat;
             item.dataset.name = name;
             item.dataset.qty = qty;
+            item.dataset.status = status;
             item.innerHTML = `
                 <div class="list-thumb ${grad}"><i class="fas fa-cog"></i></div>
                 <div class="list-info"><h4>${name}</h4><p>${cat}</p></div>
@@ -485,10 +455,8 @@ if ($user){
             `;
             container.appendChild(item);
         });
-    }
 
-    function renderCards() {
-        location.reload();
+        filterCards();
     }
 
     // ====== MODAL ======

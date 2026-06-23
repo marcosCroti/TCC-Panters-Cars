@@ -539,9 +539,9 @@
             border-radius: 50%;
         }
 
-        .status-dot.bom { background: #48bb78; }
+        /* .status-dot.bom { background: #48bb78; }
         .status-dot.atencao { background: #ed8936; }
-        .status-dot.critico { background: #e53e3e; }
+        .status-dot.critico { background: #e53e3e; } */
 
         .code-badge {
             position: absolute;

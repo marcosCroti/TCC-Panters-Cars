@@ -13,7 +13,7 @@
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
         <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
+        <span class="logo-text">Panthers<span>Cars</span></span>
     </div>
 
     <div class="sidebar-section">
@@ -26,6 +26,9 @@
         </a>
         <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
             <i class="fas fa-boxes"></i> Inventário
+        </a>
+        <a href="./Inspecao.html" class="nav-item" onclick="setActive(this, 'Inspeção')">
+            <i class="fas fa-boxes"></i> Inspeção
         </a>
     </div>
 
@@ -57,7 +60,7 @@
         <button class="topbar-menu-btn" onclick="toggleSidebar()">
             <i class="fas fa-bars"></i>
         </button>
-        <h2 id="topbar-title">Scanner de Peças</h2>
+        <h2 id="topbar-title">Inspecionar Peça</h2>
         <div class="topbar-actions">
             <button class="topbar-btn red" onclick="showToast('🔴 Status: Online')">
                 <i class="fas fa-circle" style="font-size:10px"></i>
@@ -77,8 +80,8 @@
 
         <!-- Page Header -->
         <div class="page-header">
-            <h1>Scanner de Peças</h1>
-            <p id="sessionLabel">Sessão: <span id="sessionCount">0</span> peças escaneadas</p>
+            <h1>Inspeção</h1>
+            <p id="sessionLabel">Preencha os dados da peça inspecionada</p>
         </div>
 
         <div class="scanner-wrapper">

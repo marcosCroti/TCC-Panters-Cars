@@ -48,12 +48,10 @@ if ($user) {
         <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
             <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
+        <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
             <i class="fas fa-boxes"></i> Inventário
         </a>
-        <a href="#" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
-            <i class="fas fa-chart-line"></i> Controle de Qualidade
-        </a>
+
     </div>
 
     <div class="sidebar-section">
