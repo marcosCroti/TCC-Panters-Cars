@@ -22,7 +22,8 @@
     quantidade_pecas_setor INT NOT NULL,
     quantidade_pecas_no_dia INT NOT NULL,
     setor VARCHAR (200) NOT NULL,
-    entrada_peca TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    entrada_peca TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    item_inspe TEXT
     );
 
     CREATE TABLE tipo_peca (
@@ -33,7 +34,7 @@
 
     
     insert into pecas(ima_peca, nome_tipo, grupo_peca, id_pecas, quantidade_pecas, quantidade_pecas_no_dia, setor)
-    values('img1', 'Pistão','Motor e Transmissão','00000001', 0, 0, 'Setor 1'),
+    values('img1', 'Pistão','Motor e Transmissão','00000001', 0, 0, 'Setor 1' ),
     ('img2', 'Pastilhas', 'Freios', '00000002', 0, 0, 'Setor 1'), 
     ('img3', 'Amortecedores', 'Suspensão e Direção', '00000003', 0, 0, 'Setor 2'), 
     ('img4', 'Bateria', 'Elétrica', '00000004', 0, 0, 'Setor 2'), 
@@ -51,6 +52,7 @@
     setor VARCHAR(200) NOT NULL,
     quantidade_pecas_no_dia INT NOT NULL,
     status_fun VARCHAR(200) NOT NULL
+
     
     );
  
