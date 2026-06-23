@@ -361,9 +361,11 @@ body {
 }
 
 .lista-inspecao li:hover {
-  background: linear-gradient(135deg, #e53e3e, #c53030);
-  color: #fff;
+  background: rgb(203, 28, 28);
+  color: #ffffff;
   border: none;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(229, 62, 62, 0.15);
 }
 
 #form-inspecao {
@@ -388,3 +390,16 @@ body {
   border-radius: 5px;
   height: 30px;
 }
+
+/* #btn-recarregar {
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 10px;
+  font-size: 15px;
+  /* gap: 6px; */
+/* box-shadow: 0 6px 20px rgba(229, 62, 62, 0.35);
+  margin: 10px;
+  width: 120px;
+} */
