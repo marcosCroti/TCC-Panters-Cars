@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="../../CSS/scanner.css" />
+    <link rel="stylesheet" href="../../CSS/inspecao.css" />
   </head>
   <body>
     <!-- ===== SIDEBAR ===== -->
@@ -49,7 +49,7 @@
           <i class="fas fa-clipboard"></i> Inspeção
         </a>
         <a
-          href="./inspe_editar.html"
+          href="./.html"
           class="nav-item"
           onclick="setActive(this, 'Editar Inspeção')"
         >
@@ -84,7 +84,7 @@
         <button class="topbar-menu-btn" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
         </button>
-        <h2 id="topbar-title">Scanner de Peças</h2>
+        <h2 id="topbar-title">Inspecionar Peça</h2>
         <div class="topbar-actions">
           <button
             class="topbar-btn red"
@@ -110,83 +110,76 @@
       <div class="content">
         <!-- Page Header -->
         <div class="page-header">
-          <h1>Scanner de Peças</h1>
+          <div>
+            <h1>Inspeção</h1>
+            <p>Preencha os dados da peça inspecionada</p>
+          </div>
+          <div>
+            <button class="btn btn-ghost btn-sm" onclick="">
+              <i class="fas fa-arrow-left"></i> Voltar ao Scanner
+            </button>
+          </div>
         </div>
 
-        <div class="scanner-wrapper">
-          <!-- Scanner Box -->
-          <div class="scanner-box" id="scannerBox">
-            <div class="scan-line" id="scanLine"></div>
-            <div class="scan-corners" id="scanCorners"></div>
-            <div class="scan-corners-2" id="scanCorners2"></div>
+        <div class="peca-selecao">
+          <p>Inspeção da Peça Mouse</p>
+          <select name="" id="" sta>
+            <option value="" disabled hidden selected>Selecione</option>
+            <option value="peca1">Peça 1</option>
+            <option value="peca2">Peça 2</option>
+            <option value="peca3">Peça 3</option>
+            <option value="peca4">Peça 4</option>
+          </select>
+          <button>Recarregar</button>
+        </div>
 
-            <div class="qr-icon-wrap" id="qrIdle">
-              <div class="qr-grid" id="qrGrid">
-                <div class="qr-cell" id="qc1"></div>
-                <div class="qr-cell" id="qc2"></div>
-                <div class="qr-cell" id="qc3"></div>
-                <div class="qr-cell" id="qc4"></div>
-              </div>
-              <div class="scanner-label" id="scannerLabel">
-                Pronto para escanear
-              </div>
-              <div class="scanner-sublabel" id="scannerSub">
-                Clique em "Escanear Peça" abaixo
-              </div>
+        <div class="lista-inspecao">
+          <ol>
+            <li>Verificar se a cor do mouse é preta.</li>
+            <li>Verificar se o mouse é USB ou Bluetooth.</li>
+            <li>Verificar se o peso do mouse está entre 85-90g.</li>
+            <li>Verificar se o acabamento do plástico é fosco.</li>
+            <li>Verificar se o clique esquerdo faz som.</li>
+            <li>Verificar se o botão do scroll clica.</li>
+            <li>Verificar se o compartimento da pilha fecha bem.</li>
+          </ol>
+        </div>
+
+        <form id="form-inspecao" action="">
+          <div class="input-row">
+            <div>
+              <label for="input-total">Total:</label>
+              <input type="number" id="input-total" placeholder="Total" />
             </div>
 
-            <!-- Result Card (oculto por padrão) -->
-            <div class="result-card" id="resultCard">
-              <h3 id="resultName">—</h3>
-              <div class="result-row">
-                <span class="rl">Código</span>
-                <span class="rv" id="rCode">—</span>
-              </div>
-              <div class="result-row">
-                <span class="rl">Categoria</span>
-                <span class="rv" id="rCat">—</span>
-              </div>
-              <div class="result-row">
-                <span class="rl">Localização</span>
-                <span class="rv" id="rLoc">—</span>
-              </div>
-              <div class="result-row">
-                <span class="rl">Quantidade</span>
-                <span class="rv" id="rQty">—</span>
-              </div>
-              <div class="result-row">
-                <span class="rl">Status</span>
-                <span class="rv" id="rStatus">—</span>
-              </div>
+            <div>
+              <label for="input-aprovadas">Aprovadas:</label>
+              <input
+                type="number"
+                id="input-aprovadas"
+                placeholder="Aprovadas"
+              />
+            </div>
+          </div>
+          <div class="input-row">
+            <div>
+              <label for="input-lote">Lote:</label>
+              <input type="text" id="input-lote" placeholder="Lote" />
+            </div>
+            <div>
+              <label for="input-reprovadas">Reprovadas:</label>
+              <input
+                type="number"
+                id="input-reprovadas"
+                placeholder="Reprovadas"
+              />
             </div>
           </div>
 
-          <!-- Bottom Buttons -->
-          <div class="bottom-actions">
-            <button class="btn-scan" onclick="startScan()">
-              <i class="fas fa-qrcode"></i>
-              Escanear Peça
-            </button>
-            <button class="btn-alert" onclick="openAlertModal()">
-              <i class="fas fa-clipboard"></i>
-              Inspecionar Peça
-            </button>
-            <button class="btn-cancel" onclick="cancelScan()">
-              <i class="fas fa-times-circle"></i>
-              Cancelar
-            </button>
-          </div>
-
-    <!-- ===== MODAL ALERTA ===== -->
-    <div
-      class="modal-overlay"
-      id="alertModal"
-      onclick="closeModalOutside(event)"
-    >
-
-
-    <!-- ===== TOAST ===== -->
-    <div class="toast" id="toast"></div>
+          <button class="btn-insp" onclick="">Fim</button>
+        </form>
+      </div>
+    </div>
 
     <script>
       // ===== DADOS SIMULADOS =====
@@ -438,6 +431,10 @@
         if (e.key === "Escape") closeAlertModal();
         if (e.key === "Enter") startScan();
       });
+
+      <button type="submit" value="Editar">Editar</button>
+      
     </script>
   </body>
 </html>
+
