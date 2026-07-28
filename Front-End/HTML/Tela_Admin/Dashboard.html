@@ -85,7 +85,7 @@
         <button class="topbar-menu-btn" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
         </button>
-        <h2 id="topbar-title">Dashboard</h2>
+        <h2 id="topbar-title">Dashboard Gerencial</h2>
         <div class="topbar-actions">
           <button
             class="topbar-btn red"
@@ -111,10 +111,7 @@
       <div class="content">
         <!-- Page Header -->
         <div class="page-header">
-          <div>
-            <h1>Dashboard Gerencial</h1>
-            <p id="greetingText">Boa tarde, Gerente Admin!</p>
-          </div>
+          <div></div>
           <button class="refresh-btn" onclick="refreshData()">
             <i class="fas fa-sync-alt" id="refreshIcon"></i> Atualizar
           </button>
@@ -347,12 +344,12 @@
 
     <script>
       // ===== GREETING =====
-      (function () {
-        const h = new Date().getHours();
-        const g = h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
-        document.getElementById("greetingText").textContent =
-          g + ", Gerente Admin!";
-      })();
+      // (function () {
+      //   const h = new Date().getHours();
+      //   const g = h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
+      //   document.getElementById("greetingText").textContent =
+      //     g + ", Gerente Admin!";
+      // })();
 
       // ===== BAR CHART =====
       const barCtx = document.getElementById("barChart").getContext("2d");
