@@ -4,8 +4,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 }
 
 require_once __DIR__ . "/../config/db.php";
-require_once __DIR__ . "/../config/auth.php";
-require_login();
+//require_once __DIR__ . "/../config/auth.php";
+//require_login();
 
 // Pega o nome guardado na sessão pelo login.php
 $nome_sessao = $_SESSION["user"] ?? ""; 
@@ -29,95 +29,129 @@ if ($user) {
     $nome = "Usuário não encontrado";
 }
 ?>
-<!DOCTYPE html>
+
+
+
+
+
+
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoScanPro - Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../Front-end/CSS/inicio.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panthers Cars - Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../Front-End/CSS/dashboard.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-</head>
-<body>
-
-<!-- ===== SIDEBAR ===== -->
-<aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
+  </head>
+  <body>
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
         <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
-    </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+      </div>
 
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./index.php" class="nav-item" onclick="setActive(this, 'Dashboard')">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
+        <a
+          href="./index.php"
+          class="nav-item"
+          onclick="setActive(this, 'Dashboard')"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
-            <i class="fas fa-qrcode"></i> Scanner
+        <a
+          href="./scanner.php"
+          class="nav-item"
+          onclick="setActive(this, 'Scanner')"
+        >
+          <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
-            <i class="fas fa-boxes"></i> Inventário
+        <a
+          href="./inventario.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inventário')"
+        >
+          <i class="fas fa-boxes"></i> Inventário
         </a>
+        <a
+          href="./Inspecao.html"
+          class="nav-item"
+          onclick="setActive(this, 'Inspeção')"
+        >
+          <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a
+          href="./inspe_editar.html"
+          class="nav-item"
+          onclick="setActive(this, 'Editar Inspeção')"
+        >
+          <i class="fas fa-edit"></i> Editar Inspeção
+        </a>
+      </div>
 
-    </div>
-
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
+        <a href="#" class="nav-item" onclick="setActive(this, 'Funcionários')">
+          <i class="fas fa-users"></i> Funcionários
         </a>
         <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
-            <i class="fas fa-bell"></i> Alertas
-            <span class="badge">3</span>
+          <i class="fas fa-bell"></i> Alertas
+          <span class="badge">3</span>
         </a>
-    </div>
+      </div>
 
-  <div class="sidebar-footer">
-        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
+      <div class="sidebar-footer">
+        <div class="avatar">G</div>
         <div class="user-info">
-            <p><?= $nome ?></p>
-            <span><?= $func ?></span>
+          <p>Gerente Admin</p>
+          <span>Administrador</span>
         </div>
-    </div>
-</aside>
+      </div>
+    </aside>
 
-<!-- ===== MAIN ===== -->
-<div class="main">
-
-    <!-- TOPBAR -->
-    <header class="topbar">
+    <!-- ===== MAIN ===== -->
+    <div class="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
         <button class="topbar-menu-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
+          <i class="fas fa-bars"></i>
         </button>
-        <h2 id="topbar-title">Dashboard</h2>
+        <h2 id="topbar-title">Dashboard Gerencial</h2>
         <div class="topbar-actions">
-            <button class="topbar-btn red" onclick="showToast('🟢 Sistema online')">
-                <i class="fas fa-circle" style="font-size:9px"></i>
-            </button>
-            <button class="topbar-btn ghost" onclick="openAlertsModal()" style="position:relative">
-                <i class="fas fa-bell"></i>
-                <span class="notif-dot"></span>
-            </button>
-            <!-- <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-                <i class="fas fa-sign-out-alt"></i>
-            </button> -->
-            <a href="./../auth/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt" ></i></a>
+          <button
+            class="topbar-btn red"
+            onclick="showToast('🟢 Sistema online')"
+          >
+            <i class="fas fa-circle" style="font-size: 9px"></i>
+          </button>
+          <button
+            class="topbar-btn ghost"
+            onclick="openAlertsModal()"
+            style="position: relative"
+          >
+            <i class="fas fa-bell"></i>
+            <span class="notif-dot"></span>
+          </button>
+          <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
         </div>
-    </header>
+      </header>
 
-    <!-- CONTENT -->
-    <div class="content">
-
+      <!-- CONTENT -->
+      <div class="content">
         <!-- Page Header -->
         <div class="page-header">
-            <div>
-                <h1>Dashboard Gerencial</h1>
-                <p id="greetingText">Boa tarde, <?= htmlspecialchars($nome)?>!</p>
-            </div>
-            <button class="refresh-btn" onclick="refreshData()">
-                <i class="fas fa-sync-alt" id="refreshIcon"></i> Atualizar
-            </button>
+          <div></div>
+          <button class="refresh-btn" onclick="refreshData()">
+            <i class="fas fa-sync-alt" id="refreshIcon"></i> Atualizar
+          </button>
         </div>
 
         <!-- Quick Access -->
@@ -147,161 +181,210 @@ if ($user) {
                 <span class="qcard-label">Alertas</span>
                 <span class="qcard-sub">3 ativos</span>
             </a>
-        </div>
--->
+        </div> -->
 
         <!-- Stats Row -->
         <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-bg blue"></div>
-                <div class="stat-icon blue"><i class="fas fa-boxes"></i></div>
-                <div class="stat-info">
-                    <p>Total de Peças</p>
-                    <div class="stat-value" id="s1">847</div>
-                    <div class="stat-sub green"><i class="fas fa-arrow-up"></i> 12% este mês</div>
-                </div>
+          <div class="stat-card">
+            <div class="stat-bg blue"></div>
+            <div class="stat-icon blue"><i class="fas fa-boxes"></i></div>
+            <div class="stat-info">
+              <p>Total de Peças</p>
+              <div class="stat-value" id="s1">847</div>
+              <div class="stat-sub green">
+                <i class="fas fa-arrow-up"></i> 12% este mês
+              </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-bg green"></div>
-                <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
-                <div class="stat-info">
-                    <p>Aprovadas</p>
-                    <div class="stat-value" id="s2">762</div>
-                    <div class="stat-sub green"><i class="fas fa-check"></i> Taxa 90%</div>
-                </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-bg green"></div>
+            <div class="stat-icon green">
+              <i class="fas fa-check-circle"></i>
             </div>
-            <div class="stat-card">
-                <div class="stat-bg red"></div>
-                <div class="stat-icon red"><i class="fas fa-times-circle"></i></div>
-                <div class="stat-info">
-                    <p>Reprovadas</p>
-                    <div class="stat-value" id="s3">47</div>
-                    <div class="stat-sub red"><i class="fas fa-exclamation"></i> Verificar</div>
-                </div>
+            <div class="stat-info">
+              <p>Aprovadas</p>
+              <div class="stat-value" id="s2">762</div>
+              <div class="stat-sub green">
+                <i class="fas fa-check"></i> Taxa 90%
+              </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-bg yellow"></div>
-                <div class="stat-icon yellow"><i class="fas fa-user-check"></i></div>
-                <div class="stat-info">
-                    <p>Funcionários Ativos</p>
-                    <div class="stat-value" id="s4">4</div>
-                    <div class="stat-sub blue"><i class="fas fa-circle" style="font-size:7px"></i> Online</div>
-                </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-bg red"></div>
+            <div class="stat-icon red"><i class="fas fa-times-circle"></i></div>
+            <div class="stat-info">
+              <p>Reprovadas</p>
+              <div class="stat-value" id="s3">47</div>
+              <div class="stat-sub red">
+                <i class="fas fa-exclamation"></i> Verificar
+              </div>
             </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-bg yellow"></div>
+            <div class="stat-icon yellow">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <div class="stat-info">
+              <p>Funcionários Ativos</p>
+              <div class="stat-value" id="s4">4</div>
+              <div class="stat-sub blue">
+                <i class="fas fa-circle" style="font-size: 7px"></i> Online
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Charts Row -->
         <div class="charts-row">
-
-            <!-- Bar Chart -->
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div class="chart-title">
-                        <i class="fas fa-chart-bar"></i> Produção Hoje
-                    </div>
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background:#38a169"></div> Aprovadas
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background:#e53e3e"></div> Reprovadas
-                        </div>
-                    </div>
+          <!-- Bar Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">
+                <i class="fas fa-chart-bar"></i> Produção Hoje
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <div class="legend-dot" style="background: #38a169"></div>
+                  Aprovadas
                 </div>
-                <div class="chart-canvas-wrap">
-                    <canvas id="barChart"></canvas>
+                <div class="legend-item">
+                  <div class="legend-dot" style="background: #e53e3e"></div>
+                  Reprovadas
                 </div>
+              </div>
             </div>
-
-            <!-- Donut Chart -->
-            <div class="chart-card">
-                <div class="chart-header">
-                    <div class="chart-title">
-                        <i class="fas fa-chart-pie"></i> Por Setor
-                    </div>
-                </div>
-                <div class="chart-canvas-wrap" style="height:175px">
-                    <canvas id="donutChart"></canvas>
-                </div>
-                <div class="donut-legend" id="donutLegend"></div>
+            <div class="chart-canvas-wrap">
+              <canvas id="barChart"></canvas>
             </div>
+          </div>
+
+          <!-- Donut Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">
+                <i class="fas fa-chart-pie"></i> Por Setor
+              </div>
+            </div>
+            <div class="chart-canvas-wrap" style="height: 175px">
+              <canvas id="donutChart"></canvas>
+            </div>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
         </div>
 
         <!-- Alerts Section -->
         <div class="alerts-section">
-            <div class="alerts-header">
-                <div class="alerts-title">
-                    <i class="fas fa-bell"></i> Alertas Recentes
-                </div>
-                <button class="ver-todos-btn" onclick="openAlertsModal()">Ver todos</button>
+          <div class="alerts-header">
+            <div class="alerts-title">
+              <i class="fas fa-bell"></i> Alertas Recentes
             </div>
-
-            <div class="alert-item" onclick="showToast('🔴 Peça ELE-005 fora do padrão')">
-                <div class="alert-dot danger"><i class="fas fa-times-circle"></i></div>
-                <div class="alert-content">
-                    <h4>Peça ELE-005 fora do padrão – Módulo ECU</h4>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-clock"></i> 5 min atrás</span>
-                        <span><i class="fas fa-tag"></i> Elétrica</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="alert-item" onclick="showToast('⚠️ Estoque crítico ELE-005')">
-                <div class="alert-dot warning"><i class="fas fa-exclamation-triangle"></i></div>
-                <div class="alert-content">
-                    <h4>Estoque crítico: ELE-005 com apenas 5 unidades</h4>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-clock"></i> 15 min atrás</span>
-                        <span><i class="fas fa-tag"></i> Elétrica</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="alert-item" onclick="showToast('✅ Scanner finalizado – 23 peças aprovadas')">
-                <div class="alert-dot info"><i class="fas fa-info-circle"></i></div>
-                <div class="alert-content">
-                    <h4>Scanner finalizado – 23 peças aprovadas</h4>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-clock"></i> 20 min atrás</span>
-                        <span><i class="fas fa-tag"></i> Freios</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- ===== MODAL ALERTAS ===== -->
-<div class="modal-overlay" id="alertsModal" onclick="closeModalOutside(event)">
-    <div class="modal">
-        <div class="modal-header">
-            <h3>🔔 Todos os Alertas</h3>
-            <button class="modal-close" onclick="closeAlertsModal()">✕</button>
-        </div>
-        <div class="modal-row">
-            <span class="ml">🔴 ELE-005 fora do padrão</span>
-            <span class="mv" style="color:#e53e3e">Crítico</span>
-        </div>
-        <div class="modal-row">
-            <span class="ml">⚠️ Estoque baixo ELE-005</span>
-            <span class="mv" style="color:#d69e2e">Atenção</span>
-        </div>
-        <div class="modal-row">
-            <span class="ml">✅ Scanner finalizado</span>
-            <span class="mv" style="color:#38a169">Info</span>
-        </div>
-        <div style="margin-top:14px;text-align:right">
-            <button onclick="closeAlertsModal()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;">
-                Fechar
+            <button class="ver-todos-btn" onclick="openAlertsModal()">
+              Ver todos
             </button>
-        </div>
-    </div>
-</div>
+          </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
+          <div
+            class="alert-item"
+            onclick="showToast('🔴 Peça ELE-005 fora do padrão')"
+          >
+            <div class="alert-dot danger">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            <div class="alert-content">
+              <h4>Peça ELE-005 fora do padrão – Módulo ECU</h4>
+              <div class="alert-meta">
+                <span><i class="fas fa-clock"></i> 5 min atrás</span>
+                <span><i class="fas fa-tag"></i> Elétrica</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="alert-item"
+            onclick="showToast('⚠️ Estoque crítico ELE-005')"
+          >
+            <div class="alert-dot warning">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="alert-content">
+              <h4>Estoque crítico: ELE-005 com apenas 5 unidades</h4>
+              <div class="alert-meta">
+                <span><i class="fas fa-clock"></i> 15 min atrás</span>
+                <span><i class="fas fa-tag"></i> Elétrica</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="alert-item"
+            onclick="showToast('✅ Scanner finalizado – 23 peças aprovadas')"
+          >
+            <div class="alert-dot info"><i class="fas fa-info-circle"></i></div>
+            <div class="alert-content">
+              <h4>Scanner finalizado – 23 peças aprovadas</h4>
+              <div class="alert-meta">
+                <span><i class="fas fa-clock"></i> 20 min atrás</span>
+                <span><i class="fas fa-tag"></i> Freios</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MODAL ALERTAS ===== -->
+    <div
+      class="modal-overlay"
+      id="alertsModal"
+      onclick="closeModalOutside(event)"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <h3>🔔 Todos os Alertas</h3>
+          <button class="modal-close" onclick="closeAlertsModal()">✕</button>
+        </div>
+        <div class="modal-row">
+          <span class="ml">🔴 ELE-005 fora do padrão</span>
+          <span class="mv" style="color: #e53e3e">Crítico</span>
+        </div>
+        <div class="modal-row">
+          <span class="ml">⚠️ Estoque baixo ELE-005</span>
+          <span class="mv" style="color: #d69e2e">Atenção</span>
+        </div>
+        <div class="modal-row">
+          <span class="ml">✅ Scanner finalizado</span>
+          <span class="mv" style="color: #38a169">Info</span>
+        </div>
+        <div style="margin-top: 14px; text-align: right">
+          <button
+            onclick="closeAlertsModal()"
+            style="
+              background: #e53e3e;
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              padding: 8px 18px;
+              font-size: 12px;
+              font-weight: 600;
+              cursor: pointer;
+            "
+          >
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    
+
+
+
+
+
 
 <script>
     // ===== GREETING =====
