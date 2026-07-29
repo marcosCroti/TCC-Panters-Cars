@@ -163,7 +163,7 @@
 
           <!-- Bottom Buttons -->
           <div class="bottom-actions">
-            <button class="btn-scan" onclick="startScan()">
+            <button id="btn-scan" class="btn-scan" onclick="startScan()">
               <i class="fas fa-qrcode"></i>
               Escanear Peça
             </button>
@@ -187,9 +187,13 @@
 
     <!-- ===== TOAST ===== -->
     <div class="toast" id="toast"></div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="../../SCRIPT/camera2.js"></script>
+     <script src="../../SCRIPT/fatores.js"></script>
     <script>
-      // ===== DADOS SIMULADOS =====
+      
+    /*  // ===== DADOS SIMULADOS =====
       const fakeParts = [
         {
           name: "Motor V8 5.0L",
@@ -438,6 +442,9 @@
         if (e.key === "Escape") closeAlertModal();
         if (e.key === "Enter") startScan();
       });
+
+
+      */
     </script>
   </body>
 </html>

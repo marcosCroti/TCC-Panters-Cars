@@ -40,46 +40,72 @@ if ($user) {
 </head>
 <body>
 
-<!-- ===== SIDEBAR ===== -->
-<aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
+ <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
         <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
-    </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+      </div>
 
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./index.php" class="nav-item" onclick="setActive(this, 'Dashboard')">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
+        <a
+          href="./index.php"
+          class="nav-item"
+          onclick="setActive(this, 'Dashboard')"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
-            <i class="fas fa-qrcode"></i> Scanner
+        <a
+          href="./scanner.php"
+          class="nav-item"
+          onclick="setActive(this, 'Scanner')"
+        >
+          <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
-            <i class="fas fa-boxes"></i> Inventário
+        <a
+          href="./inventario.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inventário')"
+        >
+          <i class="fas fa-boxes"></i> Inventário
         </a>
+        <a
+          href="./inspeção.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inspeção')"
+        >
+          <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a
+          href="./inspe_editar.php"
+          class="nav-item"
+          onclick="setActive(this, 'Editar Inspeção')"
+        >
+          <i class="fas fa-edit"></i> Editar Inspeção
+        </a>
+      </div>
 
-    </div>
-
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
+        <a href="funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+            
+          <i class="fas fa-users"></i> Funcionários
         </a>
         <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
-            <i class="fas fa-bell"></i> Alertas
-            <span class="badge">3</span>
+          <i class="fas fa-bell"></i> Alertas
+          <span class="badge">3</span>
         </a>
-    </div>
+      </div>
 
-  <div class="sidebar-footer">
+    <div class="sidebar-footer">
         <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
             <p><?= $nome ?></p>
             <span><?= $func ?></span>
         </div>
     </div>
-</aside>
+    </aside>
 
 <!-- ===== MAIN ===== -->
 <div class="main">
@@ -159,43 +185,19 @@ if ($user) {
                     <i class="fas fa-qrcode"></i>
                     Escanear Peça
                 </button>
-                <button class="btn-cancel" id="btn-cancel">
-                    <i class="fa-solid fa-camera"></i>
-                    Ligar Câmera
+                <button class="btn-alert" id="btn-cancel">
+                    <i class="fas fa-clipboard"></i>
+                    Inspecionar
                 </button>
-                <button class="btn-alert" onclick="openAlertModal()">
+                <button class="btn-cancel" onclick="openAlertModal()">
                     <i class="fas fa-exclamation-triangle"></i>
-                    Alerta
+                    Cancelar
                 </button>
             </div>
 
             <p id="resultado-vencedor"></p>
             <p id="probabilidade"></p>
 
-            <!-- Session Counters -->
-            <div class="session-counter">
-                <div class="counter-card">
-                    <div class="counter-icon green"><i class="fas fa-check"></i></div>
-                    <div class="counter-info">
-                        <p>Escaneadas</p>
-                        <h4 id="cntScanned">0</h4>
-                    </div>
-                </div>
-                <div class="counter-card">
-                    <div class="counter-icon red"><i class="fas fa-exclamation"></i></div>
-                    <div class="counter-info">
-                        <p>Alertas</p>
-                        <h4 id="cntAlerts">0</h4>
-                    </div>
-                </div>
-                <div class="counter-card">
-                    <div class="counter-icon blue"><i class="fas fa-clock"></i></div>
-                    <div class="counter-info">
-                        <p>Tempo sessão</p>
-                        <h4 id="cntTime">00:00</h4>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>

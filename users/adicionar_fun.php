@@ -1,4 +1,4 @@
-<?php
+<?php/*
 require_once "db.php";
 
 $erros = "";
@@ -55,3 +55,4 @@ Categoria:<br>
 
 <br>
 <a href="funcionario.php">Voltar</a>
+*/

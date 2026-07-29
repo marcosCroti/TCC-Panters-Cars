@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } 
     else if (strlen($senha) < 6) {
         $erro = "A senha deve ter pelo menos 6 caracteres!";
-    } 
+    }
     if($erro){
         echo $erro;
     }

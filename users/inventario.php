@@ -163,36 +163,62 @@ function codigoPeca($id) {
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
+<!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
         <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
-    </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+      </div>
 
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./index.php" class="nav-item" onclick="setActive(this, 'Dashboard')">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
+        <a
+          href="./index.php"
+          class="nav-item"
+          onclick="setActive(this, 'Dashboard')"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
-            <i class="fas fa-qrcode"></i> Scanner
+        <a
+          href="./scanner.php"
+          class="nav-item"
+          onclick="setActive(this, 'Scanner')"
+        >
+          <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a href="./inventario.php?filtro=todos" class="nav-item active" onclick="setActive(this, 'Inventário')">
-            <i class="fas fa-boxes"></i> Inventário
+        <a
+          href="./inventario.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inventário')"
+        >
+          <i class="fas fa-boxes"></i> Inventário
         </a>
-    </div>
+        <a
+          href="./inspeção.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inspeção')"
+        >
+          <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a
+          href="./inspe_editar.php"
+          class="nav-item"
+          onclick="setActive(this, 'Editar Inspeção')"
+        >
+          <i class="fas fa-edit"></i> Editar Inspeção
+        </a>
+      </div>
 
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
+        <a href="funcionarios.php" class="nav-item">
+          <i class="fas fa-users"></i> Funcionários
         </a>
-        <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
-            <i class="fas fa-bell"></i> Alertas
-            <span class="badge">3</span>
+        <a href="#" class="nav-item">
+          <i class="fas fa-bell"></i> Alertas
+          <span class="badge">3</span>
         </a>
-    </div>
+      </div>
 
     <div class="sidebar-footer">
         <div class="avatar"><?= strtoupper($nome[0]) ?></div>
@@ -201,7 +227,7 @@ function codigoPeca($id) {
             <span><?= $func ?></span>
         </div>
     </div>
-</aside>
+    </aside>
 
 <!-- MAIN -->
 <div class="main">
@@ -227,8 +253,7 @@ function codigoPeca($id) {
     <div class="content">
         <div class="page-header">
             <div>
-                <h1>Inventário de Peças</h1>
-                <p>Catálogo completo do estoque</p>
+                <button type="hidden"></button>
             </div>
             <div class="view-toggle">
                 <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grade">

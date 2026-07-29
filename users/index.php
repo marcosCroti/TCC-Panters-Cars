@@ -29,6 +29,8 @@ if ($user) {
     $nome = "Usuário não encontrado";
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -36,51 +38,76 @@ if ($user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoScanPro - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../Front-end/CSS/inicio.css">
+    <link rel="stylesheet" href="../Front-end/CSS/dashboard.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
 
 <!-- ===== SIDEBAR ===== -->
-<aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
         <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
-    </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+      </div>
 
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./index.php" class="nav-item" onclick="setActive(this, 'Dashboard')">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
+        <a
+          href="./index.php"
+          class="nav-item"
+          onclick="setActive(this, 'Dashboard')"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
-            <i class="fas fa-qrcode"></i> Scanner
+        <a
+          href="./scanner.php"
+          class="nav-item"
+          onclick="setActive(this, 'Scanner')"
+        >
+          <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
-            <i class="fas fa-boxes"></i> Inventário
+        <a
+          href="./inventario.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inventário')"
+        >
+          <i class="fas fa-boxes"></i> Inventário
         </a>
+        <a
+          href="./inspeção.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inspeção')"
+        >
+          <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a
+          href="./inspe_editar.php"
+          class="nav-item"
+          onclick="setActive(this, 'Editar Inspeção')"
+        >
+          <i class="fas fa-edit"></i> Editar Inspeção
+        </a>
+      </div>
 
-    </div>
-
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
+        <a href="funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+          <i class="fas fa-users"></i> Funcionários
         </a>
         <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
-            <i class="fas fa-bell"></i> Alertas
-            <span class="badge">3</span>
+          <i class="fas fa-bell"></i> Alertas
+          <span class="badge">3</span>
         </a>
-    </div>
+      </div>
 
-  <div class="sidebar-footer">
+    <div class="sidebar-footer">
         <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
             <p><?= $nome ?></p>
             <span><?= $func ?></span>
         </div>
     </div>
-</aside>
+    </aside>
 
 <!-- ===== MAIN ===== -->
 <div class="main">
@@ -111,10 +138,7 @@ if ($user) {
 
         <!-- Page Header -->
         <div class="page-header">
-            <div>
-                <h1>Dashboard Gerencial</h1>
-                <p id="greetingText">Boa tarde, <?= htmlspecialchars($nome)?>!</p>
-            </div>
+    <button typy="hidden"></button>
             <button class="refresh-btn" onclick="refreshData()">
                 <i class="fas fa-sync-alt" id="refreshIcon"></i> Atualizar
             </button>

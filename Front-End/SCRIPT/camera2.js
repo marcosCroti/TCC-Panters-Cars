@@ -12,17 +12,19 @@ let isModelReady = false;
 const logo = document.getElementById("qrIdle");
 let statusCam = "desligado";
 let animationFrameId; // Guardará o ID do loop para podermos pará-lo
-let icone = document.querySelector(".fa-solid");
+let icone = document.querySelector(".fas");
 
 function alternarCor() {
   console.log(`O valor de statusCam é ${statusCam}`);
   if (statusCam === "ligado") {
     gerenciarBotao.innerHTML =
-      " <i class='fa-solid fa-camera'></i> Ligar Câmera ";
+      " <i class='fas fa-clipboard'></i> Inpecionar";
     icone.classList.add();
   } else if (statusCam === "desligado") {
     gerenciarBotao.innerHTML = 
-    "<i class='fa-solid fa-power-off'></i> Desligar Câmera";
+    "<i class='fa-solid fa-power-off'></i> Parar inspecionamento";
+
+    
   }
 }
 
