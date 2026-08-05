@@ -519,177 +519,177 @@
         /* ========================
            MODAL OVERLAY
         ======================== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
 
-        .modal-overlay.active {
-            display: flex;
-        }
+.modal-overlay.active {
+  display: flex;
+}
 
-        /* MODAL BOX */
-        .modal {
-            background-color: #1e1e1e;
-            border-radius: 16px;
-            width: 560px;
-            max-width: 95vw;
-            padding: 0;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            animation: fadeInScale 0.25s ease;
-        }
+/* MODAL BOX */
+.modal {
+  background-color: #1e1e1e;
+  border-radius: 16px;
+  width: 560px;
+  max-width: 95vw;
+  padding: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: fadeInScale 0.25s ease;
+}
 
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.92);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 22px 26px;
-            border-bottom: 1px solid #2e2e2e;
-        }
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px;
+  border-bottom: 1px solid #2e2e2e;
+}
 
-        .modal-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 17px;
-            font-weight: 700;
-            color: #ffffff;
-        }
+.modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+}
 
-        .modal-header-left .modal-icon {
-            color: #e53935;
-            font-size: 20px;
-        }
+.modal-header-left .modal-icon {
+  color: #e53935;
+  font-size: 20px;
+}
 
-        .modal-close {
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 22px;
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s;
-        }
+.modal-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
 
-        .modal-close:hover {
-            color: #fff;
-        }
+.modal-close:hover {
+  color: #fff;
+}
 
-        .modal-body {
-            padding: 28px 26px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+.modal-body {
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-        .modal-row {
-            display: flex;
-            gap: 16px;
-        }
+.modal-row {
+  display: flex;
+  gap: 16px;
+}
 
-        .modal-field {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-        }
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
 
-        .modal-field label {
-            font-size: 11px;
-            font-weight: 700;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
+.modal-field label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
 
-        .modal-field input,
-        .modal-field select {
-            background-color: #2a2a2a;
-            border: 1px solid #3a3a3a;
-            border-radius: 8px;
-            padding: 12px 14px;
-            font-size: 14px;
-            color: #ccc;
-            outline: none;
-            transition: border 0.2s;
-            width: 100%;
-        }
+.modal-field input,
+.modal-field select {
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #ccc;
+  outline: none;
+  transition: border 0.2s;
+  width: 100%;
+}
 
-        .modal-field input::placeholder {
-            color: #666;
-        }
+.modal-field input::placeholder {
+  color: #666;
+}
 
-        .modal-field input:focus,
-        .modal-field select:focus {
-            border-color: #e53935;
-        }
+.modal-field input:focus,
+.modal-field select:focus {
+  border-color: #e53935;
+}
 
-        .modal-field select {
-            appearance: auto;
-            cursor: pointer;
-        }
+.modal-field select {
+  appearance: auto;
+  cursor: pointer;
+}
 
-        .modal-field select option {
-            background-color: #2a2a2a;
-            color: #ccc;
-        }
+.modal-field select option {
+  background-color: #2a2a2a;
+  color: #ccc;
+}
 
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 12px;
-            padding: 18px 26px;
-            border-top: 1px solid #2e2e2e;
-        }
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 26px;
+  border-top: 1px solid #2e2e2e;
+}
 
-        .btn-cancelar {
-            background: none;
-            border: none;
-            color: #ccc;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            padding: 10px 16px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
+.btn-cancelar {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
 
-        .btn-cancelar:hover {
-            background-color: #2e2e2e;
-        }
+.btn-cancelar:hover {
+  background-color: #2e2e2e;
+}
 
-        .btn-cadastrar {
-            background-color: #e53935;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 22px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.2s;
-        }
+.btn-cadastrar {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
 
-        .btn-cadastrar:hover {
-            background-color: #c62828;
-        }
+.btn-cadastrar:hover {
+  background-color: #c62828;
+}

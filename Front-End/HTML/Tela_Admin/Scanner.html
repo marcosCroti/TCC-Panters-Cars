@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panthers Cars - Scanner</title>
+    <title>AutoScanPro - Scanner</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -15,20 +15,20 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
         <div class="logo-icon">🚗</div>
-        <span class="logo-text">Panthers<span>Cars</span></span>
+        <span class="logo-text">AutoScan<span>Pro</span></span>
       </div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
         <a
-          href="./Dashboard.html"
+          href="./index.php"
           class="nav-item"
           onclick="setActive(this, 'Dashboard')"
         >
           <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
         <a
-          href="./scanner.html"
+          href="./scanner.php"
           class="nav-item"
           onclick="setActive(this, 'Scanner')"
         >
@@ -42,18 +42,11 @@
           <i class="fas fa-boxes"></i> Inventário
         </a>
         <a
-          href="./Inspecao.html"
+          href="#"
           class="nav-item"
-          onclick="setActive(this, 'Inspeção')"
+          onclick="setActive(this, 'Controle de Qualidade')"
         >
-          <i class="fas fa-clipboard"></i> Inspeção
-        </a>
-        <a
-          href="./inspe_editar.html"
-          class="nav-item"
-          onclick="setActive(this, 'Editar Inspeção')"
-        >
-          <i class="fas fa-edit"></i> Editar Inspeção
+          <i class="fas fa-chart-line"></i> Controle de Qualidade
         </a>
       </div>
 
@@ -69,9 +62,9 @@
       </div>
 
       <div class="sidebar-footer">
-        <div class="avatar">G</div>
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
-          <p>Gerente Admin</p>
+          <p><?= $nome ?></p>
           <span>Administrador</span>
         </div>
       </div>
@@ -100,22 +93,23 @@
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
           </button>
-          <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
+          <a
+            href="./../auth/logout.php"
+            class="topbar-btn ghost"
+            style="text-decoration: none"
+            ><i class="fas fa-sign-out-alt"></i
+          ></a>
         </div>
       </header>
 
       <!-- CONTENT -->
       <div class="content">
         <!-- Page Header -->
-        <div class="page-header">
-          
-        </div>
 
         <div class="scanner-wrapper">
           <!-- Scanner Box -->
           <div class="scanner-box" id="scannerBox">
+            <div id="webcam-container"></div>
             <div class="scan-line" id="scanLine"></div>
             <div class="scan-corners" id="scanCorners"></div>
             <div class="scan-corners-2" id="scanCorners2"></div>
@@ -131,7 +125,7 @@
                 Pronto para escanear
               </div>
               <div class="scanner-sublabel" id="scannerSub">
-                Clique em "Escanear Peça" abaixo
+                Clique em "Ligar Camêra" abaixo
               </div>
             </div>
 
@@ -163,6 +157,22 @@
 
           <!-- Bottom Buttons -->
           <div class="bottom-actions">
+            <button class="btn-scan" id="btn-scan">
+              <i class="fas fa-qrcode"></i>
+              Escanear Peça
+            </button>
+            <button class="btn-cancel" id="btn-cancel">
+              <i class="fa-solid fa-camera"></i>
+              Ligar Câmera
+            </button>
+            <button class="btn-alert" onclick="openAlertModal()">
+              <i class="fas fa-exclamation-triangle"></i>
+              Alerta
+            </button>
+          </div>
+
+          <!-- Bottom Buttons -->
+          <div class="bottom-actions">
             <button id="btn-scan" class="btn-scan" onclick="startScan()">
               <i class="fas fa-qrcode"></i>
               Escanear Peça
@@ -177,23 +187,76 @@
             </button>
           </div>
 
+          <!-- Session Counters -->
+          <div class="session-counter">
+            <div class="counter-card">
+              <div class="counter-icon green"><i class="fas fa-check"></i></div>
+              <div class="counter-info">
+                <p>Escaneadas</p>
+                <h4 id="cntScanned">0</h4>
+              </div>
+            </div>
+            <div class="counter-card">
+              <div class="counter-icon red">
+                <i class="fas fa-exclamation"></i>
+              </div>
+              <div class="counter-info">
+                <p>Alertas</p>
+                <h4 id="cntAlerts">0</h4>
+              </div>
+            </div>
+            <div class="counter-card">
+              <div class="counter-icon blue"><i class="fas fa-clock"></i></div>
+              <div class="counter-info">
+                <p>Tempo sessão</p>
+                <h4 id="cntTime">00:00</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== MODAL ALERTA ===== -->
     <div
       class="modal-overlay"
       id="alertModal"
       onclick="closeModalOutside(event)"
     >
-
+      <div class="modal">
+        <div class="modal-header">
+          <h3>⚠️ Registrar Alerta</h3>
+          <button class="modal-close" onclick="closeAlertModal()">✕</button>
+        </div>
+        <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px">
+          Descreva o problema identificado na peça:
+        </p>
+        <textarea
+          id="alertText"
+          placeholder="Ex: Peça danificada, código ilegível, estoque incorreto..."
+        ></textarea>
+        <div class="modal-actions">
+          <button class="modal-btn secondary" onclick="closeAlertModal()">
+            Cancelar
+          </button>
+          <button class="modal-btn primary" onclick="submitAlert()">
+            Registrar Alerta
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- ===== TOAST ===== -->
     <div class="toast" id="toast"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+
+    <script>
+      src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script src="../../SCRIPT/camera2.js"></script>
-     <script src="../../SCRIPT/fatores.js"></script>
+    <script src="../../SCRIPT/fatores.js"></script>
     <script>
-      
-    /*  // ===== DADOS SIMULADOS =====
+      /*  // ===== DADOS SIMULADOS =====
       const fakeParts = [
         {
           name: "Motor V8 5.0L",
