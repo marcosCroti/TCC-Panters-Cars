@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoScanPro - Controle de Qualidade</title>
+    <title>Panthers Cars - Controle de Qualidade</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../CSS/Controle_Qualidade.css">
+    <link rel="stylesheet" href="../../CSS/Style_Admin/Controle_Admin.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
@@ -13,8 +13,10 @@
 <!-- ===== SIDEBAR ===== -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-        <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
+        <div class="logo-icon">
+            <img src="../../logo_panthers.jpg" alt="logo Panthers" id="logo">
+        </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
     </div>
 
     <div class="sidebar-section">
@@ -31,16 +33,22 @@
         <a href="./Controle_Qualidade.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
             <i class="fas fa-chart-line"></i> Controle de Qualidade
         </a>
+         <a href="./Inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a href="./Editar-Inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-edit"></i> Editar-Inspeção
+        </a>
     </div>
 
     <div class="sidebar-section">
-        <div class="section-title">Administração</div>
-        <a href="#" class="nav-item" onclick="setActive(this,'Funcionários')">
+        <div class="sidebar-section-title">Administração</div>
+        <a href="./Funcionarios.html" class="nav-item" onclick="setActive(this,'Funcionários')">
             <i class="fas fa-users"></i> Funcionários
         </a>
-        <a href="#" class="nav-item" onclick="setActive(this,'Alertas')">
+        <a href="./Alerta_Admin.html" class="nav-item" onclick="setActive(this,'Alertas')">
             <i class="fas fa-bell"></i> Alertas
-            <span class="nav-badge">0</span>
+            <span class="badge">0</span>
         </a>
     </div>
 
@@ -63,15 +71,13 @@
         </button>
         <h2 id="topbar-title">Controle de Qualidade</h2>
         <div class="topbar-actions">
-            <button class="topbar-btn red" onclick="showToast('🟢 Sistema online')">
-                <i class="fas fa-circle" style="font-size:9px"></i>
-            </button>
-            <button class="topbar-btn ghost" style="position:relative" onclick="showToast('🔔 Nenhum alerta ativo')">
+            <button class="topbar-btn ghost" href="./Alerta_Admin.html">
                 <i class="fas fa-bell"></i>
+                <span class="notif-dot"></span>
             </button>
-            <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
+            <a class="topbar-btn ghost"  href="../Inicializaçao.html">
                 <i class="fas fa-sign-out-alt"></i>
-            </button>
+            </a>
         </div>
     </header>
 

@@ -34,7 +34,7 @@ body {
     height: 120px;
     border-radius: 20px;
     margin-left: 120px;
-    border: rgb(255, 86, 86) 2px solid;
+    border: rgba(205, 48, 48, 0.411) 2px solid;
 }
 
 /* .logo-icon {

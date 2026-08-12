@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panthers Cars - Alertas (Admin)</title>
+    <link rel="stylesheet" href="../../CSS/Style_Admin/Alerta_Admin.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+
+        </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">
+            <img src="../../logo_panthers.jpg" alt="logo Panthers" id="logo">
+        </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Principal</div>
+        <a href="./Dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="./scanner.html" class="nav-item" onclick="setActive(this, 'Scanner')">
+            <i class="fas fa-qrcode"></i> Scanner
+        </a>
+        <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
+            <i class="fas fa-boxes"></i> Inventário
+        </a>
+        <a href="./Controle_Qualidade.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-chart-line"></i> Controle de Qualidade
+        </a>
+         <a href="./Inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a href="./Editar-Inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-edit"></i> Editar-Inspeção
+        </a>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Administração</div>
+        <a href="./Funcionarios.html" class="nav-item" onclick="setActive(this,'Funcionários')">
+            <i class="fas fa-users"></i> Funcionários
+        </a>
+        <a href="./Alerta_Admin.html" class="nav-item" onclick="setActive(this,'Alertas')">
+            <i class="fas fa-bell"></i> Alertas
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="avatar">G</div>
+        <div class="user-info">
+            <p>Gerente Admin</p>
+            <span>Administrador</span>
+        </div>
+    </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h2 id="topbar-title">Alerta</h2>
+        <div class="topbar-actions">
+            <a class="topbar-btn ghost" href="./Alerta_Admin.html">
+                <i class="fas fa-bell"></i>
+                <span class="notif-dot"></span>
+            </a>
+            <a class="topbar-btn ghost" onclick="showToast('🚪 Saindo...') " href="../Inicializaçao.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
+
+
+
+
+    <div class="content">
+        <div class="content-header">
+            <div class="content-header-left">
+                <h1>Gerenciar Alertas</h1>
+                <p>Crie e gerencie avisos para a equipe</p>
+            </div>
+            <button class="btn-add" onclick="abrirModal()">
+                🔔 + Novo Alerta
+            </button>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <button class="filtro-btn active" onclick="filtrar('todos', this)">Todos</button>
+            <button class="filtro-btn" onclick="filtrar('urgente', this)">🔴 Urgente</button>
+            <button class="filtro-btn" onclick="filtrar('atencao', this)">🟡 Atenção</button>
+            <button class="filtro-btn" onclick="filtrar('info', this)">🔵 Informação</button>
+            <button class="filtro-btn" onclick="filtrar('sucesso', this)">🟢 Sucesso</button>
+        </div>
+
+        <!-- GRID -->
+        <div class="alertas-grid" id="alertasGrid">
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">🔔</div>
+                <p>Nenhum alerta criado ainda.<br>Clique em <strong>+ Novo Alerta</strong> para começar.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="fecharModalFora(event)">
+    <div class="modal" id="modalBox">
+        <div class="modal-header">
+            <div class="modal-header-left">
+                <span class="modal-icon">🔔</span> Novo Alerta
+            </div>
+            <button class="modal-close" onclick="fecharModal()">✕</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label>Título do Alerta</label>
+                    <input type="text" id="inputTitulo" placeholder="Ex: Manutenção programada" />
+                </div>
+                <div class="modal-field">
+                    <label>Tipo</label>
+                    <select id="inputTipo">
+                        <option value="urgente">🔴 Urgente</option>
+                        <option value="atencao">🟡 Atenção</option>
+                        <option value="info" selected>🔵 Informação</option>
+                        <option value="sucesso">🟢 Sucesso</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label>Descrição</label>
+                    <textarea id="inputDescricao" placeholder="Descreva o alerta detalhadamente..."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label>Setor Destinatário</label>
+                    <select id="inputSetor">
+                        <option value="todos">Todos os Setores</option>
+                        <option value="Montagem">Montagem</option>
+                        <option value="Qualidade">Qualidade</option>
+                        <option value="Expedição">Expedição</option>
+                        <option value="Inspeção">Inspeção</option>
+                    </select>
+                </div>
+                <div class="modal-field">
+                    <label>Data / Hora</label>
+                    <input type="datetime-local" id="inputData" />
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+            <button class="btn-salvar" onclick="salvarAlerta()">💾 Publicar Alerta</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let alertas = [];
+    let filtroAtual = 'todos';
+    let editandoId = null;
+
+    const tipoLabel = {
+        urgente: { label: 'Urgente', emoji: '🔴' },
+        atencao: { label: 'Atenção', emoji: '🟡' },
+        info:    { label: 'Informação', emoji: '🔵' },
+        sucesso: { label: 'Sucesso', emoji: '🟢' }
+    };
+
+    function abrirModal(id = null) {
+        editandoId = id;
+        if (id !== null) {
+            const a = alertas.find(x => x.id === id);
+            document.getElementById('inputTitulo').value = a.titulo;
+            document.getElementById('inputTipo').value = a.tipo;
+            document.getElementById('inputDescricao').value = a.descricao;
+            document.getElementById('inputSetor').value = a.setor;
+            document.getElementById('inputData').value = a.data;
+            document.querySelector('.modal-header-left').innerHTML = '<span class="modal-icon">✏️</span> Editar Alerta';
+            document.querySelector('.btn-salvar').innerHTML = '💾 Salvar Alterações';
+        } else {
+            document.getElementById('inputTitulo').value = '';
+            document.getElementById('inputTipo').value = 'info';
+            document.getElementById('inputDescricao').value = '';
+            document.getElementById('inputSetor').value = 'todos';
+            document.getElementById('inputData').value = '';
+            document.querySelector('.modal-header-left').innerHTML = '<span class="modal-icon">🔔</span> Novo Alerta';
+            document.querySelector('.btn-salvar').innerHTML = '💾 Publicar Alerta';
+        }
+        document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function fecharModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+        editandoId = null;
+    }
+
+    function fecharModalFora(e) {
+        if (e.target === document.getElementById('modalOverlay')) fecharModal();
+    }
+
+    function salvarAlerta() {
+        const titulo = document.getElementById('inputTitulo').value.trim();
+        const tipo = document.getElementById('inputTipo').value;
+        const descricao = document.getElementById('inputDescricao').value.trim();
+        const setor = document.getElementById('inputSetor').value;
+        const data = document.getElementById('inputData').value;
+
+        if (!titulo || !descricao) {
+            alert('Preencha o título e a descrição!');
+            return;
+        }
+
+        if (editandoId !== null) {
+            const idx = alertas.findIndex(x => x.id === editandoId);
+            alertas[idx] = { id: editandoId, titulo, tipo, descricao, setor, data };
+        } else {
+            alertas.push({
+                id: Date.now(),
+                titulo, tipo, descricao, setor,
+                data: data || new Date().toISOString().slice(0,16)
+            });
+        }
+
+        salvarLS();
+        renderAlertas();
+        fecharModal();
+    }
+
+    function deletarAlerta(id) {
+        if (!confirm('Deseja excluir este alerta?')) return;
+        alertas = alertas.filter(a => a.id !== id);
+        salvarLS();
+        renderAlertas();
+    }
+
+    function filtrar(tipo, btn) {
+        filtroAtual = tipo;
+        document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderAlertas();
+    }
+
+    function renderAlertas() {
+        const grid = document.getElementById('alertasGrid');
+        const lista = filtroAtual === 'todos' ? alertas : alertas.filter(a => a.tipo === filtroAtual);
+
+        document.getElementById('badgeCount').textContent = alertas.length;
+
+        if (lista.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">🔔</div>
+                    <p>Nenhum alerta encontrado.<br>Clique em <strong>+ Novo Alerta</strong> para começar.</p>
+                </div>`;
+            return;
+        }
+
+        grid.innerHTML = lista.map(a => {
+            const dt = a.data ? new Date(a.data).toLocaleString('pt-BR') : '—';
+            const t = tipoLabel[a.tipo];
+            return `
+            <div class="alerta-card ${a.tipo}">
+                <div class="card-top">
+                    <div class="card-tipo">
+                        <span class="tipo-badge ${a.tipo}">${t.emoji} ${t.label}</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-btn-edit" onclick="abrirModal(${a.id})" title="Editar">✏️</button>
+                        <button class="card-btn-del" onclick="deletarAlerta(${a.id})" title="Excluir">🗑️</button>
+                    </div>
+                </div>
+                <div class="card-titulo">${a.titulo}</div>
+                <div class="card-descricao">${a.descricao}</div>
+                <div class="card-footer">
+                    <span class="card-setor ${a.setor === 'todos' ? 'todos' : ''}">${a.setor === 'todos' ? '🌐 Todos' : a.setor}</span>
+                    <span>🕐 ${dt}</span>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function salvarLS() {
+        localStorage.setItem('panthers_alertas', JSON.stringify(alertas));
+    }
+
+    function carregarLS() {
+        const s = localStorage.getItem('panthers_alertas');
+        if (s) alertas = JSON.parse(s);
+        renderAlertas();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+    carregarLS();
+</script>
+</body>
+</html>

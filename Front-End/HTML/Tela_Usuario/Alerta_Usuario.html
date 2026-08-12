@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panthers Cars - Meus Alertas</title>
+    <link rel="stylesheet" href="../../CSS/Style_Admin/Alerta_Admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">
+            <img src="../../logo_panthers.jpg" alt="logo panthers" id="logo">
+        </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Principal</div>
+        <a href="./Dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="./scanner.html" class="nav-item" onclick="setActive(this, 'Scanner')">
+            <i class="fas fa-qrcode"></i> Scanner
+        </a>
+        <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
+            <i class="fas fa-boxes"></i> Inventário
+        </a>
+        
+    </div>
+
+    
+        <a href="Alerta_Usuario.html" class="nav-item">
+            <i class="fas fa-bell"></i> Alertas
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="avatar">f</div>
+        <div class="user-info">
+           
+        </div>
+    </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+    <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h2 id="topbar-title">Alerta</h2>
+        <div class="topbar-actions">
+            <a class="topbar-btn ghost" href="./Alerta_Usuario.html">
+                <i class="fas fa-bell"></i>
+                <span class="notif-dot"></span>
+            </a>
+            <a class="topbar-btn ghost" href="../Inicializaçao.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
+
+
+
+
+    <div class="content">
+        <div class="content-header">
+            <div class="content-header-left">
+                <h1>Verificar Alertas</h1>
+            </div>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <button class="filtro-btn active" onclick="filtrar('todos', this)">Todos</button>
+            <button class="filtro-btn" onclick="filtrar('urgente', this)">🔴 Urgente</button>
+            <button class="filtro-btn" onclick="filtrar('atencao', this)">🟡 Atenção</button>
+            <button class="filtro-btn" onclick="filtrar('info', this)">🔵 Informação</button>
+            <button class="filtro-btn" onclick="filtrar('sucesso', this)">🟢 Sucesso</button>
+        </div>
+
+        <!-- GRID -->
+        <div class="alertas-grid" id="alertasGrid">
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">🔔</div>
+                <p>Nenhum alerta criado ainda.<br>Clique em <strong>+ Novo Alerta</strong> para começar.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL DETALHE -->
+<div class="modal-overlay" id="modalOverlay" onclick="fecharModalFora(event)">
+    <div class="modal" id="modalBox">
+        <div class="modal-detalhe-header">
+            <div>
+                <div id="detTipoBadge" style="margin-bottom:8px;"></div>
+                <div class="modal-detalhe-titulo" id="detTitulo"></div>
+            </div>
+            <button class="modal-detalhe-close" onclick="fecharModal()">✕</button>
+        </div>
+        <div class="modal-detalhe-body">
+            <div class="modal-detalhe-desc" id="detDesc"></div>
+            <div class="modal-detalhe-info">
+                <span>📍 Setor: <strong id="detSetor"></strong></span>
+                <span>🕐 <strong id="detData"></strong></span>
+            </div>
+        </div>
+        <div class="modal-detalhe-footer">
+            <button class="btn-fechar-modal" onclick="fecharModal()">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let alertas = [];
+    let lidosSet = new Set();
+    let filtroAtual = 'todos';
+
+    const tipoLabel = {
+        urgente: { label: 'Urgente', emoji: '🔴' },
+        atencao: { label: 'Atenção', emoji: '🟡' },
+        info:    { label: 'Informação', emoji: '🔵' },
+        sucesso: { label: 'Sucesso', emoji: '🟢' }
+    };
+
+    function carregarDados() {
+        const s = localStorage.getItem('panthers_alertas');
+        alertas = s ? JSON.parse(s) : [];
+
+        const l = localStorage.getItem('panthers_lidos');
+        lidosSet = l ? new Set(JSON.parse(l)) : new Set();
+
+        renderAlertas();
+    }
+
+    function filtrar(tipo, btn) {
+        filtroAtual = tipo;
+        document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderAlertas();
+    }
+
+    function marcarLido(id) {
+        if (lidosSet.has(id)) {
+            lidosSet.delete(id);
+        } else {
+            lidosSet.add(id);
+        }
+        localStorage.setItem('panthers_lidos', JSON.stringify([...lidosSet]));
+        renderAlertas();
+    }
+
+    function abrirDetalhe(id) {
+        const a = alertas.find(x => x.id === id);
+        if (!a) return;
+
+        marcarLido(id);
+
+        const t = tipoLabel[a.tipo];
+        document.getElementById('detTipoBadge').innerHTML =
+            `<span class="tipo-badge ${a.tipo}">${t.emoji} ${t.label}</span>`;
+        document.getElementById('detTitulo').textContent = a.titulo;
+        document.getElementById('detDesc').textContent = a.descricao;
+        document.getElementById('detSetor').textContent = a.setor === 'todos' ? 'Todos' : a.setor;
+        document.getElementById('detData').textContent = a.data
+            ? new Date(a.data).toLocaleString('pt-BR') : '—';
+
+        document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function fecharModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    function fecharModalFora(e) {
+        if (e.target === document.getElementById('modalOverlay')) fecharModal();
+    }
+
+    function renderAlertas() {
+        const grid = document.getElementById('alertasGrid');
+
+        let lista = alertas;
+        if (filtroAtual === 'nao-lido') lista = alertas.filter(a => !lidosSet.has(a.id));
+        else if (filtroAtual !== 'todos') lista = alertas.filter(a => a.tipo === filtroAtual);
+
+        const naoLidos = alertas.filter(a => !lidosSet.has(a.id)).length;
+        const lidos = alertas.length - naoLidos;
+        const urgentes = alertas.filter(a => a.tipo === 'urgente').length;
+
+        document.getElementById('sumTotal').textContent = alertas.length;
+        document.getElementById('sumNaoLidos').textContent = naoLidos;
+        document.getElementById('sumLidos').textContent = lidos;
+        document.getElementById('sumUrgentes').textContent = urgentes;
+        document.getElementById('badgeNaoLidos').textContent = naoLidos;
+
+        if (lista.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">🔔</div>
+                    <p>Nenhum alerta disponível no momento.</p>
+                </div>`;
+            return;
+        }
+
+        grid.innerHTML = lista.map(a => {
+            const t = tipoLabel[a.tipo];
+            const isLido = lidosSet.has(a.id);
+            const dt = a.data ? new Date(a.data).toLocaleString('pt-BR') : '—';
+            return `
+            <div class="alerta-card ${a.tipo} ${isLido ? 'lido' : ''}" onclick="abrirDetalhe(${a.id})">
+                <div class="card-top">
+                    <span class="tipo-badge ${a.tipo}">${t.emoji} ${t.label}</span>
+                    ${isLido
+                        ? `<span class="lido-badge">✓ Lido</span>`
+                        : `<span class="nao-lido-dot" title="Não lido"></span>`}
+                </div>
+                <div class="card-titulo">${a.titulo}</div>
+                <div class="card-descricao">${a.descricao}</div>
+                <div class="card-footer">
+                    <span class="card-setor ${a.setor === 'todos' ? 'todos' : ''}">${a.setor === 'todos' ? '🌐 Todos' : a.setor}</span>
+                    <span>🕐 ${dt}</span>
+                </div>
+                <button class="btn-marcar ${isLido ? 'lido' : ''}"
+                    onclick="event.stopPropagation(); marcarLido(${a.id})">
+                    ${isLido ? '✓ Marcar como não lido' : '○ Marcar como lido'}
+                </button>
+            </div>`;
+        }).join('');
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+    // Atualiza a cada 5 segundos automaticamente
+    carregarDados();
+    setInterval(carregarDados, 5000);
+</script>
+</body>
+</html>

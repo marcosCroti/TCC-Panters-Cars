@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panthers Cars - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../CSS/dashboard.css">
+    <link rel="stylesheet" href="../../CSS/Style_Users/Dashboard_Users.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
@@ -13,8 +13,10 @@
 <!-- ===== SIDEBAR ===== -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-        <div class="logo-icon">🚗</div>
-        <span class="logo-text">AutoScan<span>Pro</span></span>
+        <div class="logo-icon">
+            <img src="../../logo_panthers.jpg" alt="logo panthers" id="logo">
+        </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
     </div>
 
     <div class="sidebar-section">
@@ -28,27 +30,19 @@
         <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
             <i class="fas fa-boxes"></i> Inventário
         </a>
-        <a href="./Controle_Qualidade.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
-            <i class="fas fa-chart-line"></i> Controle de Qualidade
-        </a>
+        
     </div>
 
-    <div class="sidebar-section">
-        <div class="sidebar-section-title">Administração</div>
-        <a href="#" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
-        </a>
-        <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
+    
+        <a href="Alerta_Usuario.html" class="nav-item" onclick="setActive(this, 'Alertas')">
             <i class="fas fa-bell"></i> Alertas
-            <span class="badge">3</span>
         </a>
     </div>
 
     <div class="sidebar-footer">
-        <div class="avatar">G</div>
+        <div class="avatar">f</div>
         <div class="user-info">
-            <p>Gerente Admin</p>
-            <span>Administrador</span>
+           
         </div>
     </div>
 </aside>
@@ -58,25 +52,19 @@
 
     <!-- TOPBAR -->
     <header class="topbar">
-        <button class="topbar-menu-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
         <h2 id="topbar-title">Dashboard</h2>
         <div class="topbar-actions">
-            <button class="topbar-btn red" onclick="showToast('🟢 Sistema online')">
-                <i class="fas fa-circle" style="font-size:9px"></i>
-            </button>
-            <button class="topbar-btn ghost" onclick="openAlertsModal()" style="position:relative">
+            <a class="topbar-btn ghost" href="./Alerta_Usuario.html">
                 <i class="fas fa-bell"></i>
                 <span class="notif-dot"></span>
-            </button>
-            <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
+            </a>
+            <a class="topbar-btn ghost" href="../Inicializaçao.html">
                 <i class="fas fa-sign-out-alt"></i>
-            </button>
+            </a>
         </div>
     </header>
 
-    <!-- CONTENT -->
+<!-- CONTENT -->
     <div class="content">
 
         <!-- Page Header -->
@@ -92,30 +80,25 @@
 
         <!-- Quick Access -->
         <div class="quick-cards">
-            <a href="#" class="qcard" onclick="showToast('📷 Abrindo Scanner...')">
+            <a href="./Scanner.html" class="qcard" onclick="showToast('📷 Abrindo Scanner...')">
                 <div class="qcard-icon"><i class="fas fa-qrcode"></i></div>
                 <span class="qcard-label">Scanner</span>
                 <span class="qcard-sub">Escanear peças</span>
             </a>
-            <a href="#" class="qcard" onclick="showToast('📦 Abrindo Inventário...')">
+            <a href="./Inventario.html" class="qcard" onclick="showToast('📦 Abrindo Inventário...')">
                 <div class="qcard-icon"><i class="fas fa-boxes"></i></div>
                 <span class="qcard-label">Inventário</span>
                 <span class="qcard-sub">Ver estoque</span>
             </a>
-            <a href="#" class="qcard" onclick="showToast('👥 Abrindo Funcionários...')">
-                <div class="qcard-icon"><i class="fas fa-users"></i></div>
-                <span class="qcard-label">Funcionários</span>
-                <span class="qcard-sub">Gerenciar equipe</span>
             </a>
-            <a href="#" class="qcard" onclick="showToast('📊 Abrindo Qualidade...')">
+            <a href="./Controle_Qualidade.html" class="qcard" onclick="showToast('📊 Abrindo Qualidade...')">
                 <div class="qcard-icon"><i class="fas fa-chart-bar"></i></div>
                 <span class="qcard-label">Qualidade</span>
                 <span class="qcard-sub">Relatórios</span>
             </a>
-            <a href="#" class="qcard" onclick="openAlertsModal()">
+            <a href="./Alerta_Admin.html" class="qcard" onclick="openAlertsModal()">
                 <div class="qcard-icon"><i class="fas fa-bell"></i></div>
                 <span class="qcard-label">Alertas</span>
-                <span class="qcard-sub">3 ativos</span>
             </a>
         </div>
 

@@ -2,10 +2,10 @@
 
         body { display: flex; height: 100vh; overflow: hidden; background: #f0f2f5; }
 
-        /* ===== SIDEBAR ===== */
+               /* ===== SIDEBAR ===== */
         .sidebar {
             width: 260px;
-            background: #1a1f2e;
+            background: #f0f2f5;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -15,6 +15,7 @@
             height: 100%;
             z-index: 100;
             transition: transform 0.3s ease;
+            box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
         }
 
         .sidebar-logo {
@@ -28,8 +29,8 @@
         .logo-icon {
             background: #e53e3e;
             border-radius: 10px;
-            width: 42px;
-            height: 42px;
+            width: 50px;
+            height: 53px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -37,15 +38,17 @@
             animation: pulse-logo 2s infinite;
         }
 
-        @keyframes pulse-logo {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(229,62,62,0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(229,62,62,0); }
+        #logo{
+            width: 50px;
+            height: 53px;
+            border-radius: 10px;
         }
 
         .logo-text {
             font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.5px;
+            color: black;
         }
 
         .logo-text span {
@@ -71,7 +74,7 @@
             gap: 12px;
             padding: 11px 14px;
             border-radius: 10px;
-            color: #9ca3af;
+            color: #1c1c1c;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -86,20 +89,9 @@
         }
 
         .nav-item:hover {
-            background: rgba(255,255,255,0.08);
-            color: #fff;
+            background: rgba(255, 101, 101, 0.08);
+            color: #c53030;
             transform: translateX(4px);
-        }
-
-        .nav-item.active {
-            background: #e53e3e;
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(229,62,62,0.4);
-        }
-
-        .nav-item.active:hover {
-            transform: translateX(0);
-            background: #c53030;
         }
 
         .nav-item i {
@@ -154,13 +146,15 @@
         .user-info p {
             font-size: 13px;
             font-weight: 600;
-            color: #fff;
+            color: #000000;
         }
 
         .user-info span {
             font-size: 11px;
             color: #6b7280;
         }
+
+
         /* ===== MAIN ===== */
         .main {
             margin-left: 260px; flex: 1;
@@ -168,45 +162,99 @@
             height: 100vh; overflow: hidden;
         }
 
-        /* ===== TOPBAR ===== */
+/* ===== TOPBAR ===== */
         .topbar {
-            background: #fff; padding: 0 24px;
-            height: 54px; display: flex; align-items: center;
-            border-bottom: 1px solid #e5e7eb; gap: 14px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-            flex-shrink: 0;
+            background: #fff;
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.06);
         }
 
         .topbar-menu-btn {
-            background: none; border: none; cursor: pointer;
-            font-size: 18px; color: #374151; padding: 5px;
-            border-radius: 7px; transition: background 0.2s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #374151;
+            padding: 6px;
+            border-radius: 8px;
+            transition: background 0.2s;
         }
-        .topbar-menu-btn:hover { background: #f3f4f6; }
 
-        .topbar h2 { font-size: 15px; font-weight: 600; color: #1f2937; }
+        .topbar-menu-btn:hover {
+            background: #f3f4f6;
+        }
 
-        .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+        .topbar h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .topbar-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
         .topbar-btn {
-            width: 34px; height: 34px; border-radius: 50%;
-            border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; transition: all 0.2s; position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
-        .topbar-btn.red { background: #e53e3e; color: #fff; }
-        .topbar-btn.red:hover { background: #c53030; transform: scale(1.08); }
-        .topbar-btn.ghost { background: #f3f4f6; color: #374151; }
-        .topbar-btn.ghost:hover { background: #e5e7eb; transform: scale(1.08); }
+        .topbar-btn.red {
+            background: #e53e3e;
+            color: #fff;
+        }
+
+        .topbar-btn.red:hover {
+            background: #c53030;
+            transform: scale(1.08);
+        }
+
+        .topbar-btn.ghost {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .topbar-btn.ghost:hover {
+            background: #e5e7eb;
+            transform: scale(1.08);
+        }
 
         .notif-dot {
-            position: absolute; top: 3px; right: 3px;
-            width: 7px; height: 7px; background: #e53e3e;
-            border-radius: 50%; border: 2px solid #fff;
-            animation: blinkDot 1.5s infinite;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 8px;
+            height: 8px;
+            background: #e53e3e;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            animation: notif-blink 1.5s infinite;
         }
-        @keyframes blinkDot { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+        @keyframes notif-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
 
         /* ===== CONTENT ===== */
         .content {
