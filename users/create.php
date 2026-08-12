@@ -10,7 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $senha = trim($_POST["password"] ?? "");
     $confirmarSenha = trim($_POST["confirmar"] ?? "");
     $nome = trim($_POST["nome"] ?? "");
-    $telefone = preg_replace('/[^0-9]/', '', $_POST["telefone"] ?? "");
+    //$telefone = preg_replace('/[^0-9]/', '', $_POST["telefone"] ?? "");
+    $telefone = ($_POST["telefone"] ?? "");
+
     $inputAdmin = $_POST["perfil"] ?? "employee";
 
     // 1. Define o valor de admin separado da validação de erros

@@ -9,3 +9,4 @@ $stmt->execute([$funcionario]);
 
 header("Location: funcionario.php");
 exit;
+?>

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         $mensagem = "Inspeção salva com sucesso!";
     } else {
-        $mensagem = "Erro ao salvar: " . $stmt->erro;
+        $mensagem = "Erro ao salvar: " . $stmt->$erro;
     }
 
     $stmt->close();

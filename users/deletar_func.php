@@ -8,3 +8,5 @@ $stmt = $pdo->prepare("DELETE FROM usuarios WHERE ID = ?");
 $stmt->execute([$id]);
 
 header("Location: funcionarios.php");
+
+?>
