@@ -1,50 +1,51 @@
 <?php
-require_once __DIR__ . "/../config/db.php";
-require_once __DIR__ . "/../config/auth.php";
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+require_once __DIR__ . "/../CONFIG/db.php";
+require_once __DIR__ . "/../CONFIG/auth.php";
 
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
-}
 
-$erro = "";
+    $erro = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $nome = trim($_POST["nome"] ?? "");
-    $senha = $_POST["senha"] ?? "";
-    $cpf = preg_replace('/[^0-9]/', '', $_POST["cpf"] ?? "");
-
-    if ($nome === "" || $senha === "" || $cpf === "") {
-        $erro = "Preencha todos os campos";
-    } else {
-
-        // busca usuário pelo CPF e nome
-        $stmt = $pdo->prepare("
-            SELECT usuario_nome, password_hash, CPF 
-            FROM first_data.usuarios 
-            WHERE usuario_nome = ? AND CPF = ?
-        ");
-
-        $stmt->execute([$nome, $cpf]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$user) {
-            $erro = "Usuário não encontrado";
+        $nome = trim($_POST["nome"] ?? "");
+        $senha = $_POST["senha"] ?? "";
+        $cpf = preg_replace('/[^0-9]/', '', $_POST["cpf"] ?? "");
+        $id = null;
+        if ($nome === "" || $senha === "" || $cpf === "") {
+            $erro = "Preencha todos os campos";
         } else {
 
-            // verifica senha (HASH)
-            if (!password_verify($senha, $user["password_hash"])) {
-                $erro = "Senha incorreta";
+            // busca usuário pelo CPF e nome
+            $stmt = $pdo->prepare("
+                SELECT usuario_nome, password_hash, CPF, id 
+                FROM first_data.usuarios 
+                WHERE usuario_nome = ? AND CPF = ?
+            ");
+
+            $stmt->execute([$nome, $cpf]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$user) {
+                $erro = "Usuário não encontrado";
             } else {
 
-                // login OK
-                $_SESSION["user"] = $user["usuario_nome"];
+                // verifica senha (HASH)
+                if (!password_verify($senha, $user["password_hash"])) {
+                    $erro = "Senha incorreta";
+                } else {
 
-                header("Location: ../users/index.php");
-                exit;
+                    // login OK
+                    $_SESSION["user"] = $user["usuario_nome"];
+                    $_SESSION["user_id"] = $user["id"];
+
+                    header("Location: ../TELAS-ADMIN/index.php");
+                    exit;
+                }
             }
         }
-    }
 }
 
 ?>
@@ -54,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoScanPro - Login</title>
-    <link rel="stylesheet" href="../Front-End/CSS/Style_Users/Login_User.css">
+    <title>Panthers Cars - Login</title>
+    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-LOGAR/Login_User.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -138,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div class="links">
                         <a href="#" class="link-primary">Esqueceu a senha?</a>
                         <p class="link-secondary">
-                            Sem cadastro? <a href="../users/create.php">Criar conta</a>
+                            Sem cadastro? <a href="../LOGIN/create.php">Criar conta</a>
                         </p>
                     </div>
                 </form>

@@ -1,3 +1,36 @@
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+require_once __DIR__ . "/../config/db.php";
+require_once __DIR__ . "/../config/auth.php";
+require_login();
+
+// Pega o nome guardado na sessão pelo login.php
+$nome_sessao = $_SESSION["user"] ?? ""; 
+
+
+
+$stmt = $pdo->prepare("SELECT usuario_nome, isAdmin FROM first_data.usuarios WHERE usuario_nome = ?");
+$stmt->execute([$nome_sessao]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+if ($user) {
+    // CORREÇÃO: Pega o valor real trazido do banco de dados
+    $nome = $user["usuario_nome"]; 
+    if($user["isAdmin"]){
+        $func = "Administrador";
+    }else{
+        $func = "Funcionario";
+    }
+} else {
+    $nome = "Usuário não encontrado";
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,61 +38,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panthers Cars - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../CSS/Style_Admin/Dashboard_Admin.css">
+    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-ADMIN/dashboard.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
 
 <!-- ===== SIDEBAR ===== -->
-<aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-        <div class="logo-icon">
-            <img src="../../logo_panthers.jpg" alt="logo" id="logo">
-        </div>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🚗</div>
         <span class="logo-text">Panthers<span>Cars</span></span>
-    </div>
+      </div>
 
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./Dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
+        <a
+          href="./index.php"
+          class="nav-item"
+          onclick="setActive(this, 'Dashboard')"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
-        <a href="./scanner.html" class="nav-item" onclick="setActive(this, 'Scanner')">
-            <i class="fas fa-qrcode"></i> Scanner
+        <a
+          href="./scanner.php"
+          class="nav-item"
+          onclick="setActive(this, 'Scanner')"
+        >
+          <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a href="./Inventario.html" class="nav-item" onclick="setActive(this, 'Inventário')">
-            <i class="fas fa-boxes"></i> Inventário
+        <a
+          href="./inventario.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inventário')"
+        >
+          <i class="fas fa-boxes"></i> Inventário
         </a>
-        <a href="./Controle_Qualidade.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
-            <i class="fas fa-chart-line"></i> Controle de Qualidade
+        <a
+          href="./inspeção.php"
+          class="nav-item"
+          onclick="setActive(this, 'Inspeção')"
+        >
+          <i class="fas fa-clipboard"></i> Inspeção
         </a>
-         <a href="./Inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
-            <i class="fas fa-clipboard"></i> Inspeção
+        <a
+          href="./inspe_editar.php"
+          class="nav-item"
+          onclick="setActive(this, 'Editar Inspeção')"
+        >
+          <i class="fas fa-edit"></i> Editar Inspeção
         </a>
-        <a href="./Editar-Inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
-            <i class="fas fa-edit"></i> Editar-Inspeção
-        </a>
-    </div>
+      </div>
 
-    <div class="sidebar-section">
+      <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="./Funcionarios.html" class="nav-item" onclick="setActive(this,'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
+        <a href="funcionario.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+          <i class="fas fa-users"></i> Funcionários
         </a>
-        <a href="./Alerta_Admin.html" class="nav-item" onclick="setActive(this, 'Alertas')">
-            <i class="fas fa-bell"></i> Alertas
-            <span class="badge">0</span>
-        </a>
-    </div>
+
+      </div>
 
     <div class="sidebar-footer">
-        <div class="avatar">G</div>
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
-            <p>Gerente Admin</p>
-            <span>Administrador</span>
+            <p><?= $nome ?></p>
+            <span><?= $func ?></span>
         </div>
     </div>
-</aside>
+    </aside>
 
 <!-- ===== MAIN ===== -->
 <div class="main">
@@ -74,10 +119,11 @@
             <a class="topbar-btn ghost" href="./Alerta_Admin.html">
                 <i class="fas fa-bell"></i>
                 <span class="notif-dot"></span>
-            </a>
-            <a class="topbar-btn ghost" href="../Inicializaçao.html">
+            </button>
+            <!-- <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
                 <i class="fas fa-sign-out-alt"></i>
-            </a>
+            </button> -->
+            <a href="./../auth/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt" ></i></a>
         </div>
     </header>
 
@@ -86,18 +132,15 @@
 
         <!-- Page Header -->
         <div class="page-header">
-            <div>
-                <h1>Dashboard Gerencial</h1>
-                <p id="greetingText">Boa tarde, Gerente Admin!</p>
-            </div>
+    <button typy="hidden"></button>
             <button class="refresh-btn" onclick="refreshData()">
                 <i class="fas fa-sync-alt" id="refreshIcon"></i> Atualizar
             </button>
         </div>
 
         <!-- Quick Access -->
-        <div class="quick-cards">
-            <a href="./Scanner.html" class="qcard" onclick="showToast('📷 Abrindo Scanner...')">
+        <!-- <div class="quick-cards">
+            <a href="#" class="qcard" onclick="showToast('📷 Abrindo Scanner...')">
                 <div class="qcard-icon"><i class="fas fa-qrcode"></i></div>
                 <span class="qcard-label">Scanner</span>
                 <span class="qcard-sub">Escanear peças</span>
@@ -122,6 +165,7 @@
                 <span class="qcard-label">Alertas</span>
             </a>
         </div>
+-->
 
         <!-- Stats Row -->
         <div class="stats-row">
@@ -278,11 +322,7 @@
 
 <script>
     // ===== GREETING =====
-    (function() {
-        const h = new Date().getHours();
-        const g = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
-        document.getElementById('greetingText').textContent = g + ', Gerente Admin!';
-    })();
+
 
     // ===== BAR CHART =====
     const barCtx = document.getElementById('barChart').getContext('2d');

@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . "/../config/db.php";
-require_once __DIR__ . "/../config/auth.php";
+require_once __DIR__ . "/../CONFIG/db.php";
+require_once __DIR__ . "/../CONFIG/auth.php";
 
 $erro = "";
 
@@ -10,7 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $senha = trim($_POST["password"] ?? "");
     $confirmarSenha = trim($_POST["confirmar"] ?? "");
     $nome = trim($_POST["nome"] ?? "");
-    $telefone = preg_replace('/[^0-9]/', '', $_POST["telefone"] ?? "");
+    //$telefone = preg_replace('/[^0-9]/', '', $_POST["telefone"] ?? "");
+    $telefone = ($_POST["telefone"] ?? "");
+
     $inputAdmin = $_POST["perfil"] ?? "employee";
 
     // 1. Define o valor de admin separado da validação de erros
@@ -47,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt = $pdo->prepare("INSERT INTO first_data.usuarios (CPF, usuario_nome, email, password_hash, telefone, isAdmin) VALUES (?, ?, ?, ?, ?, ?)");
                 
                 if ($stmt->execute([$cpf, $nome, $email, $hash, $telefone, $isAdminValue])) {
-                    header("Location: ../auth/login.php");
+                    header("Location: ../AUTH/login.php");
                     exit;
                 } else {
                     $erro = "Erro crítico ao salvar no banco.";
@@ -65,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AutoScanPro - Criar Conta</title>
-    <link rel="stylesheet" href="../Front-End/CSS/style.css" />
+    <title>Panthers Cars - Criar Conta</title>
+    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-LOGAR/Criar_Conta.css"/>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -252,7 +254,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
           <!-- Link para Login -->
           <div class="login-link">
-            Já tem conta? <a href="../auth/login.php">Fazer login</a>
+            Já tem conta? <a href="../AUTH/login.php">Fazer login</a>
           </div>
         </form>
 
@@ -260,6 +262,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
     </div>
 
-    <script src="../Front-end/SCRIPT/script.js"></script>
+    <script src="../../FRONT-END/JAVASCRIPT/script.js"></script>
   </body>
 </html>
