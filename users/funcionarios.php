@@ -118,10 +118,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         <a href="funcionarios.php" class="nav-item">
           <i class="fas fa-users"></i> Funcionários
         </a>
-        <a href="#" class="nav-item">
-          <i class="fas fa-bell"></i> Alertas
-          <span class="badge">3</span>
-        </a>
       </div>
 
     <div class="sidebar-footer">
