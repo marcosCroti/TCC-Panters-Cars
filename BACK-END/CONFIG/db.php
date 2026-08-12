@@ -1,0 +1,26 @@
+<?php
+
+    $host = "localhost";
+    $db = "first_data";
+    $user = "root";
+    $pass = "12345678";
+
+
+    try{
+        $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
+
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        
+        
+    }catch(PDOException $e){
+        die("erro: Conexão" . $e->getMessage());
+        
+        echo $e->getMessage();
+    }
+
+
+
+?>
