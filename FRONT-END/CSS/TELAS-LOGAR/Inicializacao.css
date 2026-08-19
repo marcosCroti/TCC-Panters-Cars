@@ -1,0 +1,490 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #E50914;
+            --red-dark: #a30610;
+            --red-glow: rgba(229, 9, 20, 0.6);
+            --black: #000;
+            --dark: #0a0a0a;
+            --card-bg: rgba(15, 15, 15, 0.95);
+        }
+
+        body {
+            background-color: var(--black);
+            font-family: "Montserrat", sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* ─── AMBIENT GLOW ─── */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(229,9,20,0.22) 0%, rgba(229,9,20,0.05) 50%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            animation: ambientGlow 5s cubic-bezier(0.1, 0.8, 0.2, 1) 0.2s forwards;
+        }
+
+        /* ═══════════════════════════════════════
+           TELA DE LOADING
+        ═══════════════════════════════════════ */
+        #loading-screen {
+            width: 100%;
+            max-width: 650px;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 40px;
+            animation: screenFadeOut 0.8s cubic-bezier(0.25, 1, 0.5, 1) 5.2s forwards;
+        }
+
+        .logo-wrapper {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            
+        }
+
+        .logo {
+            width: 750px;
+            height: 500px;
+            object-fit: contain;
+            opacity: 0;
+            filter: invert(1) grayscale(1) brightness(2) contrast(3) drop-shadow(0 0 30px rgba(229,9,20,0.95));
+            mix-blend-mode: lighten;
+            position: relative;
+            left: 69px;
+            animation: zoomInLogo 4.2s cubic-bezier(0.1, 0.8, 0.2, 1) 0.3s forwards;
+            margin-left: 80px;
+
+        }
+
+        .brand-name-loading {
+            color: var(--red);
+            font-size: 4.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            width: 100%;
+            white-space: nowrap;
+            position: relative;
+            margin-top: -15px;
+            opacity: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-shadow:
+                0 0 15px rgba(229,9,20,0.65),
+                0 0 45px rgba(229,9,20,0.4),
+                0 8px 30px rgba(0,0,0,0.95);
+            animation: zoomInText 4.5s cubic-bezier(0.1, 0.8, 0.2, 1) 0.6s forwards;
+        }
+
+        .loader-bar {
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #E50914 50%, transparent 100%);
+            margin-top: 35px;
+            box-shadow: 0 0 20px #E50914;
+            opacity: 0.8;
+            animation: load 3.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+        }
+
+        /* ═══════════════════════════════════════
+           TELA DE SELEÇÃO
+        ═══════════════════════════════════════ */
+        #selection-screen {
+            position: absolute;
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            opacity: 0;
+            pointer-events: none;
+            animation: selectionFadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) 5.8s forwards;
+        }
+
+        /* Partículas de fundo */
+        #selection-screen::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 50% 100%, rgba(229,9,20,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 50% 0%, rgba(229,9,20,0.04) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ─── Header da seleção ─── */
+        .selection-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 56px;
+            gap: 10px;
+        }
+
+        .selection-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .selection-logo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            filter: invert(1) grayscale(1) brightness(2) contrast(3) drop-shadow(0 0 14px rgba(229,9,20,0.9));
+            mix-blend-mode: lighten;
+        }
+
+        .selection-brand {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(229,9,20,0.5);
+        }
+
+        .selection-brand span {
+            color: var(--red);
+        }
+
+        .selection-subtitle {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 5px;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+        }
+
+        .divider-line {
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--red), transparent);
+        }
+
+        /* ─── Grid de cards ─── */
+        .cards-grid {
+            display: flex;
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        /* ─── Card base ─── */
+        .login-card {
+            position: relative;
+            width: 280px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 44px 32px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer;
+            transition:
+                transform 0.38s cubic-bezier(0.25, 1, 0.5, 1),
+                border-color 0.38s ease,
+                box-shadow 0.38s ease;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+
+            /* Animação de entrada individual */
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .login-card.card-employee {
+            animation: cardSlideIn 0.7s cubic-bezier(0.25, 1, 0.5, 1) 6.1s forwards;
+        }
+
+        .login-card.card-admin {
+            animation: cardSlideIn 0.7s cubic-bezier(0.25, 1, 0.5, 1) 6.28s forwards;
+        }
+
+        /* Brilho interno superior */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Glow de fundo no hover */
+        .login-card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease, bottom 0.4s ease;
+            pointer-events: none;
+        }
+
+        .login-card:hover::after {
+            opacity: 1;
+            bottom: -40px;
+        }
+
+        .login-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(229, 9, 20, 0.5);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.7),
+                0 0 40px rgba(229, 9, 20, 0.15),
+                inset 0 0 30px rgba(229, 9, 20, 0.04);
+        }
+
+        .login-card:active {
+            transform: translateY(-4px) scale(0.99);
+            transition-duration: 0.15s;
+        }
+
+        /* ─── Ícone do card ─── */
+        .card-icon-wrap {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            background: rgba(229, 9, 20, 0.1);
+            border: 1px solid rgba(229, 9, 20, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-card:hover .card-icon-wrap {
+            background: rgba(229, 9, 20, 0.18);
+            border-color: rgba(229, 9, 20, 0.6);
+            box-shadow: 0 0 24px rgba(229, 9, 20, 0.3);
+        }
+
+        .card-icon-wrap svg {
+            width: 34px;
+            height: 34px;
+            fill: none;
+            stroke: var(--red);
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s ease;
+            filter: drop-shadow(0 0 6px rgba(229,9,20,0.4));
+        }
+
+        /* ─── Textos do card ─── */
+        .card-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--red);
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.32rem;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            line-height: 1.3;
+            position: relative;
+            z-index: 1;
+            margin-top: -6px;
+        }
+
+        .card-desc {
+            font-size: 0.74rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.38);
+            text-align: center;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+            margin-top: -4px;
+        }
+
+        /* ─── Botão interno ─── */
+        .card-btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 13px 0;
+            border-radius: 10px;
+            background: rgba(229, 9, 20, 0.12);
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            color: var(--red);
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            transition:
+                background 0.3s ease,
+                border-color 0.3s ease,
+                color 0.3s ease,
+                box-shadow 0.3s ease,
+                letter-spacing 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--red);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: -1;
+        }
+
+        .login-card:hover .card-btn {
+            color: #fff;
+            border-color: var(--red);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.35);
+            letter-spacing: 4px;
+        }
+
+        .login-card:hover .card-btn::before {
+            transform: scaleX(1);
+        }
+
+        /* Badge admin */
+        .admin-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: rgba(229, 9, 20, 0.15);
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            color: var(--red);
+            font-size: 0.52rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 9px;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        /* ─── Footer ─── */
+        .selection-footer {
+            margin-top: 48px;
+            font-size: 0.62rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.18);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: footerFadeIn 1s ease 7s forwards;
+        }
+
+        /* ═══════════════════════════════════════
+           ANIMAÇÕES
+        ═══════════════════════════════════════ */
+        @keyframes ambientGlow {
+            0%   { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+            30%  { opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+        }
+
+        @keyframes zoomInLogo {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translateZ(-80px);
+                filter: invert(1) grayscale(1) brightness(2) contrast(3) drop-shadow(0 0 0px transparent) blur(10px);
+            }
+            30% {
+                opacity: 1;
+                filter: invert(1) grayscale(1) brightness(2) contrast(3) drop-shadow(0 0 30px rgba(229,9,20,0.95)) blur(0);
+            }
+            100% { transform: scale(1.15) translateZ(0); opacity: 1; }
+        }
+
+        @keyframes zoomInText {
+            0%   { opacity: 0; letter-spacing: 14px; text-indent: 14px; transform: scale(0.97); filter: blur(5px); }
+            25%  { opacity: 1; filter: blur(0); }
+            100% { opacity: 1; letter-spacing: 5px; text-indent: 5px; transform: scale(1); }
+        }
+
+        @keyframes load {
+            0%   { width: 0; opacity: 1; }
+            85%  { width: 440px; opacity: 1; }
+            100% { width: 480px; opacity: 0; }
+        }
+
+        @keyframes screenFadeOut {
+            to { opacity: 0; transform: scale(1.03); visibility: hidden; pointer-events: none; }
+        }
+
+        @keyframes selectionFadeIn {
+            to { opacity: 1; pointer-events: all; }
+        }
+
+        @keyframes cardSlideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes footerFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* ─── Responsivo ─── */
+        @media (max-width: 660px) {
+            .cards-grid {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+            .login-card {
+                width: 100%;
+                max-width: 320px;
+            }
+            .selection-brand {
+                font-size: 1.4rem;
+            }
+        }

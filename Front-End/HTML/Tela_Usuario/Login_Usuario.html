@@ -1,70 +1,20 @@
-<?php
-    if (session_status() !== PHP_SESSION_ACTIVE) {
-        session_start();
-    }
-require_once __DIR__ . "/../CONFIG/db.php";
-require_once __DIR__ . "/../CONFIG/auth.php";
-
-
-    $erro = "";
-
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-        $nome = trim($_POST["nome"] ?? "");
-        $senha = $_POST["senha"] ?? "";
-        $cpf = preg_replace('/[^0-9]/', '', $_POST["cpf"] ?? "");
-        $id = null;
-        if ($nome === "" || $senha === "" || $cpf === "") {
-            $erro = "Preencha todos os campos";
-        } else {
-
-            // busca usuário pelo CPF e nome
-            $stmt = $pdo->prepare("
-                SELECT usuario_nome, password_hash, CPF, id 
-                FROM first_data.usuarios 
-                WHERE usuario_nome = ? AND CPF = ?
-            ");
-
-            $stmt->execute([$nome, $cpf]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$user) {
-                $erro = "Usuário não encontrado";
-            } else {
-
-                // verifica senha (HASH)
-                if (!password_verify($senha, $user["password_hash"])) {
-                    $erro = "Senha incorreta";
-                } else {
-
-                    // login OK
-                    $_SESSION["user"] = $user["usuario_nome"];
-                    $_SESSION["user_id"] = $user["id"];
-
-                    header("Location: ../TELAS-ADMIN/index.php");
-                    exit;
-                }
-            }
-        }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panthers Cars - Login</title>
-    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-LOGAR/Login_User.css">
+    <title>Panthers Cars- Login</title>
+    <link rel="stylesheet" href="../../CSS/Style_Users/Login_User.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="login-card">
             <!-- Logo -->
-            <div class="logo-center">
-                    <img src="../Front-End/logo_panthers.jpg" alt="logo" class="logo">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../../logo_panthers.jpg" alt="logo" id="logo">
+                </div>
             </div>
 
             <!-- Título -->
@@ -73,10 +23,10 @@ require_once __DIR__ . "/../CONFIG/auth.php";
 
             <!-- Formulário -->
             <div class="form-section">
-                <h2 class="form-title">Acesso ao Sistema</h2>
+                <h2 class="form-title">Acesso ao Sistema Pelo Usuario</h2>
                 <p class="form-subtitle">Entre com suas credenciais de acesso</p>
 
-                <form method="POST">
+                <form>
                     <!-- campo nome -->
                     <div class="input-group">
                         <label for="nome">
@@ -84,7 +34,7 @@ require_once __DIR__ . "/../CONFIG/auth.php";
                         </label>
                         <div class="input-wrapper">
                             <i class="fas fa-id-badge input-icon"></i>
-                            <input type="text" id="nome" placeholder="Nome Completo" name="nome">
+                            <input type="text" id="nome" placeholder="Nome Completo">
                         </div>
                     </div>
 
@@ -100,7 +50,6 @@ require_once __DIR__ . "/../CONFIG/auth.php";
                                 id="cpf" 
                                 placeholder="000.000.000-00"
                                 maxlength="14"
-                                name="cpf"
                             >
                         </div>
                     </div>
@@ -116,31 +65,24 @@ require_once __DIR__ . "/../CONFIG/auth.php";
                                 type="password" 
                                 id="senha" 
                                 placeholder="••••••••"
-                                name="senha"
                             >
                         </div>
                     </div>
 
                     <!-- Botão de Login -->
-                    <button type="submit" class="btn-login">
+                    <button type="submit" class="btn-login" href="../Tela_Usuario/Dashboard.html">
                         <i class="fas fa-arrow-right-to-bracket"></i>
                         Entrar no Sistema
                     </button>
-                    <?php if ($erro): ?>
-                    <p><?= htmlspecialchars($erro) ?></p>
-                    <?php endif; ?> 
 
-                    <!-- Divisor -->
-                    <div class="divider">
-                        <span>ou</span>
-                    </div>
+         
 
-                    <!-- Links -->
-                    <div class="links">
-                        <a href="#" class="link-primary">Esqueceu a senha?</a>
-                        <p class="link-secondary">
-                            Sem cadastro? <a href="../LOGIN/create.php">Criar conta</a>
-                        </p>
+                
+                    <!-- Credenciais de Demonstração -->
+                    <div class="demo-credentials">
+                        <h3>Credenciais de Demonstração</h3>
+        
+                        <p>Funcionário: <span>111.111.111-11</span> / <span>func123</span></p>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panthers Cars</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/Inicializacao.css">
+</head>
+<body>
+
+    <!-- ══════════════ LOADING SCREEN ══════════════ -->
+    <div id="loading-screen">
+        <div class="logo-wrapper">
+            <img class="logo" src="./LOGO_INI.png" alt="Panthers Cars Logo">
+        </div>
+        <h1 class="brand-name-loading">Panthers Cars</h1>
+        <div class="loader-bar"></div>
+    </div>
+
+    <!-- ══════════════ SELECTION SCREEN ══════════════ -->
+    <div id="selection-screen">
+
+        <!-- Header -->
+        <div class="selection-header">
+            <div class="selection-logo-row">
+                <img class="selection-logo-img" src="./LOGO.png"Panthers Cars">
+                <div class="selection-brand">Panthers <span>Cars</span></div>
+            </div>
+            <div class="divider-line"></div>
+            <p class="selection-subtitle">Selecione seu perfil de acesso</p>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards-grid">
+
+            <!-- Card Funcionário -->
+            <a href="../HTML/Tela_Usuario/Login_Usuario.html" class="login-card card-employee">
+                <div class="card-icon-wrap">
+                    <!-- Ícone pessoa/crachá -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <span class="card-label">Acesso</span>
+                <h2 class="card-title">Funcionário</h2>
+                <p class="card-desc">Área restrita para colaboradores da equipe Panthers Cars.</p>
+                <button class="card-btn">Entrar →</button>
+            </a>
+
+            <!-- Card Administrador -->
+            <a href="./Tela_Admin/Login_Admin.html" class="login-card card-admin">
+                <span class="admin-badge">Admin</span>
+                <div class="card-icon-wrap">
+                    <!-- Ícone escudo/chave -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <span class="card-label">Acesso</span>
+                <h2 class="card-title">Administrador</h2>
+                <p class="card-desc">Painel gerencial com controle total do sistema Panthers.</p>
+                <button class="card-btn">Entrar →</button>
+            </a>
+
+        </div>
+
+        <!-- Footer -->
+        <p class="selection-footer">© 2025 Panthers Cars · Sistema interno</p>
+
+    </div>
+
+    <script>
+        // Remove loading screen do DOM após animação terminar
+        setTimeout(() => {
+            const loading = document.getElementById('loading-screen');
+            if (loading) loading.remove();
+        }, 6500);
+    </script>
+
+</body>
+</html>
