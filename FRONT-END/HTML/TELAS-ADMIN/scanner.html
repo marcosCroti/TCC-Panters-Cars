@@ -29,9 +29,9 @@
     </div>
 
         </a>
-        <a href="./Alerta_Usuario.html" class="nav-item" onclick="setActive(this, 'Alertas')">
+        <!-- <a href="./Alerta_Usuario.html" class="nav-item" onclick="setActive(this, 'Alertas')">
             <i class="fas fa-bell"></i> Alertas
-        </a>
+        </a> -->
     </div>
 
     <div class="sidebar-footer">
@@ -48,10 +48,10 @@
     <header class="topbar">
         <h2 id="topbar-title">Scanner de Peças</h2>
         <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="./Alerta_Usuario.html">
+            <!-- <a class="topbar-btn ghost" href="./Alerta_Usuario.html">
                 <i class="fas fa-bell"></i>
                 <span class="notif-dot"></span>
-            </a>
+            </a> -->
             <a class="topbar-btn ghost" href="../Inicializaçao.html">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
@@ -150,7 +150,7 @@
 </div>
 
 <!-- ===== MODAL ALERTA ===== -->
-<div class="modal-overlay" id="alertModal" onclick="closeModalOutside(event)">
+<!-- <div class="modal-overlay" id="alertModal" onclick="closeModalOutside(event)">
     <div class="modal">
         <div class="modal-header">
             <h3>⚠️ Registrar Alerta</h3>
@@ -165,7 +165,7 @@
             <button class="modal-btn primary" onclick="submitAlert()">Registrar Alerta</button>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- ===== TOAST ===== -->
 <div class="toast" id="toast"></div>
@@ -321,30 +321,30 @@
     }
 
     // ===== ALERT MODAL =====
-    function openAlertModal() {
-        document.getElementById('alertModal').classList.add('open');
-    }
+    // function openAlertModal() {
+    //     document.getElementById('alertModal').classList.add('open');
+    // }
 
-    function closeAlertModal() {
-        document.getElementById('alertModal').classList.remove('open');
-        document.getElementById('alertText').value = '';
-    }
+    // function closeAlertModal() {
+    //     document.getElementById('alertModal').classList.remove('open');
+    //     document.getElementById('alertText').value = '';
+    // }
 
-    function closeModalOutside(e) {
-        if (e.target === document.getElementById('alertModal')) closeAlertModal();
-    }
+    // function closeModalOutside(e) {
+    //     if (e.target === document.getElementById('alertModal')) closeAlertModal();
+    // }
 
-    function submitAlert() {
-        const text = document.getElementById('alertText').value.trim();
-        if (!text) {
-            showToast('⚠️ Descreva o problema antes de registrar');
-            return;
-        }
-        alertCount++;
-        document.getElementById('cntAlerts').textContent = alertCount;
-        closeAlertModal();
-        showToast('🚨 Alerta registrado com sucesso!');
-    }
+    // function submitAlert() {
+    //     const text = document.getElementById('alertText').value.trim();
+    //     if (!text) {
+    //         showToast('⚠️ Descreva o problema antes de registrar');
+    //         return;
+    //     }
+    //     alertCount++;
+    //     document.getElementById('cntAlerts').textContent = alertCount;
+    //     closeAlertModal();
+    //     showToast('🚨 Alerta registrado com sucesso!');
+    // }
 
     // ===== SIDEBAR =====
     function toggleSidebar() {
