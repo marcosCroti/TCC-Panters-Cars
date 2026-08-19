@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Inspeção</title>
+    <link rel="stylesheet" href="../../CSS/TELAS-LOGAR/Style_Admin/Inspecao.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="main">
+
+    <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">
+            <img src="../../logo_panthers.jpg" alt="logo" id="logo">
+        </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Principal</div>
+        <a href="./dashboard.html" class="nav-item" onclick="setActive(this, 'Dashboard')">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="./scanner.html" class="nav-item" onclick="setActive(this, 'Scanner')">
+            <i class="fas fa-qrcode"></i> Scanner
+        </a>
+         <a href="./inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a href="./editar_inspecao.html" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-edit"></i> Editar-Inspeção
+        </a>
+        <a href="./Inventario.html" class="nav-item active" onclick="setActive(this, 'Inventário')">
+            <i class="fas fa-boxes"></i> Inventário
+        </a>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Administração</div>
+        <a href="./Funcionarios.html" class="nav-item" onclick="setActive(this,'Funcionários')">
+            <i class="fas fa-users"></i> Funcionários
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="avatar">G</div>
+        <div class="user-info">
+            <p>Gerente Admin</p>
+            <span>Administrador</span>
+        </div>
+    </div>
+</aside>
+
+    <header class="topbar">
+        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h2 id="topbar-title">Inspeção</h2>
+        <div class="topbar-actions">
+            <a class="topbar-btn ghost" href="./Alerta_Admin.html">
+                <i class="fas fa-bell"></i>
+                <span class="notif-dot"></span>
+            </a>
+            <a class="topbar-btn ghost" href="../Inicializaçao.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
+    
+    <!-- MAIN -->
+    <div class="main-content">
+
+        <!-- BACK BUTTON -->
+        <div class="back-btn-wrapper">
+            <button class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Voltar ao Scanner
+            </button>
+        </div>
+
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+            <label>Item:</label>
+            <select>
+                <option value="">Selecione</option>
+                <option value="mouse">Mouse</option>
+                <option value="teclado">Teclado</option>
+                <option value="monitor">Monitor</option>
+            </select>
+            <button class="btn-reload">
+                <i class="fas fa-rotate-right"></i>
+                Recarregar
+            </button>
+        </div>
+
+        <!-- CHECKLIST -->
+        <div class="checklist-card">
+            <div class="checklist-header">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Itens de Verificação</h3>
+            </div>
+            <div class="checklist-body">
+
+                <div class="checklist-item">
+                    <div class="item-number">1</div>
+                    <span class="item-text">Verificar se a cor do mouse é preta.</span>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="item-number">2</div>
+                    <span class="item-text">Verificar se o mouse é USB ou Bluetooth.</span>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="item-number">3</div>
+                    <span class="item-text">Verificar se o peso do mouse está entre 85-90g.</span>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="item-number">4</div>
+                    <span class="item-text">Verificar se o acabamento do plástico é fosco.</span>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="item-number">5</div>
+                    <span class="item-text">Verificar se o clique esquerdo faz som.</span>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="item-number">6</div>
+                    <span class="item-text">Verificar se o botão do scroll clica.</span>
+                </div>
+
+                <div class="checklist-item">
+                    <div class="item-number">7</div>
+                    <span class="item-text">Verificar se o compartimento da pilha fecha bem.</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="stats-row">
+            <div class="stat-card total">
+                <div class="stat-label">Total</div>
+                <input class="stat-input" type="number" placeholder="0">
+            </div>
+            <div class="stat-card aprovadas">
+                <div class="stat-label">Aprovadas</div>
+                <input class="stat-input" type="number" placeholder="0">
+            </div>
+            <div class="stat-card lote">
+                <div class="stat-label">Lote</div>
+                <input class="stat-input" type="text" placeholder="—">
+            </div>
+            <div class="stat-card reprovadas">
+                <div class="stat-label">Reprovadas</div>
+                <input class="stat-input" type="number" placeholder="0">
+            </div>
+        </div>
+
+        <!-- ACTION -->
+        <div class="action-bar">
+            <button class="btn-fim">
+                <i class="fas fa-check-circle" style="margin-right:8px;"></i>
+                Finalizar Inspeção
+            </button>
+        </div>
+
+    </div>
+</div>
+
+    
+
+</body>
+</html>
