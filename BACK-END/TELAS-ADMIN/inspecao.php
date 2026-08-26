@@ -5,8 +5,40 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 require_once __DIR__ . "/../config/db.php";
 require_once __DIR__ . "/../config/auth.php";
 require_login();
+
 $nome_sessao = $_SESSION["user"] ?? ""; 
 $opcao_selecionada = $_GET['opicao'] ?? '';
+
+// Inicializamos como array vazio para evitar erros no foreach caso venha vazio
+$inspecoes = [];
+
+if ($opcao_selecionada !== "") {
+    // Exemplo mapeando a opção selecionada para um ID numérico correspondente no banco
+    $mapeamento_ids = [
+        'pistao' => 1,
+        'pastilha' => 2,
+        'bateria' => 3,
+        'amortecedor' => 4,
+        'para_choque' => 5
+    ];
+
+    $id_peca = $mapeamento_ids[$opcao_selecionada] ?? null;
+
+    if ($id_peca) {
+        // Usamos placeholders (?) para evitar SQL Injection
+        $stmt = $pdo->prepare("SELECT id_peca, instrucao FROM first_data.instrucao WHERE id_peca = ?");
+        $stmt->execute([$id_peca]);
+        // fetchAll para pegar todas as linhas de inspeção daquela peça
+        $inspecoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
+
+
+
+/*
+
+
 
 
 $tabelas = [
@@ -17,36 +49,59 @@ $tabelas = [
     'bateria' => 'bateria_parametro'
 ];
 
-$lista = [
-    "Teste1",
-    "Teste2",
-    "Teste3",
-    "Teste4",
+// Listas de verificação dinâmicas para cada opção selecionada
+$listas_opcoes = [
+    'pistao' => [
+        "   .",
+        "Inspecionar canaletas dos anéis de segmento.",
+        "Checar alinhamento do pino de pistão.",
+        "Verificar ausência de riscos na saia do pistão."
+    ],
+    'pastilha' => [
+        "Verificar espessura do material de atrito.",
+        "Inspecionar trincas ou trincamentos na superfície.",
+        "Conferir assentamento das placas antirruído.",
+        "Verificar desgaste uniforme das sapatas."
+    ],
+    'bateria' => [
+        "Verificar carga e tensão da bateria.",
+        "Conferir nível do eletrólito nas células.",
+        "Checar vedação e ausência de corrosão nos bornes.",
+        "Testar corrente de partida a frio (CCA)."
+    ],
+    'amortecedor' => [
+        "Verificar curso e velocidade de retorno da haste.",
+        "Checar vazamento de fluido hidráulico.",
+        "Conferir estado e desgaste das buchas de fixação.",
+        "Inspecionar alinhamento da coifa e do batente."
+    ],
+    'para_choque' => [
+        "Verificar alinhamento e fixação das presilhas.",
+        "Checar pintura, tonalidade e acabamento externo.",
+        "Conferir absorvedor de impacto interno.",
+        "Verificar encaixe das grades e faróis de milha."
+    ]
 ];
 
-if($opcao_selecionada === ""){
+// Atribui a lista correspondente à opção selecionada ou mantém vazia se nada for escolhido
+$lista = $listas_opcoes[$opcao_selecionada] ?? [];
+
+if ($opcao_selecionada === "" || !isset($tabelas[$opcao_selecionada])) {
     $tabela_permetida = "";
-}else{
+    $user = [];
+} else {
     $tabela_permetida = $tabelas[$opcao_selecionada];
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM $tabela_permetida");
+        $stmt->execute();
+        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        $user = []; // Previne o erro fatal caso a tabela não exista no banco de dados
+    }
 }
-/*if(!array_key_exists($opcao_selecionada, $tabelas)){
-    die("Categoria Invalida ou não selecionada");
-}else if($opcao_selecionada === ""){
-    echo "Pinhamonhangaba";
-};*/
-
-
-$stmt = $pdo->prepare("SELECT * FROM $tabela_permetida");
-
-$user = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-
-
-
+*//*
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $opcoes = $_GET["opicao"];
+    $opcoes = $_GET["opicao"] ?? '';
 
     switch ($opcoes){
         case "pistao":
@@ -57,7 +112,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $cor = "2";
             $modelo = "2";
             break;
-        
         case "bateria":
             $cor = "3";
             $modelo = "3";
@@ -70,14 +124,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $cor = "5";
             $modelo = "5";
             break;
-            }
-}       
-
-
-
-
+    }
+}        */
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -88,7 +137,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-LOGAR/Style_Admin/Inspecao.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
 </head>
 <body>
 
@@ -166,44 +214,25 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             </a>
         </div>
 
-<!--         FILTER BAR
-         <form action="inspecao.php" method="GET">
-        <div class="filter-bar">
-            <label>Item:</label>
-            
+        <form action="inspecao.php" method="GET">
+            <div class="filter-bar">
+                <label>Item:</label>
+
             <select name="opicao">
-                <option value="pista" selected="pistao">Pistão</option>
-                <option value="pastilha selected="pastilha">Pastilha</option>
-                <option value="bateria">Bateria</option>
-                <option value="suspensao"  >Suspensão</option>
-                <option value="chassi">Chassi</option>
+                <option value="" disabled <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>Selecione uma opção</option>
+                <option value="pistao" <?= ($opcao_selecionada === 'pistao') ? 'selected' : '' ?>>Pistão</option>
+                <option value="pastilha" <?= ($opcao_selecionada === 'pastilha') ? 'selected' : '' ?>>Pastilha</option>
+                <option value="bateria" <?= ($opcao_selecionada === 'bateria') ? 'selected' : '' ?>>Bateria</option>
+                <option value="amortecedor" <?= ($opcao_selecionada === 'amortecedor') ? 'selected' : '' ?>>Amortecedor</option>
+                <option value="para_choque" <?= ($opcao_selecionada === 'para_choque') ? 'selected' : '' ?>>Para Choque</option>
             </select>
-            <button type="submit" class="btn-reload">
-                <i class="fas fa-rotate-right"></i>
-                Recarregar
-            </button>
-        </div>
-           </form> -->
 
-           <form action="inspecao.php" method="GET">
-  <div class="filter-bar">
-    <label>Item:</label>
-
-    <select name="opicao">
-      <option value="" disabled selected <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>Selecione uma opção</option>
-      <option value="pistao" <?= ($opcao_selecionada === 'pistao') ? 'selected' : '' ?>>Pistão</option>
-      <option value="pastilha" <?= ($opcao_selecionada === 'pastilha') ? 'selected' : '' ?>>Pastilha</option>
-      <option value="bateria" <?= ($opcao_selecionada === 'bateria') ? 'selected' : '' ?>>Bateria</option>
-      <option value="amortecedor" <?= ($opcao_selecionada === 'amortecedor') ? 'selected' : '' ?>>Amortecedor</option>
-      <option value="para_choque" <?= ($opcao_selecionada === 'para_choque') ? 'selected' : '' ?>>Para Choque</option>
-    </select>
-
-    <button type="submit" class="btn-reload">
-      <i class="fas fa-rotate-right"></i>
-      Recarregar
-    </button>
-  </div>
-</form>
+                <button type="submit" class="btn-reload">
+                    <i class="fas fa-rotate-right"></i>
+                    Recarregar
+                </button>
+            </div>
+        </form>
 
         <!-- CHECKLIST -->
         <div class="checklist-card">
@@ -211,17 +240,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 <i class="fas fa-clipboard-list"></i>
                 <h3>Itens de Verificação</h3>
             </div>
-            <div class="checklist-body">
+<div class="checklist-body">
 
+    <?php 
+    $contador = 1; 
+    foreach ($inspecoes as $inspecao): 
+    ?>
+        <div class="checklist-item">
+            <div class="item-number"><?= $contador++; ?></div>
+            <span class="item-text"><?= htmlspecialchars($inspecao["instrucao"]); ?></span>
+            <div class="item-check"></div>
+        </div>
+    <?php endforeach; ?>
 
-            <?php foreach ($lista as $list){
-                
-            }
-            
-            
-            
-            
-            ?>
+</div>
         
         <!--
                 <div class="checklist-item">
