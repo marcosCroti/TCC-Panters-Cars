@@ -74,7 +74,7 @@ if ($user) {
           <i class="fas fa-boxes"></i> Inventário
         </a>
         <a
-          href="./inspeção.php"
+          href="./inspecao.php"
           class="nav-item"
           onclick="setActive(this, 'Inspeção')"
         >

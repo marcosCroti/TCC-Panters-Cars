@@ -1,4 +1,7 @@
 // Link do seu modelo (mantenha a barra ao final)
+
+      
+console.log("trolha games");
 const botaoscan = document.getElementById("btn-scan");
 botaoscan.addEventListener("click", capturarEProcessar);
 botaoscan.A
@@ -124,19 +127,29 @@ async function capturarEProcessar() {
 
   let melhorClasse = "";
   let maiorValor = 0;
+  let limiteconfiavel = 0.90;
   let resultados = {};
   for (let i = 0; i < maxPredictions; i++) {
     resultados[prediction[i].className] = prediction[i].probability;
     if (prediction[i].probability > maiorValor) {
       maiorValor = prediction[i].probability;
       melhorClasse = prediction[i].className;
+      console.log(maiorValor);
+      console.log(melhorClasse);
+      document.getElementById("resultado-vencedor").innerText = melhorClasse;
+      document.getElementById("probabilidade").innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
+
+    } if(maiorValor < limiteconfiavel){
+        console.log("Não é possivel achar algo, tente outra coisa");
+        document.getElementById("resultado-vencedor").innerText = "Não é possivel achar algo, tente outra coisa";
+        document.getElementById("probabilidade").innerText = "";
+    }
+
+
+
     }
   }
 
   // Atualiza a interface com o resultado
-  console.log(maiorValor);
-  console.log(melhorClasse);
-  document.getElementById("resultado-vencedor").innerText = melhorClasse;
-  document.getElementById("probabilidade").innerText =
-    (maiorValor * 100).toFixed(1) + "% de certeza";
-}
+
+
