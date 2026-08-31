@@ -231,7 +231,7 @@ body {
     pointer-events: none; /* Permite clicar através do ícone */
 }
 
-.input-wrapper input {
+.input-wrapper input, select {
     /* width: 100%;
     padding: 13px 14px 13px 42px;
     background: #f0f2f5;
@@ -254,7 +254,7 @@ body {
     z-index: 1;
 }
 
-.input-wrapper input:focus {
+.input-wrapper input:focus, select:focus {
     /* outline: none;
     border-color: #e74c3c;
     background: #151515; */
@@ -264,9 +264,11 @@ body {
     box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15); 
 }
 
-.input-wrapper input::placeholder {
+.input-wrapper input::placeholder{
     color: #9c9c9c;
 }
+
+
 
 /* Toggle de Senha */
 .password-toggle {
