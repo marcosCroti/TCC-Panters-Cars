@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background:linear-gradient(rgb(255, 67, 67),rgba(0, 0, 0, 0.9));
+    background: #f0f2f5;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -16,15 +16,17 @@ body {
 
 .container {
     width: 100%;
-    max-width: 540px;
+    max-width: 600px; 
+
 }
 
 .register-card {
-    background: #1a1a1a;
+    background: #f0f2f5;
     border-radius: 24px;
-    padding: 40px 35px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    padding: 40px 35px; 
+    box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
     color: #fff;
+    width: 100%;
 }
 
 /* Logo */
@@ -34,7 +36,16 @@ body {
     margin-bottom: 20px;
 }
 
-.logo-icon {
+/* Logo */
+#logo {
+    margin-bottom: 5px;
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+}
+
+
+/* .logo-icon {
     width: 80px;
     height: 80px;
     background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
@@ -45,7 +56,7 @@ body {
     font-size: 40px;
     color: white;
     box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
-}
+} */
 
 /* Título */
 .title {
@@ -53,7 +64,7 @@ body {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 8px;
-    color: #fff;
+    color: black;
 }
 
 .highlight {
@@ -211,33 +222,50 @@ body {
 
 .input-icon {
     position: absolute;
-    left: 14px;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
     color: #6b7688;
-    font-size: 15px;
-    z-index: 1;
+    font-size: 16px;
+     z-index: 2; /* Mantém o ícone por cima */
+    pointer-events: none; /* Permite clicar através do ícone */
 }
 
 .input-wrapper input {
-    width: 100%;
+    /* width: 100%;
     padding: 13px 14px 13px 42px;
-    background: #0d0d0d;
+    background: #f0f2f5;
     border: 2px solid #2a2a2a;
     border-radius: 12px;
     color: #fff;
     font-size: 14px;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; */
+    width: 100%;
+    padding: 14px 16px 14px 45px;
+    background: #f0f2f5;
+    /* Substitui a sombra por uma borda idêntica ao contorno que você tinha */
+    border: 1px solid rgba(0, 0, 0, 0);
+    box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327); 
+    border-radius: 12px;
+    color: #333; /* Texto escuro para contraste no fundo claro */
+    font-size: 15px;
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .input-wrapper input:focus {
-    outline: none;
+    /* outline: none;
     border-color: #e74c3c;
-    background: #151515;
+    background: #151515; */
+    outline: none; /* Remove a linha preta padrão do navegador */
+    border-color: #e74c3c; /* Muda o contorno para a cor que você escolher (ex: vermelho) */
+    background: #fff; /* Opcional: clareia o fundo para destacar o campo ativo */
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15); 
 }
 
 .input-wrapper input::placeholder {
-    color: #4a4a4a;
+    color: #9c9c9c;
 }
 
 /* Toggle de Senha */
@@ -267,7 +295,7 @@ body {
 .strength-bar {
     width: 100%;
     height: 4px;
-    background: #2a2a2a;
+    /* background: #f0f2f5; */
     border-radius: 2px;
     overflow: hidden;
     margin-bottom: 6px;
