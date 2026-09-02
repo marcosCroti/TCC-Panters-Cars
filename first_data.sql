@@ -1,4 +1,4 @@
-    create database first_data CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+create database first_data CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
     use first_data;
 
@@ -31,16 +31,6 @@
     id_pecas INT REFERENCES pecas(id_pecas),
     ima_peca BLOB NOT NULL
     );
-
-    
-    insert into pecas(ima_peca, nome_tipo, grupo_peca, id_pecas, quantidade_pecas, quantidade_pecas_no_dia, setor)
-    values('img1', 'Pistão','Motor e Transmissão','00000001', 0, 0, 'Motor e Transmissão' ),
-    ('img2', 'Pastilhas', 'Freios', '00000002', 0, 0, 'Setor 1', 0, 0, 'Freios'), 
-    ('img3', 'Amortecedores', 'Suspensão e Direção', '00000003', 0, 0, 'Suspensão  e Direção'), 
-    ('img4', 'Bateria', 'Elétrica', '00000004', 0, 0, 'Setor 2', 0,0, 'Elétrica'), 
-    ('img5','Para-choques', 'Carroceria/Acabamento', '00000005', 0, 0, 'Carroceria/Acabamento'),
-    ('img6', 'Cinto de Segurança', 'Componentes de Segurança', '00000006', 0, 0, 'Componentes de Segurança');
-    
  
     select * FROM pecas;
     
@@ -68,58 +58,4 @@
     nome_fun VARCHAR(200) NOT NULL,
     setor VARCHAR(200) NOT NUll,
     quantidade_pecas_no_dia INT NOT NULL
-    );
-    
-    create table examinar_pecas(
-    pecas_aprovadas INT NOT NULL,
-    pecas_rejeitadas INT NOT NULL,
-    pecas_examinadas INT NOT NULL,
-    quantidade_pecas INT NOT NULL,
-    quantidade_pecas_setor INT NOT NULL,
-    quantidade_pecas_no_dia INT NOT NULL
-    );
-
-    create table pistao_parametro(
-        cor_parametro VARCHAR(200) NOT NULL, 
-        tamanho_parametro FLOAT NOT NULL, 
-        fixuras_parametro VARCHAR(200) NOT NULL, 
-        encaixe_parametro VARCHAR(200) NOT NULL,
-        espessura_parametro FLOAT NOT NULL
-    );
-
-    create table pastilha_parametro(
-        cor_parametro VARCHAR(200) NOT NULL, 
-        tamanho_parametro FLOAT NOT NULL,
-        fixuras_parametro VARCHAR(200) NOT NULL, 
-        encaixe_parametro VARCHAR(200) NOT NULL,
-        espessura_parametro FLOAT NOT NULL
-         
-    );
-
-    create table amortecedor_parametro(
-        cor_parametro VARCHAR(200) NOT NULL, 
-        tamanho_parametro FLOAT NOT NULL,
-        fixuras_parametro VARCHAR(200) NOT NULL, 
-        encaixe_parametro VARCHAR(200) NOT NULL,
-        espessura_parametro FLOAT NOT NULL
-    
-        
-    );
-
-    create table para_choque_parametro(
-        cor_parametro VARCHAR(200) NOT NULL, 
-        tamanho_parametro FLOAT NOT NULL, 
-        fixuras_parametro VARCHAR(200) NOT NULL, 
-        encaixe_parametro VARCHAR(200) NOT NULL,
-        espessura_parametro FLOAT NOT NULL
-        
-    );
-
-    create table bateria_parametro(
-        cor_parametro VARCHAR(200) NOT NULL, 
-        tamanho_parametro FLOAT NOT NULL, 
-        fixuras_parametro VARCHAR(200) NOT NULL, 
-        encaixe_parametro VARCHAR(200) NOT NULL, 
-        espessura_parametro FLOAT NOT NULL
-        
     );
