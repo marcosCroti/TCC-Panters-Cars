@@ -14,7 +14,10 @@
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
-        <div class="logo-icon">🚗</div>
+        <!-- <div class="logo-icon">🚗</div> -->
+         <div class="logo" id="logo-icon">
+             <img src="../../FRON" alt="logo" id="logo">
+         </div>
         <span class="logo-text">Panthers<span>Cars</span></span>
       </div>
 
@@ -22,7 +25,7 @@
         <div class="sidebar-section-title">Principal</div>
         <a
           href="./dashboard.html"
-          class="nav-item"
+          class="nav-item" 
           onclick="setActive(this, 'Dashboard')"
         >
           <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -35,26 +38,26 @@
           <i class="fas fa-qrcode"></i> Scanner
         </a>
         <a
-          href="./inventario.html"
-          class="nav-item active"
-          onclick="setActive(this, 'Inventário')"
+        href="./inspecao.html"
+        class="nav-item"
+        onclick="setActive(this, 'Inspeção')"
         >
-          <i class="fas fa-boxes"></i> Inventário
-        </a>
-        <a
-          href="./inspecao.html"
-          class="nav-item"
-          onclick="setActive(this, 'Inspeção')"
-        >
-          <i class="fas fa-clipboard"></i> Inspeção
-        </a>
-        <a
-          href="./inspe_editar.html"
-          class="nav-item"
-          onclick="setActive(this, 'Editar Inspeção')"
-        >
-          <i class="fas fa-edit"></i> Editar Inspeção
-        </a>
+        <i class="fas fa-clipboard"></i> Inspeção
+      </a>
+      <a
+      href="./editar_inspecao.html"
+      class="nav-item"
+      onclick="setActive(this, 'Editar Inspeção')"
+      >
+      <i class="fas fa-edit"></i> Editar Inspeção
+    </a>
+    <a
+      href="./inventario.html"
+      class="nav-item active"
+      onclick="setActive(this, 'Inventário')"
+    >
+      <i class="fas fa-boxes"></i> Inventário
+    </a>
       </div>
 
       <div class="sidebar-section">
@@ -86,20 +89,20 @@
         </button>
         <h2 id="topbar-title">Inventário</h2>
         <div class="topbar-actions">
-          <button
+          <!-- <button
             class="topbar-btn red"
             onclick="showToast('🔴 Status: Online')"
           >
             <i class="fas fa-circle" style="font-size: 10px"></i>
-          </button>
-          <button
+          </button> -->
+          <!-- <button
             class="topbar-btn ghost"
             onclick="showToast('🔔 3 alertas pendentes')"
             style="position: relative"
           >
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
-          </button>
+          </button> -->
           <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
             <i class="fas fa-sign-out-alt"></i>
           </button>

@@ -151,8 +151,8 @@
         }
 
         #logo{
-            width: 50px;
-            height: 53px;
+            width: 60px;
+            height: 59px;
             border-radius: 10px;
         }
 
@@ -180,37 +180,48 @@
             margin-bottom: 8px;
         }
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 11px 14px;
-            border-radius: 10px;
-            color: #1c1c1c;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            margin-bottom: 3px;
-            position: relative;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-        }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: black;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-bottom: 3px;
+  position: relative;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
 
-        .nav-item:hover {
-            background: rgba(255, 101, 101, 0.08);
-            color: #c53030;
-            transform: translateX(4px);
-        }
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #c53030;
+  transform: translateX(4px);
+}
 
-        .nav-item i {
-            font-size: 16px;
-            width: 20px;
-            text-align: center;
-        }
+.nav-item.active {
+  background: #e53e3e;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+}
+
+.nav-item.active:hover {
+  transform: translateX(0);
+  background: #c53030;
+}
+
+.nav-item i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
 
         .badge {
             margin-left: auto;

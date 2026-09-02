@@ -38,7 +38,7 @@ if ($user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panthers Cars - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-ADMIN/dashboard.css">
+    <link rel="stylesheet" href="../../CSS/TELAS-ADMIN/dashboard.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
@@ -46,126 +46,95 @@ if ($user) {
 <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
-        <div class="logo-icon">🚗</div>
+        <!-- <div class="logo-icon">🚗</div> -->
+         <div class="logo" id="logo-icon">
+                    <img src="../../LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+
+         </div>
         <span class="logo-text">Panthers<span>Cars</span></span>
       </div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
         <a
-          href="./index.php"
-          class="nav-item"
+          href="./dashboard.html"
+          class="nav-item active"
           onclick="setActive(this, 'Dashboard')"
         >
           <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
         <a
-          href="./scanner.php"
+          href="./scanner.html"
           class="nav-item"
           onclick="setActive(this, 'Scanner')"
         >
           <i class="fas fa-qrcode"></i> Scanner
         </a>
-        <a
-          href="./inventario.php"
-          class="nav-item"
-          onclick="setActive(this, 'Inventário')"
-        >
-          <i class="fas fa-boxes"></i> Inventário
-        </a>
-        <a
-          href="./inspecao.php"
+                <a
+          href="./inspecao.html"
           class="nav-item"
           onclick="setActive(this, 'Inspeção')"
         >
           <i class="fas fa-clipboard"></i> Inspeção
         </a>
         <a
-          href="./inspe_editar.php"
+          href="./editar_inspecao.html"
           class="nav-item"
           onclick="setActive(this, 'Editar Inspeção')"
         >
           <i class="fas fa-edit"></i> Editar Inspeção
         </a>
+        <a
+          href="./inventario.html"
+          class="nav-item"
+          onclick="setActive(this, 'Inventário')"
+        >
+          <i class="fas fa-boxes"></i> Inventário
+        </a>
       </div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="funcionario.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+        <a href="#" class="nav-item" onclick="setActive(this, 'Funcionários')">
           <i class="fas fa-users"></i> Funcionários
         </a>
-
       </div>
 
-    <div class="sidebar-footer">
-        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
+      <div class="sidebar-footer">
+        <div class="avatar">G</div>
         <div class="user-info">
-            <p><?= $nome ?></p>
-            <span><?= $func ?></span>
+          <p>Gerente Admin</p>
+          <span>Administrador</span>
         </div>
-    </div>
+      </div>
     </aside>
 
 <!-- ===== MAIN ===== -->
 <div class="main">
-
     <!-- TOPBAR -->
     <header class="topbar">
         <button class="topbar-menu-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
+          <i class="fas fa-bars"></i>
         </button>
-        <h2 id="topbar-title">Dashboard</h2>
+        <h2 id="topbar-title">Dashboard Gerencial</h2>
         <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="./Alerta_Admin.html">
-                <i class="fas fa-bell"></i>
-                <span class="notif-dot"></span>
-            </button>
-            <!-- <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
+            <a class="topbar-btn ghost" href="../Inicializaçao.html">
                 <i class="fas fa-sign-out-alt"></i>
-            </button> -->
-            <a href="./../auth/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt" ></i></a>
+            </a>
         </div>
     </header>
 
-    <!-- CONTENT -->
+<!-- CONTENT -->
     <div class="content">
 
         <!-- Page Header -->
         <div class="page-header">
-    <button typy="hidden"></button>
+            <div></div>
             <button class="refresh-btn" onclick="refreshData()">
                 <i class="fas fa-sync-alt" id="refreshIcon"></i> Atualizar
             </button>
         </div>
 
-        <!-- Quick Access -->
-        <!-- <div class="quick-cards">
-            <a href="#" class="qcard" onclick="showToast('📷 Abrindo Scanner...')">
-                <div class="qcard-icon"><i class="fas fa-qrcode"></i></div>
-                <span class="qcard-label">Scanner</span>
-                <span class="qcard-sub">Escanear peças</span>
-            </a>
-            <a href="./Inventario.html" class="qcard" onclick="showToast('📦 Abrindo Inventário...')">
-                <div class="qcard-icon"><i class="fas fa-boxes"></i></div>
-                <span class="qcard-label">Inventário</span>
-                <span class="qcard-sub">Ver estoque</span>
-            </a>
-            <a href="./Funcionarios.html" class="qcard" onclick="showToast('👥 Abrindo Funcionários...')">
-                <div class="qcard-icon"><i class="fas fa-users"></i></div>
-                <span class="qcard-label">Funcionários</span>
-                <span class="qcard-sub">Gerenciar equipe</span>
-            </a>
-            <a href="./Controle_Qualidade.html" class="qcard" onclick="showToast('📊 Abrindo Qualidade...')">
-                <div class="qcard-icon"><i class="fas fa-chart-bar"></i></div>
-                <span class="qcard-label">Qualidade</span>
-                <span class="qcard-sub">Relatórios</span>
-            </a>
-            <a href="./Alerta_Admin.html" class="qcard" onclick="openAlertsModal()">
-                <div class="qcard-icon"><i class="fas fa-bell"></i></div>
-                <span class="qcard-label">Alertas</span>
-            </a>
-        </div>
--->
 
         <!-- Stats Row -->
         <div class="stats-row">
@@ -197,13 +166,12 @@ if ($user) {
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-bg yellow"></div>
-                <div class="stat-icon yellow"><i class="fas fa-user-check"></i></div>
-                <div class="stat-info">
-                    <p>Funcionários Ativos</p>
-                    <div class="stat-value" id="s4">4</div>
-                    <div class="stat-sub blue"><i class="fas fa-circle" style="font-size:7px"></i> Online</div>
-                </div>
+            <div class="stat-icon yellow"><i class="fas fa-cogs"></i></div> 
+            <div class="stat-info"> 
+                <p>Total Inspeções</p> 
+                <div class="stat-value" id="s4">410</div> 
+                <div class="stat-sub yellow"><i class="fas fa-arrow-up"></i> 50% este mês</div>
+            </div> 
             </div>
         </div>
 
@@ -248,7 +216,7 @@ if ($user) {
         <div class="alerts-section">
             <div class="alerts-header">
                 <div class="alerts-title">
-                    <i class="fas fa-bell"></i> Alertas Recentes
+                    <i class="fas fa-bell"></i> Histórico Inspeções
                 </div>
                 <button class="ver-todos-btn" onclick="openAlertsModal()">Ver todos</button>
             </div>
@@ -289,6 +257,8 @@ if ($user) {
 
     </div>
 </div>
+
+
 
 <!-- ===== MODAL ALERTAS ===== -->
 <div class="modal-overlay" id="alertsModal" onclick="closeModalOutside(event)">

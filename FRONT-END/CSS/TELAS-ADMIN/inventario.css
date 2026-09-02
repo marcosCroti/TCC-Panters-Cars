@@ -48,6 +48,24 @@ body {
   animation: pulse-logo 2s infinite;
 }
 
+#logo{
+            width: 60px;
+            height: 59px;
+            border-radius: 10px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: black;
+        }
+
+        .logo-text span {
+            color: #e53e3e;
+        }
+
+
 @keyframes pulse-logo {
   0%,
   100% {
