@@ -46,7 +46,7 @@
         <i class="fas fa-clipboard"></i> Inspeção
       </a>
       <a
-      href="./inspe_editar.html"
+      href="./editar_inspecao.html"
       class="nav-item"
       onclick="setActive(this, 'Editar Inspeção')"
       >
@@ -64,12 +64,13 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
         <a
-          href="./funcionarios.html"
-          class="nav-item active"
-          onclick="setActive(this, 'Funcionários')"
+          href="./funcionarios.html" 
+          class="nav-item active" onclick="setActive(this, 'Funcionários')"
+          
         >
           <i class="fas fa-users"></i> Funcionários
         </a>
+
         <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
           <i class="fas fa-bell"></i> Alertas
           <span class="badge">3</span>
@@ -112,7 +113,13 @@
         <div class="content-header">
           <div class="content-header-left"></div>
           <!-- BOTÃO QUE ABRE O MODAL -->
-          <button class="btn-add" onclick="abrirModal()">👤+ Adicionar</button>
+          <!-- <button class="btn-add" onclick="abrirModal()">👤+ Adicionar</button> -->
+          <!-- <button class="btn-add">👤+ Adicionar</button> -->
+          <div >
+            <a class="btn-add" href="../../LOGIN/criar_conta.html">👤+ Adicionar
+            </a>
+        </div>
+        
         </div>
 
         <div class="table-card">
