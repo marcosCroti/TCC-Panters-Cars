@@ -1,6 +1,5 @@
 // Link do seu modelo (mantenha a barra ao final)
 
-      
 console.log("trolha games");
 const botaoscan = document.getElementById("btn-scan");
 botaoscan.addEventListener("click", capturarEProcessar);
@@ -129,21 +128,31 @@ async function capturarEProcessar() {
   let maiorValor = 0;
   let limiteconfiavel = 0.90;
   let resultados = {};
+  const link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=${melhorClasse}`;
+
+  console.log(link);
   for (let i = 0; i < maxPredictions; i++) {
     resultados[prediction[i].className] = prediction[i].probability;
     if (prediction[i].probability > maiorValor) {
       maiorValor = prediction[i].probability;
       melhorClasse = prediction[i].className;
+      
       console.log(maiorValor);
       console.log(melhorClasse);
       document.getElementById("resultado-vencedor").innerText = melhorClasse;
       document.getElementById("probabilidade").innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
 
+
+
     } if(maiorValor < limiteconfiavel){
         console.log("Não é possivel achar algo, tente outra coisa");
         document.getElementById("resultado-vencedor").innerText = "Não é possivel achar algo, tente outra coisa";
         document.getElementById("probabilidade").innerText = "";
-    }
+        
+        //window.location.href = link;
+        console.log(link);
+      }
+
 
 
 

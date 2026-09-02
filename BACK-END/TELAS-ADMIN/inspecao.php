@@ -17,9 +17,9 @@ if ($opcao_selecionada !== "") {
     $mapeamento_ids = [
         'pistao' => 1,
         'pastilha' => 2,
-        'bateria' => 3,
-        'amortecedor' => 4,
-        'para_choque' => 5
+        'bateria' => 5,
+        'amortecedor' => 3,
+        'para_choque' => 4
     ];
 
     $id_peca = $mapeamento_ids[$opcao_selecionada] ?? null;
@@ -134,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Inspeção</title>
-    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-LOGAR/Style_Admin/Inspecao.css">
+    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-ADMIN/inspecao.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>

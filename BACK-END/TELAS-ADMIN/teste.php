@@ -108,6 +108,7 @@ if ($user) {
 <!-- ===== MAIN ===== -->
 <div class="main">
 
+<img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="">
     <!-- TOPBAR -->
     <header class="topbar">
         <button class="topbar-menu-btn" onclick="toggleSidebar()">

@@ -1,5 +1,5 @@
 console.log("trolha games");
-
+console.log("PERRY O ORNITORRINCO");
 // Elementos da DOM
 const botaoscan = document.getElementById("btn-scan");
 const gerenciarBotao = document.getElementById("btn-cancel");
@@ -125,10 +125,13 @@ async function capturarEProcessar() {
   let maiorValor = 0;
   let limiteconfiavel = 0.90; // 90% de confiança mínima
 
+  
+  
   for (let i = 0; i < maxPredictions; i++) {
     if (prediction[i].probability > maiorValor) {
       maiorValor = prediction[i].probability;
       melhorClasse = prediction[i].className;
+
     }
   }
 
@@ -138,6 +141,16 @@ async function capturarEProcessar() {
   if (maiorValor >= limiteconfiavel) {
     if (elResultado) elResultado.innerText = melhorClasse;
     if (elProbabilidade) elProbabilidade.innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
+    let link = "";
+    if(melhorClasse == "Para-choque"){
+      link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=para_choque`;
+    }else{
+      link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=${melhorClasse.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
+    }
+
+
+    console.log(link);
+    window.location.href = link;
   } else {
     console.log("Não é possível achar algo, tente outra coisa");
     if (elResultado) elResultado.innerText = "Não é possivel achar algo, tente outra coisa";
