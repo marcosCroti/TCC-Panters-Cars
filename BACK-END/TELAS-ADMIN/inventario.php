@@ -12,7 +12,7 @@ $nome_sessao = $_SESSION["user"] ?? "";
 $stmt = $pdo->prepare("SELECT usuario_nome, isAdmin FROM first_data.usuarios WHERE usuario_nome = ?");
 $stmt->execute([$nome_sessao]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+$func = "";
 
 if ($user) {
     // CORREÇÃO: Pega o valor real trazido do banco de dados

@@ -3,13 +3,18 @@ console.log("PERRY O ORNITORRINCO");
 // Elementos da DOM
 const botaoscan = document.getElementById("btn-scan");
 const gerenciarBotao = document.getElementById("btn-cancel");
+let botaoinspecao = document.getElementById("btn-insp");
+let link = "";
+botaoinspecao.disabled = true
 const logo = document.getElementById("qrIdle");
 let icone = document.querySelector(".fas");
+
 
 // Eventos
 if (botaoscan) botaoscan.addEventListener("click", capturarEProcessar);
 if (gerenciarBotao) gerenciarBotao.addEventListener("click", ligaDesliga);
 
+botaoinspecao.addEventListener("click", mudarpagina);
 // URL atualizada para o novo modelo do Teachable Machine
 const URL = "https://teachablemachine.withgoogle.com/models/Tj6G-iKq6/";
 
@@ -23,7 +28,7 @@ function alternarCor() {
   if (statusCam === "ligado") {
     gerenciarBotao.innerHTML = "<i class='fas fa-clipboard'></i> Inpecionar";
   } else if (statusCam === "desligado") {
-    gerenciarBotao.innerHTML = "<i class='fa-solid fa-power-off'></i> Parar inspecionamento";
+    gerenciarBotao.innerHTML = "<i class='fa-solid fa-power-off'></i> Desligar câmera";
   }
 }
 
@@ -117,6 +122,7 @@ async function loop() {
 
 // Função de predição com filtro de limite de confiança
 async function capturarEProcessar() {
+  link = "";
   if (!isModelReady || !model || !webcam) return;
 
   const prediction = await model.predict(webcam.canvas);
@@ -133,7 +139,14 @@ async function capturarEProcessar() {
       melhorClasse = prediction[i].className;
 
     }
+
+    if (link === "") {
+        botaoinspecao.disabled = true;
+    }else {
+        botaoinspecao.disabled = false;
+    }
   }
+
 
   const elResultado = document.getElementById("resultado-vencedor");
   const elProbabilidade = document.getElementById("probabilidade");
@@ -141,19 +154,35 @@ async function capturarEProcessar() {
   if (maiorValor >= limiteconfiavel) {
     if (elResultado) elResultado.innerText = melhorClasse;
     if (elProbabilidade) elProbabilidade.innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
-    let link = "";
+
     if(melhorClasse == "Para-choque"){
       link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=para_choque`;
     }else{
       link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=${melhorClasse.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
     }
 
+    if(link === ""){
+        botaoinspecao.disabled = true;
+    if(elResultado === "Não é possivel achar algo, tente outra coisa"){
+        botaoinspecao.disabled = true; 
+    }
+    }else{
+      botaoinspecao.disabled = false;
+    }
+ 
+
+
+
 
     console.log(link);
-    window.location.href = link;
+    //window.location.href = link;
   } else {
     console.log("Não é possível achar algo, tente outra coisa");
     if (elResultado) elResultado.innerText = "Não é possivel achar algo, tente outra coisa";
     if (elProbabilidade) elProbabilidade.innerText = "";
   }
+}
+
+function mudarpagina(){
+  window.location.href = link;
 }
