@@ -19,35 +19,35 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
         <a
-          href="./index.php"
+          href="./dashboard.html"
           class="nav-item"
           onclick="setActive(this, 'Dashboard')"
         >
           <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
         <a
-          href="./scanner.php"
+          href="./scanner.html"
           class="nav-item"
           onclick="setActive(this, 'Scanner')"
         >
           <i class="fas fa-qrcode"></i> Scanner
         </a>
         <a
-          href="./inventario.php"
+          href="./inventario.html"
           class="nav-item"
           onclick="setActive(this, 'Inventário')"
         >
           <i class="fas fa-boxes"></i> Inventário
         </a>
         <a
-          href="./inspecao.php"
+          href="./inspecao.html"
           class="nav-item"
           onclick="setActive(this, 'Inspeção')"
         >
           <i class="fas fa-clipboard"></i> Inspeção
         </a>
         <a
-          href="./inspe_editar.php"
+          href="./inspe_editar.html"
           class="nav-item"
           onclick="setActive(this, 'Editar Inspeção')"
         >
@@ -153,11 +153,11 @@
                 </button>
                 <button class="btn-alert" id="btn-cancel">
                     <i class="fas fa-clipboard"></i>
-                    Inspecionar
+                    Ligar Câmera
                 </button>
-                <button class="btn-cancel" onclick="openAlertModal()">
+                <button class="btn-insp" id="btn-insp">
                     <i class="fas fa-exclamation-triangle"></i>
-                    Cancelar
+                    Ir para inspeção
                 </button>
             </div>
 
@@ -190,13 +190,9 @@
 <!-- ===== TOAST ===== -->
 <div class="toast" id="toast"></div>
 
-<script>
-
-
-</script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-    <script src="../../Front-End/JAVASCRIPT/camera2.js"></script>
+    <script src="../../Front-End/JAVASCRIPT/teste.js"></script>
      <script src="../../Front-End/JAVASCRIPT//fatores.js"></script>
 </body>
 </html>

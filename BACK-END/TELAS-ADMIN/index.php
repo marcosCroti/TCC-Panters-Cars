@@ -38,7 +38,7 @@ if ($user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panthers Cars - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../CSS/TELAS-ADMIN/dashboard.css">
+    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-ADMIN/dashboard.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
@@ -48,7 +48,7 @@ if ($user) {
       <div class="sidebar-logo">
         <!-- <div class="logo-icon">🚗</div> -->
          <div class="logo" id="logo-icon">
-                    <img src="../../LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+                    <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" id="logo">
 
          </div>
         <span class="logo-text">Panthers<span>Cars</span></span>
@@ -57,21 +57,21 @@ if ($user) {
       <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
         <a
-          href="./dashboard.html"
+          href="./index.php"
           class="nav-item active"
           onclick="setActive(this, 'Dashboard')"
         >
           <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
         <a
-          href="./scanner.html"
+          href="./scanner.php"
           class="nav-item"
           onclick="setActive(this, 'Scanner')"
         >
           <i class="fas fa-qrcode"></i> Scanner
         </a>
                 <a
-          href="./inspecao.html"
+          href="./inspecao.php"
           class="nav-item"
           onclick="setActive(this, 'Inspeção')"
         >
@@ -85,7 +85,7 @@ if ($user) {
           <i class="fas fa-edit"></i> Editar Inspeção
         </a>
         <a
-          href="./inventario.html"
+          href="./inventario.php"
           class="nav-item"
           onclick="setActive(this, 'Inventário')"
         >
@@ -99,14 +99,13 @@ if ($user) {
           <i class="fas fa-users"></i> Funcionários
         </a>
       </div>
-
-      <div class="sidebar-footer">
-        <div class="avatar">G</div>
+    <div class="sidebar-footer">
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
-          <p>Gerente Admin</p>
-          <span>Administrador</span>
+            <p><?= $nome ?></p>
+            <span><?= $func ?></span>
         </div>
-      </div>
+    </div>
     </aside>
 
 <!-- ===== MAIN ===== -->
