@@ -11,7 +11,6 @@
 </head>
 <body>
 
-    <div class="main">
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
         <!-- <div class="logo-icon">🚗</div> -->
@@ -56,6 +55,7 @@
         </div>
     </div>
 </aside>
+    <div class="main">
 
 <!-- TOPBAR-->
 <header class="topbar">
@@ -64,7 +64,7 @@
         </button>
         <h2 id="topbar-title">Editar Inspeção</h2>
         <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="../Inicializaçao.html">
+            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>
@@ -73,18 +73,9 @@
     <!-- MAIN -->
     <div class="main-content">
 
-        <!-- BACK BUTTON -->
-        <div class="back-btn-wrapper">
-            <button class="btn-back">
-                <i class="fas fa-edit"></i>
-                Editar Inspeção
-            </button>
-            <button class="btn-back">
-                <i class="fas fa-arrow-left"></i>
-                Voltar ao Scanner
-            </button>
-        </div>
 
+        
+        
         <!-- FILTER BAR -->
         <div class="filter-bar">
             <label>Item:</label>
@@ -98,7 +89,23 @@
                 <i class="fas fa-rotate-right"></i>
                 Recarregar
             </button>
+            <button class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Voltar ao Scanner
+            </button>
         </div>
+
+        <!-- <div>
+            <input type="text" name="" id="" class="search-box" placeholder="Digite a nova instrução">
+            <button class="add">Adicionar instrução</button>
+        </div> -->
+
+        <div class="search-box">
+    <input type="text" placeholder="Digite a nova instrução">
+    <button class="btn-add" title="Adicionar instrução">
+        <i class="fas fa-plus"></i> <!-- Ícone de mais do FontAwesome -->
+    </button>
+</div>
 
         <!-- CHECKLIST -->
         <div class="checklist-card">
@@ -111,36 +118,65 @@
                 <div class="checklist-item">
                     <div class="item-number">1</div>
                     <span class="item-text">Verificar se a cor do mouse é preta.</span>
+                    <div class="actions-cell">
+                        <span>✏️</span>
+                        <span>🗑️</span>
+                    </div>
                 </div>
 
+                
                 <div class="checklist-item">
                     <div class="item-number">2</div>
                     <span class="item-text">Verificar se o mouse é USB ou Bluetooth.</span>
+                    <div class="actions-cell">
+                        <span>✏️</span>
+                        <span>🗑️</span>
+                    </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="item-number">3</div>
                     <span class="item-text">Verificar se o peso do mouse está entre 85-90g.</span>
+                    <div class="actions-cell">
+                        <span>✏️</span>
+                        <span>🗑️</span>
+                    </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="item-number">4</div>
                     <span class="item-text">Verificar se o acabamento do plástico é fosco.</span>
+                    <div class="actions-cell">
+                        <span>✏️</span>
+                        <span>🗑️</span>
+                    </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="item-number">5</div>
                     <span class="item-text">Verificar se o clique esquerdo faz som.</span>
+                    <div class="actions-cell">
+                        <span>✏️</span>
+                        <span>🗑️</span>
+                    </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="item-number">6</div>
                     <span class="item-text">Verificar se o botão do scroll clica.</span>
+                    <div class="actions-cell">
+                        <span>✏️</span>
+                        <span>🗑️</span>
+                    </div>
                 </div>
 
                 <div class="checklist-item">
                     <div class="item-number">7</div>
                     <span class="item-text">Verificar se o compartimento da pilha fecha bem.</span>
+                    <div class="actions-cell">
+                        <span>✏️</span>
+                        <span>🗑️</span>
+                    </div>
                 </div>
 
             </div>

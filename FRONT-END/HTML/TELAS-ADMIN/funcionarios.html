@@ -103,9 +103,9 @@
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
           </button> -->
-          <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
+            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
       </header>
       <!-- CONTENT -->
@@ -162,10 +162,19 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
+
+
+        <!-- <div class="topbar-actions">
+            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div> -->
               </tr>
               <tr>
                 <td>
@@ -188,8 +197,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -214,8 +225,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -240,8 +253,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -266,8 +281,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -360,5 +377,19 @@
         }
       });
     </script> -->
+
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const main = document.querySelector(".main");
+
+    sidebar.classList.toggle("closed");
+    main.classList.toggle("expanded");
+  }
+</script>
+
+
+
   </body>
 </html>

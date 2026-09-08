@@ -1,8 +1,11 @@
-        * {
+        /* * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
+        } */
+
+         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
 
         body {
             font-family: 'Inter', sans-serif;
@@ -17,7 +20,7 @@
             margin-left: calc(260px + 24px); /* sidebar width + espaçamento */
 }
         
-        .main { margin-left: 250px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
         /* ===== TOPBAR ===== */
         .topbar {
@@ -717,3 +720,54 @@
                 max-width: 100%;
             }
         }
+
+
+
+        /* ===== ANIMAÇÕES DE ENTRADA (INSPEÇÃO) ===== */
+
+/* Botão voltar e Filtro */
+.back-btn-wrapper,
+.filter-bar {
+  animation: fadeInDown 0.5s ease both;
+}
+
+/* Blocos de conteúdo com surgimento sequencial */
+.checklist-card {
+  animation: fadeInUp 0.5s ease 0.1s both;
+}
+
+.info-grid {
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+.stats-row {
+  animation: fadeInUp 0.5s ease 0.3s both;
+}
+
+.action-bar {
+  animation: fadeInUp 0.5s ease 0.4s both;
+}
+
+/* Keyframes das animações */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
