@@ -94,7 +94,7 @@ if ($user) {
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="#" class="nav-item" onclick="setActive(this, 'Funcionários')">
+        <a href="./funcionario.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
           <i class="fas fa-users"></i> Funcionários
         </a>
       </div>

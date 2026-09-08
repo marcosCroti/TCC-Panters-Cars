@@ -9,6 +9,22 @@ require_login();
 $nome_sessao = $_SESSION["user"] ?? ""; 
 $opcao_selecionada = $_GET['opicao'] ?? '';
 
+
+$stmt = $pdo->prepare("SELECT usuario_nome, isAdmin FROM first_data.usuarios WHERE usuario_nome = ?");
+$stmt->execute([$nome_sessao]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($user) {
+    // CORREÇÃO: Pega o valor real trazido do banco de dados
+    $nome = $user["usuario_nome"]; 
+    if($user["isAdmin"]){
+        $func = "Administrador";
+    }else{
+        $func = "Funcionario";
+    }
+} else {
+    $nome = "Usuário não encontrado";
+}
 // Inicializamos como array vazio para evitar erros no foreach caso venha vazio
 $inspecoes = [];
 
@@ -176,11 +192,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         </a>
     </div>
 
-    <div class="sidebar-footer">
-        <div class="avatar">G</div>
+      <div class="sidebar-footer">
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
-            <p>Gerente Admin</p>
-            <span>Administrador</span>
+            <p><?= $nome ?></p>
+            <span><?= $func ?></span>
         </div>
     </div>
 </aside>

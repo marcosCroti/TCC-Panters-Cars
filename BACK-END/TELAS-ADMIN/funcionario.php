@@ -135,13 +135,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         </a> -->
       </div>
 
-      <div class="sidebar-footer">
-        <div class="avatar">G</div>
+    <div class="sidebar-footer">
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
         <div class="user-info">
-          <p>Gerente Admin</p>
-          <span>Administrador</span>
+            <p><?= $nome ?></p>
+            <span><?= $func ?></span>
         </div>
-      </div>
+    </div>
     </aside>
 
     <!-- ===== MAIN ===== -->
