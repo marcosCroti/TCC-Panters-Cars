@@ -183,12 +183,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="./Funcionarios.html" class="nav-item" onclick="setActive(this,'Funcionários')">
+        <a href="./funcionario.php" class="nav-item" onclick="setActive(this,'Funcionários')">
             <i class="fas fa-users"></i> Funcionários
-        </a>
-        <a href="./Alerta_Admin.html" class="nav-item" onclick="setActive(this, 'Alertas')">
-            <i class="fas fa-bell"></i> Alertas
-            <span class="badge">0</span>
         </a>
     </div>
 

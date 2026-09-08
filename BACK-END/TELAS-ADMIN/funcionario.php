@@ -30,7 +30,7 @@ if ($user) {
 }
 
 $nome_sessao = $_SESSION["user"] ?? ""; 
-$stmt = $pdo->query("SELECT CPF, usuario_nome, email, isAdmin, ID FROM first_data.usuarios WHERE isAdmin is null or isAdmin = 0");
+$stmt = $pdo->query("SELECT CPF, usuario_nome, email, isAdmin, ID, setor_Funcionario, telefone FROM first_data.usuarios WHERE isAdmin is null or isAdmin = 0");
 
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if ($busca !== "") {
         // 2. CORREÇÃO: Uso de placeholders '?' em vez de variáveis diretas na string do SQL
         // IMPORTANTE: Adicionados parênteses ao redor do OR para não quebrar a lógica do isAdmin
-        $sql = "SELECT CPF, usuario_nome, email, ID FROM first_data.usuarios WHERE isAdmin IS NULL AND (usuario_nome LIKE ? OR CPF LIKE ?)";
+        $sql = "SELECT CPF, usuario_nome, email, ID,, setor_Funcionario, telefone  FROM first_data.usuarios WHERE isAdmin IS NULL AND (usuario_nome LIKE ? OR CPF LIKE ?)";
         $stmt = $pdo->prepare($sql);
         
         // 3. CORREÇÃO: Passando as duas variáveis correspondentes aos dois pontos de interrogação (?)
@@ -212,9 +212,9 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         </div>
                     </td>
                     <td><?php echo $user["CPF"]; ?></td>
-                    <td><?php echo " colocar telefone" ?></td>
+                    <td><?php echo $user["telefone"] ?></td>
                     <td><?php echo $user["email"]; ?></td>
-                    <td><?php echo "colocar setor" ?></td>
+                    <td><?php echo $user["setor_Funcionario"] ?></td>
                     <!-- <td><span class="setor-badge">Montagem</span></td>
                     <td><span class="pecas-count">47</span></td> -->
                     <td>
