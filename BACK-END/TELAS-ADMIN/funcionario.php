@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if ($busca !== "") {
         // 2. CORREÇÃO: Uso de placeholders '?' em vez de variáveis diretas na string do SQL
         // IMPORTANTE: Adicionados parênteses ao redor do OR para não quebrar a lógica do isAdmin
-        $sql = "SELECT CPF, usuario_nome, email, ID,, setor_Funcionario, telefone  FROM first_data.usuarios WHERE isAdmin IS NULL AND (usuario_nome LIKE ? OR CPF LIKE ?)";
+        $sql = "SELECT CPF, usuario_nome, email, ID, setor_Funcionario, telefone  FROM first_data.usuarios WHERE isAdmin IS NULL AND (usuario_nome LIKE ? OR CPF LIKE ?)";
         $stmt = $pdo->prepare($sql);
         
         // 3. CORREÇÃO: Passando as duas variáveis correspondentes aos dois pontos de interrogação (?)
@@ -181,10 +181,11 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         </div>
 
         <div class="table-card">
-          <div class="search-bar">
+            <form method="GET" class="search-bar">
             <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Buscar por nome, CPF ou setor..." />
-            <!-- <button class="refresh-btn">🔄</button> -->
+            <input type="text" placeholder="Buscar por nome, CPF ou setor..." name="busca" />
+            <button type="submit" class="btn-add">🔄 Buscar</button>
+            </form>
           </div>
 
           <table>
@@ -428,7 +429,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         </div>
       </div>
     </div>
-
     <script>
       function abrirModal() {
         document.getElementById("modalOverlay").classList.add("active");
@@ -450,6 +450,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
           fecharModal();
         }
       });
-    </script> -->
+    </script> 
+    -->
   </body>
 </html>

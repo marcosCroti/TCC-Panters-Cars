@@ -144,6 +144,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 }        */
 ?>
 
+
+        <!--
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -197,7 +199,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     </div>
 </aside>
 
-    <!-- NAVBAR -->
+ NAVBAR
     <nav class="navbar">
         <div class="navbar-left">
             <i class="fas fa-bars"></i>
@@ -215,10 +217,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         </div>
     </nav>
 
-    <!-- MAIN -->
     <div class="main-content">
 
-        <!-- BACK BUTTON -->
+
         <div class="back-btn-wrapper">
             <a href="./scanner.php" class="btn-back">
                 <i class="fas fa-arrow-left"></i>
@@ -246,7 +247,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             </div>
         </form>
 
-        <!-- CHECKLIST -->
+
         <div class="checklist-card">
             <div class="checklist-header">
                 <i class="fas fa-clipboard-list"></i>
@@ -254,20 +255,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             </div>
 <div class="checklist-body">
 
-    <?php 
-    $contador = 1; 
-    foreach ($inspecoes as $inspecao): 
-    ?>
-        <div class="checklist-item">
-            <div class="item-number"><?= $contador++; ?></div>
-            <span class="item-text"><?= htmlspecialchars($inspecao["instrucao"]); ?></span>
-            <div class="item-check"></div>
-        </div>
-    <?php endforeach; ?>
-
 </div>
         
-        <!--
+
                 <div class="checklist-item">
                     <div class="item-number">1</div>
                     <span class="item-text">Verificar se a cor do mouse é preta.</span>
@@ -312,7 +302,168 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
             </div>
 
-        -->
+ 
+        </div>
+
+ 
+        <div class="stats-row">
+            <div class="stat-card total">
+                <div class="stat-label">Total</div>
+                <input class="stat-input" type="number" placeholder="0">
+            </div>
+            <div class="stat-card aprovadas">
+                <div class="stat-label">Aprovadas</div>
+                <input class="stat-input" type="number" placeholder="0">
+            </div>
+            <div class="stat-card lote">
+                <div class="stat-label">Lote</div>
+                <input class="stat-input" type="text" placeholder="—">
+            </div>
+            <div class="stat-card reprovadas">
+                <div class="stat-label">Reprovadas</div>
+                <input class="stat-input" type="number" placeholder="0">
+            </div>
+        </div>
+
+
+        <div class="action-bar">
+            <button class="btn-fim">
+                <i class="fas fa-check-circle" style="margin-right:8px;"></i>
+                Finalizar Inspeção
+            </button>
+        </div>
+
+    </div>
+
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Inspeção</title>
+    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-ADMIN/inspecao.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="main">
+
+    <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo" id="logo-icon">
+            <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+         </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Principal</div>
+        <a href="./index.php" class="nav-item" onclick="setActive(this, 'Dashboard')">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
+            <i class="fas fa-qrcode"></i> Scanner
+        </a>
+         <a href="./inspecao.php" class="nav-item active" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-clipboard"></i> Inspeção
+        </a>
+        <a href="./editar_inspecao.php" class="nav-item" onclick="setActive(this, 'Controle de Qualidade')">
+            <i class="fas fa-edit"></i> Editar-Inspeção
+        </a>
+        <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
+            <i class="fas fa-boxes"></i> Inventário
+        </a>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-section-title">Administração</div>
+        <a href="./funcionario.php" class="nav-item" onclick="setActive(this,'Funcionários')">
+            <i class="fas fa-users"></i> Funcionários
+        </a>
+    </div>
+
+   <div class="sidebar-footer">
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
+        <div class="user-info">
+            <p><?= $nome ?></p>
+            <span><?= $func ?></span>
+        </div>
+    </div>
+</aside>
+
+    <header class="topbar">
+        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h2 id="topbar-title">Inspeção</h2>
+        <div class="topbar-actions">
+            <!-- <a class="topbar-btn ghost" href="./Alerta_Admin.html">
+                <i class="fas fa-bell"></i>
+                <span class="notif-dot"></span>
+            </a> -->
+            <a class="topbar-btn ghost" href="../Inicializaçao.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
+    
+    <!-- MAIN -->
+    <div class="main-content">
+        <!-- <div class="page-header"></div> -->
+
+        <!-- BACK BUTTON -->
+        <div class="back-btn-wrapper">
+            <button class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Voltar ao Scanner
+            </button>
+        </div>
+
+        <!-- FILTER BAR -->
+        <form action="inspecao.php" method="GET">
+            <div class="filter-bar">
+                <label>Item:</label>
+
+            <select name="opicao">
+                <option value="" disabled <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>Selecione uma opção</option>
+                <option value="pistao" <?= ($opcao_selecionada === 'pistao') ? 'selected' : '' ?>>Pistão</option>
+                <option value="pastilha" <?= ($opcao_selecionada === 'pastilha') ? 'selected' : '' ?>>Pastilha</option>
+                <option value="bateria" <?= ($opcao_selecionada === 'bateria') ? 'selected' : '' ?>>Bateria</option>
+                <option value="amortecedor" <?= ($opcao_selecionada === 'amortecedor') ? 'selected' : '' ?>>Amortecedor</option>
+                <option value="para_choque" <?= ($opcao_selecionada === 'para_choque') ? 'selected' : '' ?>>Para Choque</option>
+            </select>
+
+                <button type="submit" class="btn-reload">
+                    <i class="fas fa-rotate-right"></i>
+                    Recarregar
+                </button>
+            </div>
+        <!-- CHECKLIST -->
+        <div class="checklist-card">
+            <div class="checklist-header">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Itens de Verificação</h3>
+            </div>
+            <div class="checklist-body">
+
+                
+            <?php 
+            $contador = 1; 
+            foreach ($inspecoes as $inspecao): 
+            ?>
+                <div class="checklist-item">
+                    <div class="item-number"><?= $contador++; ?></div>
+                    <span class="item-text"><?= htmlspecialchars($inspecao["instrucao"]); ?></span>
+                    <div class="item-check"></div>
+                </div>
+            <?php endforeach; ?>
+
+            </div>
         </div>
 
         <!-- STATS CARDS -->
@@ -344,6 +495,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         </div>
 
     </div>
+</div>
+
+    
 
 </body>
 </html>
