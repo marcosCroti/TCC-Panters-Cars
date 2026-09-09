@@ -583,11 +583,57 @@ body {
 
 
 .search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   background: #fff;
   border: 1.5px solid #e5e7eb;
   border-radius: 12px;
   padding: 10px 16px;
+  flex: 1;
+  /* max-width: 420px; */
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+    margin-bottom: 15px;
 }
+
+.search-box:focus-within {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+.search-box i {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #374151;
+  width: 100%;
+  background: transparent;
+}
+
+.search-box input::placeholder {
+  color: #9ca3af;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .checklist-item:hover .item-check {
   border-color: #e74c3c;
