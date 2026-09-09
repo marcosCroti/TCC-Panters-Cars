@@ -4,7 +4,7 @@
             box-sizing: border-box;
         } */
 
-* {
+{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -564,8 +564,6 @@ body {
   flex-shrink: 0;
   transition: all 0.2s;
 }
-
-
 /* .search-box {
   display: flex;
   align-items: center;
@@ -581,55 +579,102 @@ body {
     box-shadow 0.2s;
 } */
 
+/* ===== CAMPO DE INSTRUÇÃO REESTILIZADO (COM ÍCONE EMBUTIDO E ANIMAÇÃO IDÊNTICA) ===== */
+.search-box { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px;           /* Espaço entre a barra e o botão */
+  width: 100%;         
+  margin-top: 18px;    
+  margin-bottom: 28px; /* Mantém o ótimo descolamento do card de baixo */
+  background: transparent; 
+  position: relative;  /* Necessário para alinhar o novo ícone */
+} 
 
-.search-box {
+/* ÍCONE PEQUENO ADICIONADO NA FRENTE DO TEXTO (Via CSS) */
+.search-box::before {
+  content: "\f044";               /* Código interno do FontAwesome para um lápis com papel (fa-edit/fa-pen-to-square) */
+  font-family: "Font Awesome 6 Free"; /* Puxa diretamente a biblioteca que você já tem no projeto */
+  font-weight: 900;
+  position: absolute;
+  left: 16px;                     /* Distância do canto esquerdo */
+  color: #9ca3af;                 /* Cinza sutil combinando com o placeholder */
+  font-size: 14px;                /* Tamanho pequeno e elegante */
+  pointer-events: none;           /* Garante que clicar no ícone ainda clica no input */
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+/* O campo de entrada de texto (Barra Branca) */
+.search-box input { 
+  flex: 1;             
+  background: #ffffff; 
+  border: 1.5px solid #e5e7eb; 
+  border-radius: 15px; 
+  padding: 0 16px 0 42px; /* AUMENTADO O PADDING ESQUERDO (42px) para o texto não passar por cima do ícone */
+  height: 42px;        /* Altura compacta e fina */
+  font-size: 14px;     
+  font-weight: 500;    
+  color: #1f2937;      
+  outline: none; 
+  font-family: "Inter", sans-serif;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02); 
+  transition: all 0.3s ease; /* IDÊNTICO AO SEU BOTÃO */
+} 
+
+/* Texto de dica (Placeholder) */
+.search-box input::placeholder { 
+  color: #9ca3af; 
+  font-weight: 400;
+}
+
+/* Animação do input ao passar o mouse (Hover) ou clicar (Focus) */
+.search-box input:hover,
+.search-box input:focus { 
+  border-color: #e74c3c; 
+  transform: translateY(-2px); /* IDÊNTICO AO SEU BOTÃO */
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.15); /* Sombra avermelhada sutil para combinar */
+}
+
+/* Efeito de clique físico no input */
+.search-box input:active {
+  transform: translateY(0); /* IDÊNTICO AO SEU BOTÃO */
+}
+
+/* FAZ O ÍCONE DA FRENTE FICAR VERMELHO quando você clica na barra */
+.search-box:focus-within::before {
+  color: #e74c3c;
+  transform: translateY(-2px); /* Mantém o ícone acompanhando a subida da barra */
+}
+
+/* O botão de mais (+) externo — Compacto e Gradiente */
+.search-box .btn-add {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: #fff;
-  border: 1.5px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 10px 16px;
-  flex: 1;
-  /* max-width: 420px; */
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
-    margin-bottom: 15px;
+  justify-content: center;
+  width: 42px;         
+  height: 42px;        
+  background: linear-gradient(135deg, #e74c3c, #c0392b); 
+  color: white;        
+  border: none; 
+  border-radius: 15px; 
+  cursor: pointer;
+  font-size: 15px;     
+  flex-shrink: 0;      
+  box-shadow: 0 4px 12 rgba(231, 76, 60, 0.35); /* IDÊNTICO AO SEU BOTÃO */
+  transition: all 0.3s ease; /* IDÊNTICO AO SEU BOTÃO */
 }
 
-.search-box:focus-within {
-  border-color: #e53e3e;
-  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+/* Animação do botão de mais ao passar o mouse (Hover) */
+.search-box .btn-add:hover {
+  transform: translateY(-2px); /* IDÊNTICO AO SEU BOTÃO */
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.45); /* IDÊNTICO AO SEU BOTÃO */
 }
 
-.search-box i {
-  color: #9ca3af;
-  font-size: 14px;
+/* Efeito de clique físico no botão */
+.search-box .btn-add:active {
+  transform: translateY(0); /* IDÊNTICO AO SEU BOTÃO */
 }
-
-.search-box input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  color: #374151;
-  width: 100%;
-  background: transparent;
-}
-
-.search-box input::placeholder {
-  color: #9ca3af;
-}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -868,4 +913,19 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ===== COMPORTAMENTO DO MENU DA SIDEBAR (RESOLVE O VAZAMENTO DE VEZ) ===== */
+.sidebar-section .nav-item {
+  width: calc(100% - 28px) !important; /* Obriga o botão a respeitar o tamanho da sidebar */
+  margin-left: 14px !important;        /* Dá o recuo perfeito na esquerda */
+  margin-right: 14px !important;       /* Dá o recuo perfeito na direita */
+  box-sizing: border-box !important;   /* Evita que o padding empurre o botão para fora */
+}
+
+/* Garante que o botão ativo fique exatamente com o mesmo tamanho dos outros */
+.sidebar-section .nav-item.active {
+  background: #e53e3e !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4) !important;
 }
