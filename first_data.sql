@@ -113,5 +113,3 @@ ALTER TABLE pecas add data_insp DATETIME DEFAULT CURRENT_TIMESTAMP;
 select * 	from pecas;
 insert into pecas(nome_tipo, grupo_peca, quantidade_pecas, pecas_aprovadas, lote, pecas_Reprovadas, id_pecas)
 values("bateria", "Elétrica", 0, 0, 0, 0, 4);
-
-

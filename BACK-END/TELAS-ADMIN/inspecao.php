@@ -2,6 +2,8 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
+
+
 require_once __DIR__ . "/../config/db.php";
 require_once __DIR__ . "/../config/auth.php";
 require_login();
@@ -36,7 +38,7 @@ $mapeamento_ids = [
 ];
 
 $id_peca = $mapeamento_ids[$opcao_selecionada] ?? null;
-
+ $erro = "";
 // Lógica de Atualização (POST)
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $total = $_POST["total"] ?? "";
@@ -45,26 +47,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $rejeitadas = (int)$total - (int)$aprovadas;
     $grupo = "";
 
-    if ($opcao_selecionada === "pistao") {
-        $grupo = "Motor e Transmissão";
-    } else if ($opcao_selecionada === "pastilha") {
-        $grupo = "Freios";
-    } else if ($opcao_selecionada === "bateria") {
-        $grupo = "Elétrica";
-    } else if ($opcao_selecionada === "para_choque") {
-        $grupo = "Carroceria/Acabamento";
-    } else if ($opcao_selecionada === "amortecedor") {
-        $grupo = "Suspensão e Direção";
+    // Mapeamento de grupos
+    $grupos = [
+        "pistao"      => "Motor e Transmissão",
+        "pastilha"    => "Freios",
+        "bateria"     => "Elétrica",
+        "para_choque" => "Carroceria/Acabamento",
+        "amortecedor" => "Suspensão e Direção"
+    ];
+
+    if (empty($opcao_selecionada) || !isset($grupos[$opcao_selecionada])) {
+        $erro = "Escolha o tipo da peça!";
+    } else {
+        $grupo = $grupos[$opcao_selecionada];
     }
 
-    $stmt = $pdo->prepare("INSERT INTO pecas (quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, id_pecas, grupo_peca, nome_tipo) VALUES(?, ?, ?, ?, ?, ?, ?)");
-    if ($stmt->execute([$total, $aprovadas, $rejeitadas, $lote, $id_peca, $grupo, $opcao_selecionada])) {
-        // Armazena a mensagem na sessão para persistir no redirecionamento
-        $_SESSION["mensagem_sucesso"] = "Inspeção concluída";
+    if($aprovadas < 0 || $total < 0 || $lote < 0){
+        $erro = "Escolha um valor Existente!";
+    }
+
+    // Só executa se NÃO houver erros
+    if (empty($erro)) {
+        $stmt = $pdo->prepare("INSERT INTO pecas (quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, id_pecas, grupo_peca, nome_tipo, usuario, funcao) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
-        // Padrão PRG: Redireciona via GET mantendo a opção selecionada na URL
-        header("Location: inspecao.php?opicao=" . urlencode($opcao_selecionada));
-        exit();
+        if ($stmt->execute([$total, $aprovadas, $rejeitadas, $lote, $id_peca, $grupo, $opcao_selecionada, $nome, $func])) {
+            $_SESSION["mensagem_sucesso"] = "Inspeção concluída";
+            header("Location: inspecao.php?opicao=" . urlencode($opcao_selecionada));
+            exit();
+        }
     }
 }
 
@@ -80,7 +90,7 @@ if ($id_peca) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Inspeção</title>
+    <title>Panthers Cars - Inspeção</title>
     <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-ADMIN/inspecao.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -100,7 +110,7 @@ if ($id_peca) {
                 <a href="./index.php" class="nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 <a href="./scanner.php" class="nav-item"><i class="fas fa-qrcode"></i> Scanner</a>
                 <a href="./inspecao.php" class="nav-item active"><i class="fas fa-clipboard"></i> Inspeção</a>
-                <a href="./editar_inspecao.php" class="nav-item"><i class="fas fa-edit"></i> Editar-Inspeção</a>
+                <a href="./editar_inspecao.php" class="nav-item"><i class="fas fa-edit"></i> Editar Inspeção</a>
                 <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
             </div>
 
@@ -118,17 +128,17 @@ if ($id_peca) {
             </div>
         </aside>
 
-        <header class="topbar">
-            <button class="topbar-menu-btn" onclick="toggleSidebar()">
-                <i class="fas fa-bars"></i>
-            </button>
-            <h2 id="topbar-title">Inspeção</h2>
-            <div class="topbar-actions">
-                <a class="topbar-btn ghost" href="../Inicializaçao.html">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-            </div>
-        </header>
+    <header class="topbar">
+        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button> -->
+        <h2 id="topbar-title">Inspeção</h2>
+        <div class="topbar-actions">
+            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
 
         <div class="main-content">
             <?php if (!empty($mensagem_sucesso)): ?>
@@ -211,8 +221,14 @@ if ($id_peca) {
                         <i class="fas fa-check-circle" style="margin-right:8px;"></i>
                         Finalizar Inspeção
                     </button>
+
+
                 </div>
             </form> 
+                                <?php if($erro): ?>
+
+                       <p class="erro" style="color: red;"><?= htmlspecialchars($erro)?></p>
+                    <?php endif; ?>
         </div>
     </div>
 </body>
