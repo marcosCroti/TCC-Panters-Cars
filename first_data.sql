@@ -59,3 +59,54 @@ create database first_data CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
     setor VARCHAR(200) NOT NUll,
     quantidade_pecas_no_dia INT NOT NULL
     );
+
+    create table examinar_pecas(
+    pecas_aprovadas INT NOT NULL,
+    pecas_rejeitadas INT NOT NULL,
+    pecas_examinadas INT NOT NULL,
+    quantidade_pecas INT NOT NULL,
+    quantidade_pecas_setor INT NOT NULL,
+    quantidade_pecas_no_dia INT NOT NULL
+    );
+
+
+create table instrucao(
+	id integer auto_increment unique primary key,
+    instrucao varchar(200) not null,
+    id_peca varchar(200) not null
+);
+
+insert into instrucao(instrucao, id_peca)
+values('Inspecionar canaletas dos anéis de segmento.', '1'),
+('Checar alinhamento do pino de pistão.', '1'),
+('Verificar ausência de riscos na saia do pistão.', '1'),
+('Verificar espessura do material de atrito.', '2'),
+('Inspecionar trincas ou trincamentos na superfície.', '2'),
+('Conferir assentamento das placas antirruído.', '2'),
+('Verificar desgaste uniforme das sapatas.', '2'),
+("Verificar curso e velocidade de retorno da haste.",'3'),
+("Checar vazamento de fluido hidráulico.", "3"),
+("Conferir estado e desgaste das buchas de fixação.", "3"),
+("Inspecionar alinhamento da coifa e do batente.", "3"),
+("Verificar alinhamento e fixação das presilhas.", "4"),
+("Checar pintura, tonalidade e acabamento externo.", "4"),
+("Conferir absorvedor de impacto interno.", "4"),
+("Verificar encaixe das grades e faróis de milha.", "4");
+
+insert into instrucao(instrucao, id_peca)
+values("Verificar carga e tensão da bateria.", "5"),
+("Conferir nível do eletrólito nas células.", "5"),
+("Checar vedação e ausência de corrosão nos bornes.", "5"),
+("Testar corrente de partida a frio (CCA).", "5");
+
+  
+ALTER TABLE usuarios ADD setor_Funcionario VARCHAR(200) NULL;
+ALTER TABLE pecas ADD pecas_aprovadas INTEGER;
+ALTER TABLE pecas ADD pecas_reprovadas INTEGER;
+ALTER TABLE pecas ADD lote INTEGER;
+ALTER TABLE pecas add data_insp DATETIME DEFAULT CURRENT_TIMESTAMP;
+select * 	from pecas;
+insert into pecas(nome_tipo, grupo_peca, quantidade_pecas, pecas_aprovadas, lote, pecas_Reprovadas, id_pecas)
+values("bateria", "Elétrica", 0, 0, 0, 0, 4);
+
+
