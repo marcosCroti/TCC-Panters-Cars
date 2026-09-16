@@ -10,7 +10,8 @@
     password_hash VARCHAR(255) NOT NULL,
     isAdmin boolean,
     usuario_funcionario VARCHAR(200) NOT NULL,
-    telefone INT NOT NULL
+    telefone INT NOT NULL,
+    setor_Funcionario VARCHAR(200) NOT NULL
     );
 
     CREATE TABLE pecas (
@@ -98,3 +99,13 @@ values("Verificar carga e tensão da bateria.", "5"),
 ("Conferir nível do eletrólito nas células.", "5"),
 ("Checar vedação e ausência de corrosão nos bornes.", "5"),
 ("Testar corrente de partida a frio (CCA).", "5");
+
+  
+ALTER TABLE usuarios ADD setor_Funcionario VARCHAR(200) NULL;
+ALTER TABLE pecas ADD pecas_aprovadas INTEGER;
+ALTER TABLE pecas ADD pecas_reprovadas INTEGER;
+ALTER TABLE pecas ADD lote INTEGER;
+ALTER TABLE pecas add data_insp DATETIME DEFAULT CURRENT_TIMESTAMP;
+select * 	from pecas;
+insert into pecas(nome_tipo, grupo_peca, quantidade_pecas, pecas_aprovadas, lote, pecas_Reprovadas, id_pecas)
+values("bateria", "Elétrica", 0, 0, 0, 0, 4);
