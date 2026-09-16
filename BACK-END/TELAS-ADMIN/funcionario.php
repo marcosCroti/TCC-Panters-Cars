@@ -148,9 +148,9 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     <div class="main">
       <!-- TOPBAR -->
       <header class="topbar">
-        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
-        </button>
+        </button> -->
         <h2 id="topbar-title">Cadastro de Funcionários</h2>
         <div class="topbar-actions">
           <!-- <button
@@ -161,9 +161,9 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
           </button> -->
-          <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
+            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
       </header>
       <!-- CONTENT -->

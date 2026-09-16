@@ -111,12 +111,12 @@ if ($user) {
 <div class="main">
     <!-- TOPBAR -->
     <header class="topbar">
-        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
-        </button>
+        </button> -->
         <h2 id="topbar-title">Dashboard Gerencial</h2>
         <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/login.php">
+            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>

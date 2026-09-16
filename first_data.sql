@@ -60,7 +60,11 @@
     setor VARCHAR(200) NOT NUll,
     quantidade_pecas_no_dia INT NOT NULL
     );
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> ffbddb4b4de00d9c6e04d23aa39338dd335fccc7
     create table examinar_pecas(
     pecas_aprovadas INT NOT NULL,
     pecas_rejeitadas INT NOT NULL,

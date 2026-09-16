@@ -45,7 +45,8 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                 MIN(id_pecas) AS id_pecas,
                 nome_tipo,
                 grupo_peca,
-                SUM(quantidade_pecas) AS quantidade_pecas
+                SUM(quantidade_pecas) AS quantidade_pecas,
+                SUM(pecas_reprovadas) AS pecas_reprovadas
             FROM first_data.pecas 
             WHERE grupo_peca = ? 
             GROUP BY nome_tipo, grupo_peca
@@ -59,14 +60,13 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                 MIN(id_pecas) AS id_pecas,
                 nome_tipo,
                 grupo_peca,
-
-                SUM(quantidade_pecas) AS quantidade_pecas
+                SUM(quantidade_pecas) AS quantidade_pecas,
+                SUM(pecas_reprovadas) AS pecas_reprovadas
             FROM first_data.pecas 
             GROUP BY nome_tipo, grupo_peca
             ORDER BY MIN(id_pecas) ASC
         ");
     }
-
     $pecas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     function h($valor) {
@@ -174,58 +174,64 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
     <body>
 
     <!-- ===== SIDEBAR ===== -->
-        <aside class="sidebar" id="sidebar">
-        <div class="sidebar-logo">
-            <div class="logo-icon">🚗</div>
-            <span class="logo-text">Panthers<span>Cars</span></span>
-        </div>
+       <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <!-- <div class="logo-icon">🚗</div> -->
+         <div class="logo" id="logo-icon">
+             <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+         </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+      </div>
 
-        <div class="sidebar-section">
-            <div class="sidebar-section-title">Principal</div>
-            <a
-            href="./index.php"
-            class="nav-item"
-            onclick="setActive(this, 'Dashboard')"
-            >
-            <i class="fas fa-tachometer-alt"></i> Dashboard
-            </a>
-            <a
-            href="./scanner.php"
-            class="nav-item"
-            onclick="setActive(this, 'Scanner')"
-            >
-            <i class="fas fa-qrcode"></i> Scanner
-            </a>
-            <a
-            href="./inventario.php"
-            class="nav-item"
-            onclick="setActive(this, 'Inventário')"
-            >
-            <i class="fas fa-boxes"></i> Inventário
-            </a>
-            <a
-            href="./inspecao.php"
-            class="nav-item"
-            onclick="setActive(this, 'Inspeção')"
-            >
-            <i class="fas fa-clipboard"></i> Inspeção
-            </a>
-            <a
-            href="./inspe_editar.php"
-            class="nav-item"
-            onclick="setActive(this, 'Editar Inspeção')"
-            >
-            <i class="fas fa-edit"></i> Editar Inspeção
-            </a>
-        </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Principal</div>
+        <a
+          href="./index.php"
+          class="nav-item" 
+          onclick="setActive(this, 'Dashboard')"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a
+          href="./scanner.php"
+          class="nav-item"
+          onclick="setActive(this, 'Scanner')"
+        >
+          <i class="fas fa-qrcode"></i> Scanner
+        </a>
+        <a
+        href="./inspecao.php"
+        class="nav-item"
+        onclick="setActive(this, 'Inspeção')"
+        >
+        <i class="fas fa-clipboard"></i> Inspeção
+      </a>
+      <a
+      href="./editar_inspecao.php"
+      class="nav-item"
+      onclick="setActive(this, 'Editar Inspeção')"
+      >
+      <i class="fas fa-edit"></i> Editar Inspeção
+    </a>
+    <a
+      href="./inventario.php"
+      class="nav-item active"     
+    >
+      <i class="fas fa-boxes"></i> Inventário
+    </a>
+      </div>
 
-        <div class="sidebar-section">
-            <div class="sidebar-section-title">Administração</div>
-            <a href="funcionario.php" class="nav-item">
-            <i class="fas fa-users"></i> Funcionários
-            </a>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Administração</div>
+        <a href="funcionario.php" class="nav-item">
+          <i class="fas fa-users"></i> Funcionários
+        </a>
+        <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
+          <i class="fas fa-bell"></i> Alertas
+          <span class="badge">3</span>
+        </a> -->
+      </div>
 
-        </div>
 
         <div class="sidebar-footer">
             <div class="avatar"><?= strtoupper($nome[0]) ?></div>
@@ -239,23 +245,17 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
     <!-- MAIN -->
     <div class="main">
         <!-- TOPBAR -->
-        <header class="topbar">
-            <button class="topbar-menu-btn" onclick="toggleSidebar()">
-                <i class="fas fa-bars"></i>
-            </button>
-            <h2 id="topbar-title">Inventário</h2>
-            <div class="topbar-actions">
-                <button class="topbar-btn red" onclick="showToast('🔴 Status: Online')">
-                    <i class="fas fa-circle" style="font-size:10px"></i>
-                </button>
-                <button class="topbar-btn ghost" onclick="showToast('🔔 3 alertas pendentes')" style="position:relative">
-                    <i class="fas fa-bell"></i>
-                    <span class="notif-dot"></span>
-                </button>
-    <a href="./../auth/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt"></i></a>
-            </div>
-        </header>
-
+       <header class="topbar">
+        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button> -->
+        <h2 id="topbar-title"> Inventário </h2>
+        <div class="topbar-actions">
+            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
         <!-- CONTENT -->
         <div class="content">
             <div class="page-header">
@@ -336,6 +336,8 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                     $grupo = $peca["grupo_peca"] ?? "";
                     $setor = $peca["setor"] ?? "";
                     $quantidade = (int)($peca["quantidade_pecas"] ?? 0);
+                    $reprovadas = (int)($peca["pecas_reprovadas"] ?? 0);
+                    $total = $quantidade - $reprovadas;
                     $status = statusPeca($quantidade);
                     $statusTexto = textoStatus($status);
                     $cat = categoriaCard($grupo);
@@ -347,7 +349,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                         $codigo,
                         $grupo,
                         $setor,
-                        $quantidade,
+                        $total,
                         $status
                     ];
                 ?>
@@ -368,7 +370,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                                 <i class="fas fa-map-marker-alt"></i> <?= h($setor) ?>
                             </div>
                             <div class="card-footer">
-                                <span class="qty-text">Qtd: <span><?= h($quantidade) ?></span></span>
+                                <span class="qty-text">Qtd: <span><?= h($total) ?></span></span>
                                 <button class="info-btn" onclick='openModal(...<?= json_encode($modalArgs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>)'>
                                     <i class="fas fa-info"></i>
                                 </button>
