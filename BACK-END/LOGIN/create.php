@@ -7,16 +7,12 @@ $erro = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cpf = preg_replace('/[^0-9]/', '', $_POST["cpf"] ?? "");
     $email = trim($_POST["email"] ?? "");
+    $setor = $_POST["setor"] ?? "";
     $senha = trim($_POST["password"] ?? "");
-    $confirmarSenha = trim($_POST["confirmar"] ?? "");
     $nome = trim($_POST["nome"] ?? "");
     //$telefone = preg_replace('/[^0-9]/', '', $_POST["telefone"] ?? "");
     $telefone = ($_POST["telefone"] ?? "");
-
-    $inputAdmin = $_POST["perfil"] ?? "employee";
-
     // 1. Define o valor de admin separado da validação de erros
-    $isAdminValue = ($inputAdmin === "admin") ? 1 : 0;
 
     // 2. Cadeia de Validação (Ordem correta)
     if (empty($cpf) || empty($email) || empty($senha) || empty($nome)) {
@@ -31,9 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     else if (strlen($senha) < 6) {
         $erro = "A senha deve ter pelo menos 6 caracteres!";
     } 
-    else if ($senha !== $confirmarSenha) {
-        $erro = "As senhas não conferem!";
-    } 
     else {
         // 3. Se passou em tudo, verifica banco de dados
         try {
@@ -46,10 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $hash = password_hash($senha, PASSWORD_DEFAULT);
                 
                 // Note que usei $isAdminValue aqui
-                $stmt = $pdo->prepare("INSERT INTO first_data.usuarios (CPF, usuario_nome, email, password_hash, telefone, isAdmin) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt = $pdo->prepare("INSERT INTO first_data.usuarios (CPF, usuario_nome, email, password_hash, telefone, setor_Funcionario) VALUES (?, ?, ?, ?, ?, ?)");
                 
-                if ($stmt->execute([$cpf, $nome, $email, $hash, $telefone, $isAdminValue])) {
-                    header("Location: ../AUTH/login.php");
+                if ($stmt->execute([$cpf, $nome, $email, $hash, $telefone, $setor])) {
+                    header("Location: ../../BACK-END/TELAS-ADMIN/funcionario.php");
                     exit;
                 } else {
                     $erro = "Erro crítico ao salvar no banco.";
@@ -68,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panthers Cars - Criar Conta</title>
-    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-LOGAR/Criar_Conta.css"/>
+    <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-LOGAR/criar_conta.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -79,48 +72,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <div class="register-card">
         <!-- Logo -->
         <div class="logo">
-          <div class="logo-icon">
-            <i class="fas fa-user-plus"></i>
-          </div>
+          <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+          
         </div>
-
+        
         <!-- Título -->
         <h1 class="title">Criar <span class="highlight">Conta</span></h1>
         <p class="subtitle">Preencha seus dados para acessar o sistema</p>
 
         <!-- Formulário -->
-        <form id="registerForm" action="" method="POST">
-          <input type="hidden" name="perfil" id="perfil" value="employee">
-          <!-- Tipo de Perfil -->
-          <div class="form-section">
-            <label class="section-label">TIPO DE PERFIL</label>
-            <div class="profile-options">
-              <!-- Administrador -->
-              <div class="profile-card" data-profile="admin" >
-                <div class="profile-icon">
-                  <i class="fas fa-user-shield"></i>
-                </div>
-                <h3>Administrador</h3>
-                <p>Acesso total ao sistema e gestão de equipe</p>
-                <div class="check-icon">
-                  <i class="fas fa-check"></i>
-                </div>
-              </div>
-
-              <!-- Funcionário -->
-              <div class="profile-card active" data-profile="employee">
-                <div class="profile-icon">
-                  <i class="fas fa-user-tag"></i>
-                </div>
-                <h3>Funcionário</h3>
-                <p>Acesso ao scanner e operação de peças</p>
-                <div class="check-icon">
-                  <i class="fas fa-check"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <form id="registerForm" method="POST">
+        
           <!-- Nome Completo -->
           <div class="form-section">
             <label class="section-label">NOME COMPLETO</label>
@@ -147,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   id="cpf"
                   name="cpf"
                   placeholder="000.000.000.00"
-                  maxlength="14"
+                  maxlength="11"
                   required
                 />
               </div>
@@ -161,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   type="text"
                   id="telefone"
                   placeholder="(00) 00000-0000"
-                  maxlength="15"
+                  maxlength="11"
                   required
                   name="telefone"
                 />
@@ -169,99 +131,152 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
           </div>
 
-          <!-- E-mail -->
-          <div class="form-section">
-            <label class="section-label">E-MAIL</label>
-            <div class="input-wrapper">
-              <i class="fas fa-envelope input-icon"></i>
-              <input
-                type="email"
-                id="email"
-                placeholder="seu@email.com"
-                required
-                name="email"
-                email="email"
-              />
-            </div>
-          </div>
+            <!-- Formulário -->
+            <!-- <form id="registerForm"> -->
 
-          <!-- Senha e Confirmar Senha -->
-          <div class="form-row">
-            <div class="form-section">
-              <label class="section-label">SENHA</label>
-              <div class="input-wrapper">
-                <i class="fas fa-lock input-icon"></i>
-                <input
-                  type="password"
-                  id="senha"
-                  placeholder="Mínimo 8 caracteres"
-                  required
-                  name="password"                  
-                />
-                <button
-                  type="button"
-                  class="password-toggle"
-                  data-target="senha"
-                >
-                  <i class="fas fa-eye"></i>
+                <!-- Nome Completo -->
+                <!-- <div class="form-section">
+                    <label class="section-label">NOME COMPLETO</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input 
+                            type="text" 
+                            id="nome" 
+                            placeholder="Seu nome completo"
+                            nome="name"
+                        >
+                    </div>
+                </div> -->
+
+                <!-- CPF e Telefone -->
+                <!-- <div class="form-row">
+                    <div class="form-section">
+                        <label class="section-label">CPF</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-id-card input-icon"></i>
+                            <input 
+                                type="text" 
+                                id="cpf" 
+                                placeholder="000.000.000-00"
+                                maxlength="14"
+                                required
+                            >
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="form-section">
+                        <label class="section-label">TELEFONE</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input 
+                                type="tel" 
+                                id="telefone" 
+                                placeholder="(00) 00000-0000"
+                                maxlength="15"
+                                required
+                            >
+                        </div>
+                    </div>
+                </div> -->
+
+                
+          
+                <!-- E-mail -->
+                <div class="form-section">
+                    <label class="section-label">E-MAIL</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input 
+                            type="email" 
+                            id="email"
+                            name="email"
+                            placeholder="seu@email.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Senha e Confirmar Senha -->
+                <div class="form-row">
+                    <div class="form-section">
+                        <label class="section-label">SENHA</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input 
+                                type="password" 
+                                id="senha" 
+                                name="password"
+                                placeholder="Mínimo 8 caracteres"
+                                required
+                            >
+                            <button type="button" class="password-toggle" data-target="senha">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <label class="section-label">SETOR</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-sitemap input-icon"></i>
+                            <select name="setor" id="setor">
+                              <option value="" disabled selected>Selecione</option>
+                              <option value="montagem">Montagem</option>
+                              <option value="qualidade">Qualidade</option>
+                              <option value="expedicao">Expedição</option>
+                              <option value="inspecao">Inspeção</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                    <!-- <div class="form-section">
+                        <label class="section-label">CONFIRMAR SENHA</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input 
+                                type="password" 
+                                id="confirmarSenha" 
+                                placeholder="Repita a senha"
+                                required
+                            >
+                            <button type="button" class="password-toggle" data-target="confirmarSenha">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div> -->
+
+                <!-- Força da Senha -->
+                <!-- <div class="password-strength">
+                    <div class="strength-bar">
+                        <div class="strength-fill"></div>
+                    </div>
+                    <small class="strength-text">Força da senha: <span id="strengthText">Fraca</span></small>
+                </div> -->
+
+                <!-- Botão de Cadastro -->
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-user-plus"></i>
+                    Criar Conta
                 </button>
+
+                <!-- Link para Login -->
+                <!-- <div class="login-link">
+                    Já tem conta? <a href="../auth/login.php">Fazer login</a>
+                </div> -->
+                <?php if($erro): ?>
+                  <p style="color: red  ;"><?= $erro ?></p>
+
+                  <?php endif; ?>
               </div>
             </div>
 
-            <div class="form-section">
-              <label class="section-label">CONFIRMAR SENHA</label>
-              <div class="input-wrapper">
-                <i class="fas fa-lock input-icon"></i>
-                <input
-                  type="password"
-                  name="confirmar"
-                  id="confirmarSenha"
-                  placeholder="Repita a senha"
-                  required
-                />
-                <button
-                  type="button"
-                  class="password-toggle"
-                  data-target="confirmarSenha"
-                >
-                  <i class="fas fa-eye"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Força da Senha -->
-          <div class="password-strength">
-            <div class="strength-bar">
-              <div class="strength-fill"></div>
-            </div>
-            <small class="strength-text"
-              >Força da senha: <span id="strengthText">Fraca</span></small
-            >
-          </div>
-
-          <!-- Botão de Cadastro -->
-          <button type="submit" class="btn-register">
-            <i class="fas fa-user-plus"></i>
-            Criar Conta
-          </button>
-          <br>
-
-          <?php if ($erro): ?>
-           <p><?= htmlspecialchars($erro) ?></p>
-            <?php endif; ?>
-
-
-          <!-- Link para Login -->
-          <div class="login-link">
-            Já tem conta? <a href="../AUTH/login.php">Fazer login</a>
-          </div>
-        </form>
+ 
 
         </div>
       </div>
     </div>
 
-    <script src="../../FRONT-END/JAVASCRIPT/script.js"></script>
+    <script src="../Front-end/SCRIPT/script.js"></script>
   </body>
 </html>

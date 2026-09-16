@@ -53,8 +53,7 @@
     </a>
     <a
       href="./inventario.html"
-      class="nav-item active"
-      onclick="setActive(this, 'Inventário')"
+      class="nav-item active"     
     >
       <i class="fas fa-boxes"></i> Inventário
     </a>
@@ -62,7 +61,7 @@
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="#" class="nav-item" onclick="setActive(this, 'Funcionários')">
+        <a href="funcionarios.html" class="nav-item">
           <i class="fas fa-users"></i> Funcionários
         </a>
         <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
@@ -84,9 +83,9 @@
     <div class="main">
       <!-- TOPBAR -->
       <header class="topbar">
-        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
-        </button>
+        </button> -->
         <h2 id="topbar-title">Inventário</h2>
         <div class="topbar-actions">
           <!-- <button
@@ -103,9 +102,9 @@
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
           </button> -->
-          <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
+            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
       </header>
 

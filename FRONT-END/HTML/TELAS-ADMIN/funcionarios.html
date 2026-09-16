@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/FRONT-END/CSS/TELAS-ADMIN/funcionarios.css" />
+    <link rel="stylesheet" href="../../CSS/TELAS-ADMIN/funcionarios.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
   </head>
   <body>
@@ -46,7 +46,7 @@
         <i class="fas fa-clipboard"></i> Inspeção
       </a>
       <a
-      href="./inspe_editar.html"
+      href="./editar_inspecao.html"
       class="nav-item"
       onclick="setActive(this, 'Editar Inspeção')"
       >
@@ -64,12 +64,13 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
         <a
-          href="./funcionarios.html"
-          class="nav-item active"
-          onclick="setActive(this, 'Funcionários')"
+          href="./funcionarios.html" 
+          class="nav-item active" onclick="setActive(this, 'Funcionários')"
+          
         >
           <i class="fas fa-users"></i> Funcionários
         </a>
+
         <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
           <i class="fas fa-bell"></i> Alertas
           <span class="badge">3</span>
@@ -89,9 +90,9 @@
     <div class="main">
       <!-- TOPBAR -->
       <header class="topbar">
-        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
-        </button>
+        </button> -->
         <h2 id="topbar-title">Cadastro de Funcionários</h2>
         <div class="topbar-actions">
           <!-- <button
@@ -102,9 +103,9 @@
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
           </button> -->
-          <button class="topbar-btn ghost" onclick="showToast('🚪 Saindo...')">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
+            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
       </header>
       <!-- CONTENT -->
@@ -112,7 +113,13 @@
         <div class="content-header">
           <div class="content-header-left"></div>
           <!-- BOTÃO QUE ABRE O MODAL -->
-          <button class="btn-add" onclick="abrirModal()">👤+ Adicionar</button>
+          <!-- <button class="btn-add" onclick="abrirModal()">👤+ Adicionar</button> -->
+          <!-- <button class="btn-add">👤+ Adicionar</button> -->
+          <div >
+            <a class="btn-add" href="../../LOGIN/criar_conta.html">👤+ Adicionar
+            </a>
+        </div>
+        
         </div>
 
         <div class="table-card">
@@ -155,10 +162,19 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
+
+
+        <!-- <div class="topbar-actions">
+            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div> -->
               </tr>
               <tr>
                 <td>
@@ -181,8 +197,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -207,8 +225,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -233,8 +253,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -259,8 +281,10 @@
                 </td> -->
                 <td>
                   <div class="actions-cell">
-                    <button class="btn-edit">✏️</button>
-                    <button class="btn-delete">🗑️</button>
+                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
+                      <i>✏️</i>
+                     </a>
+                    <a class="btn-delete">🗑️</a> 
                   </div>
                 </td>
               </tr>
@@ -353,5 +377,19 @@
         }
       });
     </script> -->
+
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const main = document.querySelector(".main");
+
+    sidebar.classList.toggle("closed");
+    main.classList.toggle("expanded");
+  }
+</script>
+
+
+
   </body>
 </html>

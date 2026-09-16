@@ -20,7 +20,7 @@ require_once __DIR__ . "/../CONFIG/auth.php";
 
             // busca usuário pelo CPF e nome
             $stmt = $pdo->prepare("
-                SELECT password_hash, CPF, id 
+                SELECT password_hash, CPF, id, usuario_nome
                 FROM first_data.usuarios 
                 WHERE CPF = ?
             ");
@@ -38,7 +38,7 @@ require_once __DIR__ . "/../CONFIG/auth.php";
                 } else {
 
                     // login OK
-                    // $_SESSION["user"] = $user["usuario_nome"];
+                    $_SESSION["user"] = $user["usuario_nome"];
                     $_SESSION["user_id"] = $user["id"];
 
                     header("Location: ../TELAS-ADMIN/index.php");

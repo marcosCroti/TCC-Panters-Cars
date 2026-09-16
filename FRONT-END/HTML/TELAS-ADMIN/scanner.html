@@ -12,65 +12,69 @@
  <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
-        <div class="logo-icon">🚗</div>
+        <!-- <div class="logo-icon">🚗</div> -->
+         <div class="logo" id="logo-icon">
+            <img src="../../LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+         </div>
+
         <span class="logo-text">Panthers<span>Cars</span></span>
       </div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
         <a
-          href="./index.php"
+          href="./dashboard.html"
           class="nav-item"
           onclick="setActive(this, 'Dashboard')"
         >
           <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
         <a
-          href="./scanner.php"
-          class="nav-item"
+          href="./scanner.html"
+          class="nav-item active"
           onclick="setActive(this, 'Scanner')"
         >
           <i class="fas fa-qrcode"></i> Scanner
         </a>
         <a
-          href="./inventario.php"
-          class="nav-item"
-          onclick="setActive(this, 'Inventário')"
+        href="./inspecao.html"
+        class="nav-item"
+        onclick="setActive(this, 'Inspeção')"
         >
-          <i class="fas fa-boxes"></i> Inventário
-        </a>
-        <a
-          href="./inspecao.php"
-          class="nav-item"
-          onclick="setActive(this, 'Inspeção')"
-        >
-          <i class="fas fa-clipboard"></i> Inspeção
-        </a>
-        <a
-          href="./inspe_editar.php"
-          class="nav-item"
-          onclick="setActive(this, 'Editar Inspeção')"
-        >
-          <i class="fas fa-edit"></i> Editar Inspeção
-        </a>
+        <i class="fas fa-clipboard"></i> Inspeção
+    </a>
+    <a
+    href="./editar_inspecao.html"
+    class="nav-item"
+    onclick="setActive(this, 'Editar Inspeção')"
+    >
+    <i class="fas fa-edit"></i> Editar Inspeção
+</a>
+<a
+  href="./inventario.html"
+  class="nav-item"
+  onclick="setActive(this, 'Inventário')"
+>
+  <i class="fas fa-boxes"></i> Inventário
+</a>
       </div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
-        <a href="funcionario.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+        <a href="./funcionarios.html" class="nav-item" onclick="setActive(this, 'Funcionários')">
             
           <i class="fas fa-users"></i> Funcionários
         </a>
 
       </div>
 
-    <div class="sidebar-footer">
-        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
+      <div class="sidebar-footer">
+        <div class="avatar">G</div>
         <div class="user-info">
-            <p><?= $nome ?></p>
-            <span><?= $func ?></span>
+          <p>Gerente Admin</p>
+          <span>Administrador</span>
         </div>
-    </div>
+      </div>
     </aside>
 
 <!-- ===== MAIN ===== -->
@@ -78,19 +82,19 @@
 
     <!-- TOPBAR -->
     <header class="topbar">
-        <button class="topbar-menu-btn" onclick="toggleSidebar()">
+        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
             <i class="fas fa-bars"></i>
-        </button>
+        </button> -->
         <h2 id="topbar-title">Scanner de Peças</h2>
         <div class="topbar-actions">
-            <button class="topbar-btn red" onclick="showToast('🔴 Status: Online')">
+            <!-- <button class="topbar-btn red" onclick="showToast('🔴 Status: Online')">
                 <i class="fas fa-circle" style="font-size:10px"></i>
             </button>
             <button class="topbar-btn ghost" onclick="showToast('🔔 3 alertas pendentes')" style="position:relative">
                 <i class="fas fa-bell"></i>
                 <span class="notif-dot"></span>
-            </button>
-            <a href="./../auth/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt" ></i></a>
+            </button> -->
+            <a href="../../LOGIN/login_admin.html" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt" ></i></a>
         </div>
     </header>
 
@@ -153,11 +157,11 @@
                 </button>
                 <button class="btn-alert" id="btn-cancel">
                     <i class="fas fa-clipboard"></i>
-                    Inspecionar
+                    Ligar Câmera
                 </button>
-                <button class="btn-cancel" onclick="openAlertModal()">
+                <button class="btn-insp" id="btn-insp">
                     <i class="fas fa-exclamation-triangle"></i>
-                    Cancelar
+                    Ir para inspeção
                 </button>
             </div>
 
@@ -190,13 +194,9 @@
 <!-- ===== TOAST ===== -->
 <div class="toast" id="toast"></div>
 
-<script>
-
-
-</script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-    <script src="../../Front-End/JAVASCRIPT/camera2.js"></script>
+    <script src="../../Front-End/JAVASCRIPT/teste.js"></script>
      <script src="../../Front-End/JAVASCRIPT//fatores.js"></script>
 </body>
 </html>

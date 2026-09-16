@@ -1,4 +1,4 @@
-create database first_data CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+    create database first_data CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
     use first_data;
 
@@ -10,7 +10,8 @@ create database first_data CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
     password_hash VARCHAR(255) NOT NULL,
     isAdmin boolean,
     usuario_funcionario VARCHAR(200) NOT NULL,
-    telefone INT NOT NULL
+    telefone INT NOT NULL,
+    setor_Funcionario VARCHAR(200) NOT NULL
     );
 
     CREATE TABLE pecas (
@@ -59,7 +60,11 @@ create database first_data CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
     setor VARCHAR(200) NOT NUll,
     quantidade_pecas_no_dia INT NOT NULL
     );
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ffbddb4b4de00d9c6e04d23aa39338dd335fccc7
     create table examinar_pecas(
     pecas_aprovadas INT NOT NULL,
     pecas_rejeitadas INT NOT NULL,

@@ -187,9 +187,9 @@ if ($user) {
                     <i class="fas fa-clipboard"></i>
                     Inspecionar
                 </button>
-                <button class="btn-cancel" onclick="openAlertModal()">
+                <button class="btn-insp" id="btn-insp">
                     <i class="fas fa-exclamation-triangle"></i>
-                    Cancelar
+                    Ir para inspeção
                 </button>
             </div>
 
