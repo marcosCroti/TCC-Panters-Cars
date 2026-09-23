@@ -151,7 +151,7 @@ if ($user) {
                         <div class="qr-cell" id="qc4"></div>
                     </div>
                     <div class="scanner-label" id="scannerLabel">Pronto para escanear</div>
-                    <div class="scanner-sublabel" id="scannerSub">Clique em "Ligar Camêra" abaixo</div>
+                    <div class="scanner-sublabel" id="scannerSub">Clique em "Ligar Câmera" abaixo</div>
                 </div>
 
                 <!-- Result Card (oculto por padrão) -->
