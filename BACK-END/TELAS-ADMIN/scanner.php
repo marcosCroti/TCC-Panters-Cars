@@ -44,6 +44,7 @@ if ($user) {
  <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
+
         <!-- <div class="logo-icon">🚗</div> -->
          <div class="logo" id="logo-icon">
             <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
@@ -150,9 +151,13 @@ if ($user) {
                         <div class="qr-cell" id="qc3"></div>
                         <div class="qr-cell" id="qc4"></div>
                     </div>
+
                     <div class="scanner-label" id="scannerLabel">Pronto para escanear</div>
+                    
                     <div class="scanner-sublabel" id="scannerSub">Clique em "Ligar Câmera" abaixo</div>
                 </div>
+                <div class="spinner" id="spinner"></div>
+                <p id="loading">Carregando...</p>
 
                 <!-- Result Card (oculto por padrão) -->
                 <div class="result-card" id="resultCard">
@@ -185,14 +190,15 @@ if ($user) {
        
                 </button>
                 <button class="btn-alert" id="btn-cancel">
-                    <i class="fas fa-clipboard"></i>
+                    <i class='fa-solid fa-power-off'></i>
+
                     Ligar Câmera
                 </button>
                 <button class="btn-scan" id="btn-scan">
                     <i class="fas fa-qrcode"></i>
                     Escanear Peça
                 <button class="btn-insp" id="btn-insp">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="fas fa-clipboard"></i>
                     Ir para inspeção
                 </button>
             </div>
