@@ -17,12 +17,18 @@ body {
 .container {
     width: 100%;
     max-width: 600px; 
-
 }
 
-
-
-
+.voltar-link {
+  font-family: Arial, Helvetica, sans-serif;
+  display: block; 
+  font-size: 13px; 
+  font-weight: 600; 
+  color: #c0392b; /* Cor da fonte alterada aqui */
+  margin-bottom: 8px; 
+  letter-spacing: 0.8px; 
+  
+}
 
 
 .register-card {
@@ -52,7 +58,6 @@ body {
     /* ADICIONE ESTA LINHA: */
     animation: pulse-logo 3.5s infinite;
 }
-
 
 /* .logo-icon {
     width: 80px;

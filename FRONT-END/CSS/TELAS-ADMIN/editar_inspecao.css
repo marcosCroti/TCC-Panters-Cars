@@ -411,6 +411,7 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.35);
   font-family: "Inter", sans-serif;
+  text-decoration: none;
 }
 
 .btn-back:hover {
@@ -820,4 +821,94 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+
+/* ===== AJUSTE DO SEARCH BOX ===== */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;           /* Dá espaçamento entre o input e o botão vermelho */
+  margin: 20px 0;      /* Dá espaçamento externo (margem) em cima e embaixo da barra */
+  width: 100%;
+}
+
+.search-box input[type="text"] {
+  flex: 1;             /* Faz o campo de texto ocupar o espaço restante */
+  padding: 10px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+
+.search-box input[type="text"]:focus {
+  border-color: #e74c3c; /* Borda vermelha ao clicar no campo */
+}
+
+.search-box .btn-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e74c3c, #c0392b); /* Vermelho igual aos outros botões */
+  color: white;
+  border: none;
+  width: 32px;         /* Deixa o botão quadrado e estruturado */
+  height: 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2); /* Sombra suave vermelha */
+  flex-shrink: 0;      /* Garante que o botão não vai esmagar em telas menores */
+}
+
+.search-box .btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.35);
+}
+
+.search-box .btn-add:active {
+  transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+/* ===== ANIMAÇÕES DE ENTRADA (INSPEÇÃO) ===== */
+
+/* Topo (Botão voltar e filtro) */
+.back-btn-wrapper,
+.filter-bar {
+  animation: fadeInDown 0.5s ease both;
+}
+
+/* Novo: Barra de pesquisa surgindo de forma suave e sequencial */
+.search-box {
+  animation: fadeInUp 0.5s ease 0.05s both;
+}
+
+/* Blocos de conteúdo com surgimento sequencial */
+.checklist-card {
+  animation: fadeInUp 0.5s ease 0.1s both;
+}
+
+.info-grid {
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+.stats-row {
+  animation: fadeInUp 0.5s ease 0.3s both;
+}
+
+.action-bar {
+  animation: fadeInUp 0.5s ease 0.4s both;
 }
