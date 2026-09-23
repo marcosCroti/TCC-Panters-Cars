@@ -151,7 +151,7 @@ if ($user) {
                         <div class="qr-cell" id="qc4"></div>
                     </div>
                     <div class="scanner-label" id="scannerLabel">Pronto para escanear</div>
-                    <div class="scanner-sublabel" id="scannerSub">Clique em "Ligar Camêra" abaixo</div>
+                    <div class="scanner-sublabel" id="scannerSub">Clique em "Ligar Câmera" abaixo</div>
                 </div>
 
                 <!-- Result Card (oculto por padrão) -->
@@ -182,14 +182,15 @@ if ($user) {
 
             <!-- Bottom Buttons -->
             <div class="bottom-actions">
-            <button class="btn-scan" id="btn-scan">
-                    <i class="fas fa-qrcode"></i>
-                    Escanear Peça
+       
                 </button>
                 <button class="btn-alert" id="btn-cancel">
                     <i class="fas fa-clipboard"></i>
-                    Inspecionar
+                    Ligar Câmera
                 </button>
+                <button class="btn-scan" id="btn-scan">
+                    <i class="fas fa-qrcode"></i>
+                    Escanear Peça
                 <button class="btn-insp" id="btn-insp">
                     <i class="fas fa-exclamation-triangle"></i>
                     Ir para inspeção

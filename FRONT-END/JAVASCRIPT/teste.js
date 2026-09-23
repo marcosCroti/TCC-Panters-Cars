@@ -26,7 +26,7 @@ let animationFrameId; // Guarda o ID do loop de animação para permitir pausá-
 function alternarCor() {
   console.log(`O valor de statusCam é ${statusCam}`);
   if (statusCam === "ligado") {
-    gerenciarBotao.innerHTML = "<i class='fas fa-clipboard'></i> Inpecionar";
+    gerenciarBotao.innerHTML = "<i class='fas fa-clipboard'></i> Ligar câmera";
   } else if (statusCam === "desligado") {
     gerenciarBotao.innerHTML = "<i class='fa-solid fa-power-off'></i> Desligar câmera";
   }
