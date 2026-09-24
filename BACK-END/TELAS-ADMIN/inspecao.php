@@ -200,15 +200,15 @@ if ($id_peca) {
                 <div class="stats-row">
                     <div class="stat-card total">
                         <div class="stat-label">Total</div>
-                        <input class="stat-input" type="number" placeholder="0" name="total" required id="total">
+                        <input class="stat-input" type="text" placeholder="0" name="total"  maxlength="10" required id="total">
                     </div>
                     <div class="stat-card aprovadas">
                         <div class="stat-label">Aprovadas</div>
-                        <input class="stat-input" type="number" placeholder="0" name="aprovadas" id="aprovadas">
+                        <input class="stat-input" type="text" placeholder="0" name="aprovadas"  maxlength="10" id="aprovadas">
                     </div>
                     <div class="stat-card lote">
                         <div class="stat-label">Lote</div>
-                        <input class="stat-input" type="text" placeholder="—" name="lote">
+                        <input class="stat-input" type="text" placeholder="—" maxlength="10" name="lote">
                     </div>
                     <div class="stat-card reprovadas">
                         <div class="stat-label">Reprovadas</div>

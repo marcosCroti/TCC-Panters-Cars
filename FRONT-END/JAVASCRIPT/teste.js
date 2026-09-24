@@ -4,12 +4,14 @@ console.log("PERRY O ORNITORRINCO");
 const botaoscan = document.getElementById("btn-scan");
 const gerenciarBotao = document.getElementById("btn-cancel");
 let botaoinspecao = document.getElementById("btn-insp");
+const loading = document.getElementById("loading");
 let link = "";
 botaoinspecao.disabled = true
 const logo = document.getElementById("qrIdle");
 let icone = document.querySelector(".fas");
-
-
+const spin = document.getElementById("spinner");
+spin.style.display = "none";
+loading.style.display = "none";
 // Eventos
 if (botaoscan) botaoscan.addEventListener("click", capturarEProcessar);
 if (gerenciarBotao) gerenciarBotao.addEventListener("click", ligaDesliga);
@@ -22,25 +24,57 @@ let model, webcam, maxPredictions;
 let isModelReady = false;
 let statusCam = "desligado";
 let animationFrameId; // Guarda o ID do loop de animação para permitir pausá-lo
+// Função para controlar a visibilidade do Spinner
+function setCarregando(carregando) {
+  if (carregando) {
+    spin.style.display = "block";// Exibe o spinner
+    logo.style.display = "none";
+    loading.style.display = "block";
+
+  } else {
+    loading.style.display = "none";
+    spin.style.display = "none";  // Esconde o spinner
+  }
+}
 
 function alternarCor() {
   console.log(`O valor de statusCam é ${statusCam}`);
   if (statusCam === "ligado") {
-    gerenciarBotao.innerHTML = "<i class='fas fa-clipboard'></i> Ligar câmera";
-  } else if (statusCam === "desligado") {
     gerenciarBotao.innerHTML = "<i class='fa-solid fa-power-off'></i> Desligar câmera";
+    gerenciarBotao.classList.add('btn-alert-desl');
+  } else if (statusCam === "desligado") {
+    gerenciarBotao.innerHTML = "<i class='fa-solid fa-power-off'></i> Ligar câmera";
+    gerenciarBotao.classList.remove('btn-alert-desl');
   }
 }
 
-function ligar() {
+async function ligar() {
   console.log("ligando");
-  init();
-  statusCam = "ligado";
-  return statusCam;
+  
+  // 1. Exibe o spinner e altera o status
+  setCarregando(true);
+  statusCam = "carregando";
+
+  // 2. Tenta carregar o modelo e a webcam
+  const carregouSucesso = await init();
+
+  // 3. Oculta o spinner após a tentativa
+  setCarregando(false);
+
+  if (carregouSucesso) {
+    statusCam = "ligado";
+    alternarCor();
+  } else {
+    statusCam = "desligado";
+    alternarCor();
+  }
 }
 
 function desligar() {
   console.log("desligando");
+
+  // Oculta o spinner por garantia
+  setCarregando(false);
 
   // 1. Para o loop de animação imediatamente
   if (animationFrameId) {
@@ -59,21 +93,19 @@ function desligar() {
   
   statusCam = "desligado";
   isModelReady = false;
+  alternarCor();
   console.log("Desligado");
 }
 
 function ligaDesliga() {
   if (statusCam === "carregando") {
     return; // Evita cliques duplos enquanto carrega
-  } else {
-    alternarCor();
-    if (statusCam === "desligado") {
-      statusCam = "carregando";
-      ligar();
-    } else {
-      statusCam = "carregando";
-      desligar();
-    }
+  }
+  
+  if (statusCam === "desligado") {
+    ligar();
+  } else if (statusCam === "ligado") {
+    desligar();
   }
 }
 
@@ -88,7 +120,7 @@ async function init() {
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
 
-    // Configura a Webcam (mantendo a resolução e espelhamento)
+    // Configura a Webcam
     const flip = true;
     webcam = new tmImage.Webcam(680, 440, flip);
 
@@ -104,11 +136,12 @@ async function init() {
 
     // Inicia o loop contínuo da webcam
     animationFrameId = window.requestAnimationFrame(loop);
-    
+
+    return true; // Sucesso
   } catch (e) {
     console.error("Erro ao iniciar:", e);
     alert("Erro ao acessar a webcam ou carregar o modelo.");
-    statusCam = "desligado";
+    return false; // Falha
   }
 }
 
