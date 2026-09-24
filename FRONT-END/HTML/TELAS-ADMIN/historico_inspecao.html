@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panthers Cars - Funcionários</title>
+    <title>Panthers Cars - Histórico Inspeções</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="../../CSS/TELAS-ADMIN/funcionarios.css" />
+    <link rel="stylesheet" href="../../CSS/TELAS-ADMIN/historico_inspecao.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
   </head>
   <body>
@@ -58,7 +58,7 @@
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.html" 
-    class="nav-item active" onclick="setActive(this, 'Funcionários')"
+    class="nav-item" onclick="setActive(this, 'Funcionários')"
     
     >
     <i class="fas fa-users"></i> Funcionários
@@ -79,7 +79,7 @@
 
             <div class="sidebar-section">
     <div class="sidebar-section-title">Registros Inspeção</div>
-    <a href="historico_inspecao.html" class="nav-item" onclick="setActive(this, 'Funcionários')">
+    <a href="historico_inspecao.html" class="nav-item active" onclick="setActive(this, 'Funcionários')">
         <i class="fas fa-clock"></i> Histórico Peças
     </a>
     </div>
@@ -100,7 +100,7 @@
         <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
         </button> -->
-        <h2 id="topbar-title">Cadastro de Funcionários</h2>
+        <h2 id="topbar-title">Histórico Inspeções</h2>
         <div class="topbar-actions">
           <!-- <button
             class="topbar-btn ghost"
@@ -115,19 +115,7 @@
             </a>
         </div>
       </header>
-      <!-- CONTENT -->
-      <div class="content">
-        <div class="content-header">
-          <div class="content-header-left"></div>
-          <!-- BOTÃO QUE ABRE O MODAL -->
-          <!-- <button class="btn-add" onclick="abrirModal()">👤+ Adicionar</button> -->
-          <!-- <button class="btn-add">👤+ Adicionar</button> -->
-          <div >
-            <a class="btn-add" href="../../LOGIN/criar_conta.html">👤+ Adicionar
-            </a>
-        </div>
-        
-        </div>
+
 
         <div class="table-card">
           <div class="search-bar">
@@ -136,170 +124,169 @@
             <!-- <button class="refresh-btn">🔄</button> -->
           </div>
 
+
+
+
+
+
           <table>
             <thead>
               <tr>
                 <th>Funcionário</th>
-                <th>CPF</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th>Setor</th>
-                <th>Ações</th>
+                <th>Função</th>
+                <th>Peça</th>
+                <th>Total</th>
+                <th>Aprovadas</th>
+                <th>Reprovadas</th>
+                <th>Lote</th>
+                <th>Data</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div class="employee-cell">
-                    <div class="employee-avatar">J</div>
-                    <div>
-                      <div class="employee-name">João Silva</div>
-                      <div class="employee-id">ID: 1</div>
-                    </div>
-                  </div>
-                </td>
-                <td>111.111.111-11</td>
-                <td>(00) 00000-0000</td>
-                <td><span class="setor-badge">joao@empresa.com</span></td>
-                <td>Montagem</td>
-                <!-- <td>
-                  <span class="status-ativo"
-                    ><span class="status-dot-ativo"></span> Ativo</span
-                  >
-                </td> -->
-                <td>
-                  <div class="actions-cell">
-                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
-                      <i>✏️</i>
-                     </a>
-                    <a class="btn-delete">🗑️</a> 
-                  </div>
-                </td>
-
-
-        <!-- <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
-        </div> -->
-              </tr>
-              <tr>
-                <td>
-                  <div class="employee-cell">
-                    <div class="employee-avatar">M</div>
-                    <div>
-                      <div class="employee-name">Maria Santos</div>
-                      <div class="employee-id">ID: 2</div>
-                    </div>
-                  </div>
-                </td>
-                <td>222.222.222-22</td>
-                <td>(00) 00000-0000</td>
-                <td><span class="setor-badge">maria@empresa.com</span></td>
-                <td>Qualidade</td>
-                <!-- <td>
-                  <span class="status-ativo"
-                    ><span class="status-dot-ativo"></span> Ativo</span
-                  >
-                </td> -->
-                <td>
-                  <div class="actions-cell">
-                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
-                      <i>✏️</i>
-                     </a>
-                    <a class="btn-delete">🗑️</a> 
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="employee-cell">
-                    <div class="employee-avatar">C</div>
-                    <div>
-                      <div class="employee-name">Carlos Oliveira</div>
-                      <div class="employee-id">ID: 3</div>
-                    </div>
-                  </div>
-                </td>
-                <td>333.333.333-33</td>
-                <td>(00) 00000-0000</td>
-                <td><span class="setor-badge">carlos@empresa.com</span></td>
-                <td>Expedição</td>
-                <!-- <td>
-                  <span class="status-ativo"
-                    ><span class="status-dot-ativo"></span> Ativo</span
-                  >
-                </td> -->
-                <td>
-                  <div class="actions-cell">
-                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
-                      <i>✏️</i>
-                     </a>
-                    <a class="btn-delete">🗑️</a> 
-                  </div>
-                </td>
-              </tr>
+              
               <tr>
                 <td>
                   <div class="employee-cell">
                     <div class="employee-avatar">A</div>
                     <div>
-                      <div class="employee-name">Ana Costa</div>
-                      <div class="employee-id">ID: 4</div>
+                      <div class="employee-name">Ana</div>
+                      <div class="employee-id">ID: 1</div>
                     </div>
                   </div>
                 </td>
-                <td>444.444.444-44</td>
-                <td>(00) 00000-0000</td>
-                <td><span class="setor-badge">ana@empresa.com</span></td>
-                <td>Inspeção</td>
-                <!-- <td>
-                  <span class="status-inativo"
-                    ><span class="status-dot-inativo"></span> Inativo</span
-                  >
-                </td> -->
-                <td>
-                  <div class="actions-cell">
-                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
-                      <i>✏️</i>
-                     </a>
-                    <a class="btn-delete">🗑️</a> 
-                  </div>
-                </td>
-              </tr>
+                <td>Administrador</td>
+                <td>Para-choque</td>
+                <td>100</td>
+                <td>70</td>
+                <td>30</td>
+                <td>4</td>
+                <td>26-09-23 12:00:49</td>
+
+                              
               <tr>
                 <td>
                   <div class="employee-cell">
-                    <div class="employee-avatar">P</div>
+                    <div class="employee-avatar">A</div>
                     <div>
-                      <div class="employee-name">Pedro Lima</div>
-                      <div class="employee-id">ID: 5</div>
+                      <div class="employee-name">Ana</div>
+                      <div class="employee-id">ID: 1</div>
                     </div>
                   </div>
                 </td>
-                <td>555.555.555-55</td>
-                <td>(00) 00000-0000</td>
-                <td><span class="setor-badge">pedro@empresa.com</span></td>
-                <td>Montagem</td>
-                <!-- <td>
-                  <span class="status-ativo"
-                    ><span class="status-dot-ativo"></span> Ativo</span
-                  >
-                </td> -->
+                <td>Administrador</td>
+                <td>Para-choque</td>
+                <td>100</td>
+                <td>70</td>
+                <td>30</td>
+                <td>4</td>
+                <td>26-09-23 12:00:49</td>
+
+
+                     
+              <tr>
                 <td>
-                  <div class="actions-cell">
-                     <a class="btn-edit" href="../../LOGIN/editar_conta.html">
-                      <i>✏️</i>
-                     </a>
-                    <a class="btn-delete">🗑️</a> 
+                  <div class="employee-cell">
+                    <div class="employee-avatar">A</div>
+                    <div>
+                      <div class="employee-name">Ana</div>
+                      <div class="employee-id">ID: 1</div>
+                    </div>
                   </div>
                 </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+                <td>Administrador</td>
+                <td>Para-choque</td>
+                <td>100</td>
+                <td>70</td>
+                <td>30</td>
+                <td>4</td>
+                <td>26-09-23 12:00:49</td>
+
+
+                              
+              <tr>
+                <td>
+                  <div class="employee-cell">
+                    <div class="employee-avatar">A</div>
+                    <div>
+                      <div class="employee-name">Ana</div>
+                      <div class="employee-id">ID: 1</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Administrador</td>
+                <td>Para-choque</td>
+                <td>100</td>
+                <td>70</td>
+                <td>30</td>
+                <td>4</td>
+                <td>26-09-23 12:00:49</td>
+
+
+                              
+              <tr>
+                <td>
+                  <div class="employee-cell">
+                    <div class="employee-avatar">A</div>
+                    <div>
+                      <div class="employee-name">Ana</div>
+                      <div class="employee-id">ID: 1</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Administrador</td>
+                <td>Para-choque</td>
+                <td>100</td>
+                <td>70</td>
+                <td>30</td>
+                <td>4</td>
+                <td>26-09-23 12:00:49</td>
+
+
+                              
+              <tr>
+                <td>
+                  <div class="employee-cell">
+                    <div class="employee-avatar">A</div>
+                    <div>
+                      <div class="employee-name">Ana</div>
+                      <div class="employee-id">ID: 1</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Administrador</td>
+                <td>Para-choque</td>
+                <td>100</td>
+                <td>70</td>
+                <td>30</td>
+                <td>4</td>
+                <td>26-09-23 12:00:49</td>
+
+
+
+                              
+              <tr>
+                <td>
+                  <div class="employee-cell">
+                    <div class="employee-avatar">A</div>
+                    <div>
+                      <div class="employee-name">Ana</div>
+                      <div class="employee-id">ID: 1</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Administrador</td>
+                <td>Para-choque</td>
+                <td>100</td>
+                <td>70</td>
+                <td>30</td>
+                <td>4</td>
+                <td>26-09-23 12:00:49</td>
+
+
+
+                              
+
+
 
     <!-- ========================
          MODAL NOVO FUNCIONÁRIO
