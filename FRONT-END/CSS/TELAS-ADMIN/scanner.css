@@ -13,20 +13,21 @@ body {
 }
 
 /* ===== SIDEBAR ===== */
-.sidebar {
-  width: 260px;
-  background: #f0f2f5;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  z-index: 100;
-  transition: transform 0.3s ease;
-  box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
-}
+        .sidebar {
+            width: 260px;
+            /* background: #f0f2f5; */
+            background-color:  white;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
+        }
 
 .sidebar-logo {
   display: flex;
@@ -214,7 +215,8 @@ body {
 
 /* ===== TOPBAR ===== */
 .topbar {
-  background: #fff;
+  /* background: #fff; */
+  background-color:  #930f00;
   padding: 0 28px;
   height: 64px;
   display: flex;
@@ -245,7 +247,8 @@ body {
 .topbar h2 {
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  /* color: #1f2937; */
+  color: white;
 }
 
 .topbar-actions {
@@ -319,6 +322,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  background-color: white;
 }
 
 .content::-webkit-scrollbar {

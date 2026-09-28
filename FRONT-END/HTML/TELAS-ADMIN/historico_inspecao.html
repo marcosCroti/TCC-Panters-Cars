@@ -117,17 +117,38 @@
       </header>
 
 
-        <div class="table-card">
-          <div class="search-bar">
-            <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Buscar por nome, CPF ou setor..." />
-            <!-- <button class="refresh-btn">🔄</button> -->
-          </div>
+      <div class="table-card">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Buscar por nome ou peça..." />
+        </div>
+        
+      
+      
+      <!-- FILTER TAGS -->
+      <div class="filter-tags">
+        <button class="tag-btn active" onclick="filterTag(this, 'pesquisar')">
+          Pesquisar
+          </button>
+        <button class="tag-btn active" onclick="filterTag(this, 'todos')">
+          Todos
+          </button>
+          <button class="tag-btn" onclick="filterTag(this, '3 meses')">
+            3 meses
+          </button>
+          <button class="tag-btn" onclick="filterTag(this, '6 meses')">
+            6 meses
+          </button>
+          <button class="tag-btn" onclick="filterTag(this, '12 meses')">
+            12 meses
+          </button>
+          
+        </div>
+    </div>
+        
+      
 
-
-
-
-
+        <div class="table-func">
 
           <table>
             <thead>
@@ -260,7 +281,7 @@
                 <td>30</td>
                 <td>4</td>
                 <td>26-09-23 12:00:49</td>
-
+        </div>
 
 
                               

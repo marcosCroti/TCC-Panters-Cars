@@ -22,6 +22,7 @@ body {
   max-width: 900px;
   margin: 0 auto;
   margin-left: calc(260px + 24px); /* sidebar width + espaçamento */
+  background-color: white;
 }
 
 .main {
@@ -30,11 +31,13 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: white;
 }
 
 /* ===== TOPBAR ===== */
 .topbar {
-  background: #fff;
+  /* background: #fff; */
+  background-color: #930f00;
   padding: 0 28px;
   height: 64px;
   display: flex;
@@ -65,7 +68,8 @@ body {
 .topbar h2 {
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  /* color: #1f2937; */
+  color: white;
 }
 
 .topbar-actions {
@@ -134,7 +138,8 @@ body {
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: 260px;
-  background: #f0f2f5;
+  /* background: #f0f2f5; */
+  background-color: white;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -431,7 +436,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
   margin-bottom: 24px;
 }
 
@@ -488,7 +493,7 @@ body {
 .checklist-card {
   background: #ffffff;
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
   overflow: hidden;
   margin-bottom: 24px;
 }
@@ -586,6 +591,7 @@ body {
   border: 1.5px solid #e5e7eb;
   border-radius: 12px;
   padding: 10px 16px;
+  box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
 }
 
 .checklist-item:hover .item-check {
@@ -677,7 +683,7 @@ body {
   background: #fff;
   border-radius: 12px;
   padding: 16px 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
   border-left: 4px solid transparent;
 }
 
@@ -823,18 +829,17 @@ body {
   }
 }
 
-
 /* ===== AJUSTE DO SEARCH BOX ===== */
 .search-box {
   display: flex;
   align-items: center;
-  gap: 12px;           /* Dá espaçamento entre o input e o botão vermelho */
-  margin: 20px 0;      /* Dá espaçamento externo (margem) em cima e embaixo da barra */
+  gap: 12px; /* Dá espaçamento entre o input e o botão vermelho */
+  margin: 20px 0; /* Dá espaçamento externo (margem) em cima e embaixo da barra */
   width: 100%;
 }
 
 .search-box input[type="text"] {
-  flex: 1;             /* Faz o campo de texto ocupar o espaço restante */
+  flex: 1; /* Faz o campo de texto ocupar o espaço restante */
   padding: 10px 14px;
   border: 1.5px solid #e0e0e0;
   border-radius: 8px;
@@ -845,7 +850,6 @@ body {
   transition: border-color 0.2s;
 }
 
-
 .search-box input[type="text"]:focus {
   border-color: #e74c3c; /* Borda vermelha ao clicar no campo */
 }
@@ -854,17 +858,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #e74c3c, #c0392b); /* Vermelho igual aos outros botões */
+  background: linear-gradient(
+    135deg,
+    #e74c3c,
+    #c0392b
+  ); /* Vermelho igual aos outros botões */
   color: white;
   border: none;
-  width: 32px;         /* Deixa o botão quadrado e estruturado */
+  width: 32px; /* Deixa o botão quadrado e estruturado */
   height: 32px;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2); /* Sombra suave vermelha */
-  flex-shrink: 0;      /* Garante que o botão não vai esmagar em telas menores */
+  flex-shrink: 0; /* Garante que o botão não vai esmagar em telas menores */
 }
 
 .search-box .btn-add:hover {
@@ -875,13 +883,6 @@ body {
 .search-box .btn-add:active {
   transform: translateY(0);
 }
-
-
-
-
-
-
-
 
 /* ===== ANIMAÇÕES DE ENTRADA (INSPEÇÃO) ===== */
 

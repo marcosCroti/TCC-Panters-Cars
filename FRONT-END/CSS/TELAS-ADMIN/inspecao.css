@@ -20,21 +20,23 @@
             margin-left: calc(260px + 24px); /* sidebar width + espaçamento */
 }
         
-        .main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: white;}
 
         /* ===== TOPBAR ===== */
         .topbar {
-            background: #fff;
+            /* background: #fff; */
+            background-color:  #930f00;
             padding: 0 28px;
             height: 64px;
             display: flex;
             align-items: center;
             border-bottom: 1px solid #e5e7eb;
             gap: 16px;
-            position: sticky;
+            
             top: 0;
             z-index: 50;
             box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+            
         }
 
         .topbar-menu-btn {
@@ -55,7 +57,8 @@
         .topbar h2 {
             font-size: 18px;
             font-weight: 600;
-            color: #1f2937;
+            /* color: #1f2937; */
+            color: white;
         }
 
         .topbar-actions {
@@ -118,9 +121,11 @@
 
 
 /* ===== SIDEBAR ===== */
+       
         .sidebar {
             width: 260px;
-            background: #f0f2f5;
+            /* background: #f0f2f5; */
+            background-color:  white;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -416,7 +421,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
             margin-bottom: 24px;
         }
 
@@ -473,7 +478,7 @@
         .checklist-card {
             background: #ffffff;
             border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
             overflow: hidden;
             margin-bottom: 24px;
         }
@@ -635,7 +640,7 @@
             background: #fff;
             border-radius: 12px;
             padding: 16px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
             border-left: 4px solid transparent;
         }
 

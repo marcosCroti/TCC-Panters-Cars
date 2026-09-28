@@ -16,7 +16,8 @@
               /* ===== SIDEBAR ===== */
         .sidebar {
             width: 260px;
-            background: #f0f2f5;
+            /* background: #f0f2f5; */
+            background-color:  white;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -26,7 +27,7 @@
             height: 100%;
             z-index: 100;
             transition: transform 0.3s ease;
-            box-shadow: 1px 0px 4px rgb(0, 0, 0, 0.327);
+            box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
         }
 
         .sidebar-logo {
@@ -188,7 +189,8 @@
 
         /* ===== TOPBAR ===== */
         .topbar {
-            background: #fff;
+            /* background: #fff; */
+            background-color:  #930f00;
             padding: 0 28px;
             height: 64px;
             display: flex;
@@ -219,7 +221,8 @@
         .topbar h2 {
             font-size: 18px;
             font-weight: 600;
-            color: #1f2937;
+            /* color: #1f2937; */
+            color: white;
         }
 
         .topbar-actions {
@@ -330,31 +333,47 @@
 
         /* TABLE CARD */
         .table-card {
+    background: transparent;
+    border: none;
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-start;
+     gap: 1px;  
+    /* margin: 25px 0; */
+        }
+
+        .table-func {
             background: #f9f9f9;
             border: 1px solid #e5e5e5;
             border-radius: 14px;
             overflow: hidden;
-            margin: 40px;
+            margin: 0 30px;
         }
 
         .search-bar {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-direction: center;
-            gap: 10px;
-            padding: 16px 20px;
-            border-bottom: 1px solid #e5e5e5;
+           display: flex;
+    align-items: center;
+    background: #ffffff; 
+    border: 1px solid #e5e7eb; /* Borda cinza clara bem fina */
+    border-radius: 16px;       /* Bordas bem arredondadas como na imagem */
+    padding: 12px 20px;
+    /* flex: 1;  */
+    color: red;
+    margin: 30px;
+   width: 400px;
+            
         }
 
-        .search-bar input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 14px;
-            color: #333;
-            outline: none;
-        }
+.search-bar input {
+    border: none ;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    margin-left: 12px;
+    font-size: 15px;
+    color: #1a1a1a;
+}
 
         .search-bar input::placeholder {
             color: #aaa;
@@ -779,3 +798,36 @@
 .main.expanded {
   margin-left: 0;
 }
+
+.filter-tags {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.tag-btn {
+  padding: 7px 18px;
+  border-radius: 24px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-btn:hover {
+  border-color: #e53e3e;
+  color: #e53e3e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.12);
+}
+
+.tag-btn.active {
+  background: #e53e3e;
+  border-color: #e53e3e;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+}
+
