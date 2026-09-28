@@ -6,7 +6,8 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f2f5;
+    /* background: #f0f2f5; */
+    background-color: #930f00;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -71,7 +72,7 @@ body {
 }
 
 .highlight {
-    color: #e74c3c;
+    color:  #930f00;
 }
 
 .subtitle {
@@ -168,7 +169,7 @@ body {
     /* border-color: #e74c3c;
     background: #151515; */
     outline: none; /* Remove a linha preta padrão do navegador */
-    border-color: #e74c3c; /* Muda o contorno para a cor que você escolher (ex: vermelho) */
+    border-color:  #930f00; /* Muda o contorno para a cor que você escolher (ex: vermelho) */
     background: #fff; /* Opcional: clareia o fundo para destacar o campo ativo */
     box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15); 
 }
@@ -183,7 +184,7 @@ body {
 .btn-login {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    background:  #930f00;
     border: none;
     border-radius: 12px;
     color: white;
