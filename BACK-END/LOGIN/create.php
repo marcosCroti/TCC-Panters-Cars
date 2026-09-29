@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt = $pdo->prepare("INSERT INTO first_data.usuarios (CPF, usuario_nome, email, password_hash, telefone, setor_Funcionario) VALUES (?, ?, ?, ?, ?, ?)");
                 
                 if ($stmt->execute([$cpf, $nome, $email, $hash, $telefone, $setor])) {
-                    header("Location: ../../BACK-END/TELAS-ADMIN/funcionario.php");
+                    header("Location: ../../BACK-END/TELAS-ADMIN/funcionarios.php");
                     exit;
                 } else {
                     $erro = "Erro crítico ao salvar no banco.";

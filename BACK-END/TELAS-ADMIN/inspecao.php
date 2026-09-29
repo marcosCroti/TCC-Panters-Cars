@@ -16,9 +16,11 @@ $nome_sessao = $_SESSION["user"] ?? "";
 // Unifica o recebimento da opção tanto por GET quanto por POST
 $opcao_selecionada = $_REQUEST['opicao'] ?? '';
 
-$stmt = $pdo->prepare("SELECT usuario_nome, isAdmin FROM first_data.usuarios WHERE usuario_nome = ?");
+$stmt = $pdo->prepare("SELECT usuario_nome, isAdmin, ID FROM first_data.usuarios WHERE usuario_nome = ?");
 $stmt->execute([$nome_sessao]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$id_usuario = $user["ID"];
 
 if ($user) {
     $nome = $user["usuario_nome"]; 
@@ -68,9 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Só executa se NÃO houver erros
     if (empty($erro)) {
-        $stmt = $pdo->prepare("INSERT INTO pecas (quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, id_pecas, grupo_peca, nome_tipo, usuario, funcao) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO pecas (quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, id_pecas, grupo_peca, nome_tipo, usuario, funcao, id_usuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
-        if ($stmt->execute([$total, $aprovadas, $rejeitadas, $lote, $id_peca, $grupo, $opcao_selecionada, $nome, $func])) {
+        if ($stmt->execute([$total, $aprovadas, $rejeitadas, $lote, $id_peca, $grupo, $opcao_selecionada, $nome, $func, $id_usuario])) {
             $_SESSION["mensagem_sucesso"] = "Inspeção concluída";
             header("Location: inspecao.php?opicao=" . urlencode($opcao_selecionada));
             exit();
@@ -97,35 +99,85 @@ if ($id_peca) {
 </head>
 <body>
     <div class="main">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo">
-                <div class="logo" id="logo-icon">
-                    <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
-                </div>
-                <span class="logo-text">Panthers<span>Cars</span></span>
-            </div>
+   <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <!-- <div class="logo-icon">🚗</div> -->
+         <div class="logo" id="logo-icon">
+             <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+         </div>
+        <span class="logo-text">Panthers<span>Cars</span></span>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Principal</div>
+        <a
+          href="./index.php"
+          class="nav-item"
+          onclick="setActive(this, 'Dashboard')"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a
+          href="./scanner.php"
+          class="nav-item"
+          onclick="setActive(this, 'Scanner')"
+        >
+          <i class="fas fa-qrcode"></i> Scanner
+        </a>
+        <a
+        href="./inspecao.php"
+        class="nav-item"
+        onclick="setActive(this, 'Inspeção')"
+        >
+        <i class="fas fa-clipboard"></i> Inspeção
+      </a>
+      <a
+      href="./inventario.php"
+      class="nav-item"
+      onclick="setActive(this, 'Inventário')"
+      >
+      <i class="fas fa-boxes"></i> Inventário
+    </a>
+  </div>
+  
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Administração</div>
+    <a
+    href="./funcionarios.php" 
+    class="nav-item" onclick="setActive(this, 'Funcionários')"
+    
+    >
+    <i class="fas fa-users"></i> Funcionários
+  </a>
+  <a
+  href="./editar_inspecao.php"
+  class="nav-item"
+  onclick="setActive(this, 'Editar Inspeção')"
+  >
+  <i class="fas fa-edit"></i> Editar Inspeção
+</a>
+
+        <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
+          <i class="fas fa-bell"></i> Alertas
+          <span class="badge">3</span>
+        </a> -->
+      </div>
 
             <div class="sidebar-section">
-                <div class="sidebar-section-title">Principal</div>
-                <a href="./index.php" class="nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a href="./scanner.php" class="nav-item"><i class="fas fa-qrcode"></i> Scanner</a>
-                <a href="./inspecao.php" class="nav-item active"><i class="fas fa-clipboard"></i> Inspeção</a>
-                <a href="./editar_inspecao.php" class="nav-item"><i class="fas fa-edit"></i> Editar Inspeção</a>
-                <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
-            </div>
+    <div class="sidebar-section-title">Registros Inspeção</div>
+    <a href="historico_inspecao.php" class="nav-item active" onclick="setActive(this, 'Funcionários')">
+        <i class="fas fa-clock"></i> Histórico Peças
+    </a>
+    </div>
 
-            <div class="sidebar-section">
-                <div class="sidebar-section-title">Administração</div>
-                <a href="./funcionario.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
-            </div>
-
-            <div class="sidebar-footer">
-                <div class="avatar"><?= strtoupper($nome[0] ?? 'U') ?></div>
-                <div class="user-info">
-                    <p><?= htmlspecialchars($nome) ?></p>
-                    <span><?= htmlspecialchars($func) ?></span>
-                </div>
-            </div>
+    <div class="sidebar-footer">
+        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
+        <div class="user-info">
+            <p><?= $nome ?></p>
+            <span><?= $func ?></span>
+        </div>
+    </div>
         </aside>
 
     <header class="topbar">

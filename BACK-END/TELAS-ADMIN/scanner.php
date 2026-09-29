@@ -42,14 +42,13 @@ if ($user) {
 <body>
 
  <!-- ===== SIDEBAR ===== -->
+   <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-logo">
-
         <!-- <div class="logo-icon">🚗</div> -->
          <div class="logo" id="logo-icon">
-            <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+             <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
          </div>
-
         <span class="logo-text">Panthers<span>Cars</span></span>
       </div>
 
@@ -64,7 +63,7 @@ if ($user) {
         </a>
         <a
           href="./scanner.php"
-          class="nav-item active"
+          class="nav-item"
           onclick="setActive(this, 'Scanner')"
         >
           <i class="fas fa-qrcode"></i> Scanner
@@ -75,31 +74,45 @@ if ($user) {
         onclick="setActive(this, 'Inspeção')"
         >
         <i class="fas fa-clipboard"></i> Inspeção
+      </a>
+      <a
+      href="./inventario.php"
+      class="nav-item"
+      onclick="setActive(this, 'Inventário')"
+      >
+      <i class="fas fa-boxes"></i> Inventário
     </a>
+  </div>
+  
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Administração</div>
     <a
-    href="./editar_inspecao.php"
-    class="nav-item"
-    onclick="setActive(this, 'Editar Inspeção')"
+    href="./funcionarios.php" 
+    class="nav-item" onclick="setActive(this, 'Funcionários')"
+    
     >
-    <i class="fas fa-edit"></i> Editar Inspeção
-</a>
-<a
-  href="./inventario.php"
+    <i class="fas fa-users"></i> Funcionários
+  </a>
+  <a
+  href="./editar_inspecao.php"
   class="nav-item"
-  onclick="setActive(this, 'Inventário')"
->
-  <i class="fas fa-boxes"></i> Inventário
+  onclick="setActive(this, 'Editar Inspeção')"
+  >
+  <i class="fas fa-edit"></i> Editar Inspeção
 </a>
+
+        <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
+          <i class="fas fa-bell"></i> Alertas
+          <span class="badge">3</span>
+        </a> -->
       </div>
 
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">Administração</div>
-        <a href="./funcionario.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            
-          <i class="fas fa-users"></i> Funcionários
-        </a>
-
-      </div>
+            <div class="sidebar-section">
+    <div class="sidebar-section-title">Registros Inspeção</div>
+    <a href="historico_inspecao.php" class="nav-item active" onclick="setActive(this, 'Funcionários')">
+        <i class="fas fa-clock"></i> Histórico Peças
+    </a>
+    </div>
 
     <div class="sidebar-footer">
         <div class="avatar"><?= strtoupper($nome[0]) ?></div>

@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt = $pdo->prepare("INSERT INTO first_data.usuarios (CPF, usuario_nome, email, password_hash) VALUES (?, ?, ?, ?)");
                 
                if ($stmt->execute([$cpf, $nome, $email, $hash])) {
-                    header("Location: ./funcionario.php");
+                    header("Location: ./funcionarios.php");
                     exit;
                 } else {
                     $erro = "Erro crítico ao salvar no banco.";
