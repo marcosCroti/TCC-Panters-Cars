@@ -220,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                     <td><span class="pecas-count">47</span></td> -->
                     <td>
                         <div class="actions-cell">
-                        <button class="btn-edit" onclick='abrireditar(<?= json_encode($user, JSON_HEX_APOS | JSON_HEX_QUOT); ?>)'>✏️</button>    
+                          <a class="btn-edit" href="./editar_fun.php?id=<?php echo $user["ID"]; ?>">✏️</a>    
                         <a href="./deletar_func.php?id=<?php echo $user["ID"]; ?>" onclick="return confirm('Deseja realmente Excluir?')" style="text-decoration: none;">🗑️</a>
                         </div>
                     </td>
