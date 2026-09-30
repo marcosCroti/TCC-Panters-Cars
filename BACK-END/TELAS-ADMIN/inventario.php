@@ -27,13 +27,6 @@
     }
 
 
-if($func === "Funcionario"){
-        $dd = "display: none;";
-    }else{
-        $dd = "";
-    }
-
-
     $filtro = $_GET["filtro"] ?? "todos";
 
     $grupos = [
@@ -163,7 +156,29 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
 
         return "grad-red";
     }
-
+function imagemCard($grupo) {
+    if ($grupo === "Motor e Transmissão") {
+        return "https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png";
+    }
+    if ($grupo === "Freios") {
+        return "https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg";
+    }
+    if ($grupo === "Suspensão e Direção") {
+        return "https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp";
+    }
+    if ($grupo === "Elétrica") {
+        return "https://www.empresasdebaterias.com.br/imagens/bateria-amperes/bateria-amperes-02.jpg";
+    }
+    if ($grupo === "Carroceria/Acabamento") {
+        return "https://bite.vtexassets.com/arquivos/ids/180037/34290.png";
+    }
+    if ($grupo === "Componentes de Segurança") {
+        return "https://blog.nakata.com.br/storage/uploads/2018/08/229649-manual-definitivo-do-cinto-de-seguranca-tudo-que-voce-precisa-saber.jpg";
+    }
+    
+    // Imagem padrão caso não encontre nenhuma das anteriores
+    return "../../FRONT-END/IMG/PECAS/default.png";
+}
     function codigoPeca($id) {
         return "PEC-" . str_pad((string)$id, 3, "0", STR_PAD_LEFT);
     }
@@ -223,7 +238,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
     </a>
   </div>
   
-  <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
+  <div class="sidebar-section">
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.php" 
@@ -233,7 +248,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
     <i class="fas fa-users"></i> Funcionários
   </a>
   <a
-  href="./editar_inspe.php"
+  href="./editar_inspecao.php"
   class="nav-item"
   onclick="setActive(this, 'Editar Inspeção')"
   >
@@ -361,7 +376,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                     $status = statusPeca($quantidade);
                     $statusTexto = textoStatus($status);
                     $cat = categoriaCard($grupo);
-                    $grad = gradienteCard($grupo);
+                    $imagemPeca = imagemCard($grupo);
                     $codigo = codigoPeca($id);
 
                     $modalArgs = [
@@ -374,14 +389,14 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                     ];
                 ?>
                     <div class="card" data-cat="<?= h($cat) ?>" data-name="<?= h($nome) ?>" data-qty="<?= h($quantidade) ?>" data-status="<?= h($status) ?>">
-                        <div class="card-banner <?= h($grad) ?>">
-                            <i class="fas fa-cog bg-icon"></i>
-                            <i class="fas fa-wrench bg-icon-2"></i>
-                            <div class="status-badge">
-                                <span class="status-dot <?= h($status) ?>"></span> <?= h($statusTexto) ?>
-                            </div>
-                            <div class="code-badge"><?= h($codigo) ?></div>
-                        </div>
+                        <div class="card-banner card-image-container">
+                    <img src="<?= h($imagemPeca) ?>" alt="<?= h($grupo) ?>" class="card-img">
+                    
+                    <div class="status-badge">
+                        <span class="status-dot <?= h($status) ?>"></span> <?= h($statusTexto) ?>
+                    </div>
+                    <div class="code-badge"><?= h($codigo) ?></div>
+                </div>
                         <div class="card-body">
                             <div class="card-title"><?= ucfirst(h($nome)) ?></div>
                             <div class="card-meta">

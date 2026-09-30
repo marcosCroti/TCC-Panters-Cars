@@ -161,7 +161,7 @@ if ($id_peca) {
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">Administração</div>
-            <a href="./funcionario.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
+            <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
         </div>
 
         <div class="sidebar-footer">
