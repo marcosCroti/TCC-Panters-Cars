@@ -216,7 +216,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
       </a>
       <a
       href="./inventario.php"
-      class="nav-item"
+      class="nav-item active"
       onclick="setActive(this, 'Inventário')"
       >
       <i class="fas fa-boxes"></i> Inventário
@@ -248,7 +248,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
 
             <div class="sidebar-section">
     <div class="sidebar-section-title">Registros Inspeção</div>
-    <a href="historico_inspecao.php" class="nav-item active" onclick="setActive(this, 'Funcionários')">
+    <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
         <i class="fas fa-clock"></i> Histórico Peças
     </a>
     </div>

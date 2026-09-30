@@ -68,7 +68,7 @@ if($func === "Funcionario"){
         </a>
         <a
           href="./scanner.php"
-          class="nav-item"
+          class="nav-item active"
           onclick="setActive(this, 'Scanner')"
         >
           <i class="fas fa-qrcode"></i> Scanner
@@ -114,7 +114,7 @@ if($func === "Funcionario"){
 
             <div class="sidebar-section">
     <div class="sidebar-section-title">Registros Inspeção</div>
-    <a href="historico_inspecao.php" class="nav-item active" onclick="setActive(this, 'Funcionários')">
+    <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
         <i class="fas fa-clock"></i> Histórico Peças
     </a>
     </div>

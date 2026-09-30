@@ -132,7 +132,7 @@ if ($id_peca) {
         </a>
         <a
         href="./inspecao.php"
-        class="nav-item"
+        class="nav-item active"
         onclick="setActive(this, 'Inspeção')"
         >
         <i class="fas fa-clipboard"></i> Inspeção
@@ -171,7 +171,7 @@ if ($id_peca) {
 
             <div class="sidebar-section">
     <div class="sidebar-section-title">Registros Inspeção</div>
-    <a href="historico_inspecao.php" class="nav-item active" onclick="setActive(this, 'Funcionários')">
+    <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
         <i class="fas fa-clock"></i> Histórico Peças
     </a>
     </div>
@@ -190,11 +190,7 @@ if ($id_peca) {
           <i class="fas fa-bars"></i>
         </button> -->
         <h2 id="topbar-title">Inspeção</h2>
-        <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
-        </div>
+
     </header>
 
         <div class="main-content">
@@ -205,11 +201,7 @@ if ($id_peca) {
                 </div>
             <?php endif; ?>
 
-            <div class="back-btn-wrapper">
-                <a href="./scanner.php" class="btn-back">
-                    <i class="fas fa-arrow-left"></i> Voltar ao Scanner
-                </a>
-            </div>
+  
 
             <!-- FORMULÁRIO GET: Seleção/Filtro -->
             <form action="inspecao.php" method="GET">
@@ -227,6 +219,11 @@ if ($id_peca) {
                     <button type="submit" class="btn-reload">
                         <i class="fas fa-rotate-right"></i> Recarregar
                     </button>
+
+                <a href="./scanner.php" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> Voltar ao Scanner
+                </a>
+
                 </div>
             </form>
 

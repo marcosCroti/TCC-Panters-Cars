@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.php" 
-    class="nav-item" onclick="setActive(this, 'Funcionários')"
+    class="nav-item active" onclick="setActive(this, 'Funcionários')"
     
     >
     <i class="fas fa-users"></i> Funcionários
@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
             <div class="sidebar-section">
     <div class="sidebar-section-title">Registros Inspeção</div>
-    <a href="historico_inspecao.php" class="nav-item active" onclick="setActive(this, 'Funcionários')">
+    <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
         <i class="fas fa-clock"></i> Histórico Peças
     </a>
     </div>
