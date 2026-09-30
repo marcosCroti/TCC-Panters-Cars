@@ -154,6 +154,72 @@ async function loop() {
 }
 
 // Função de predição com filtro de limite de confiança
+// async function capturarEProcessar() {
+//   link = "";
+//   if (!isModelReady || !model || !webcam) return;
+
+//   const prediction = await model.predict(webcam.canvas);
+
+//   let melhorClasse = "";
+//   let maiorValor = 0;
+//   let limiteconfiavel = 0.90; // 90% de confiança mínima
+
+  
+  
+//   for (let i = 0; i < maxPredictions; i++) {
+//     if (prediction[i].probability > maiorValor) {
+//       maiorValor = prediction[i].probability;
+//       melhorClasse = prediction[i].className;
+
+//     }
+
+//     if (link === "") {
+//         botaoinspecao.disabled = true;
+//     }else {
+//         botaoinspecao.disabled = false;
+//     }
+//   }
+
+
+//   const elResultado = document.getElementById("resultado-vencedor");
+//   const elProbabilidade = document.getElementById("probabilidade");
+
+//   if (maiorValor >= limiteconfiavel) {
+//     if (elResultado) elResultado.innerText = melhorClasse;
+//     if (elProbabilidade) elProbabilidade.innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
+
+//     if(melhorClasse == "Para-choque"){
+//       link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=para_choque`;
+//     }else{
+//       link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=${melhorClasse.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
+//     }
+
+//     if(link === ""){
+//         botaoinspecao.disabled = true;
+//     if(elResultado === "Não é possivel achar algo, tente outra coisa"){
+//         botaoinspecao.disabled = true; 
+//     }
+//     }else{
+//       botaoinspecao.disabled = false;
+//     }
+ 
+
+
+
+
+//     console.log(link);
+//     //window.location.href = link;
+//   } else {
+//     console.log("Não é possível achar algo, tente outra coisa");
+//     if (elResultado) elResultado.innerText = "Não é possivel achar algo, tente outra coisa";
+//     if (elProbabilidade) elProbabilidade.innerText = "";
+//   }
+// }
+
+// function mudarpagina(){
+//   window.location.href = link;
+// }
+
 async function capturarEProcessar() {
   link = "";
   if (!isModelReady || !model || !webcam) return;
@@ -164,58 +230,63 @@ async function capturarEProcessar() {
   let maiorValor = 0;
   let limiteconfiavel = 0.90; // 90% de confiança mínima
 
-  
-  
+  // Loop apenas para descobrir a melhor predição
   for (let i = 0; i < maxPredictions; i++) {
     if (prediction[i].probability > maiorValor) {
       maiorValor = prediction[i].probability;
       melhorClasse = prediction[i].className;
-
-    }
-
-    if (link === "") {
-        botaoinspecao.disabled = true;
-    }else {
-        botaoinspecao.disabled = false;
     }
   }
-
 
   const elResultado = document.getElementById("resultado-vencedor");
   const elProbabilidade = document.getElementById("probabilidade");
 
+  // CASO 1: Escaneamento com alta confiança (SUCESSO)
   if (maiorValor >= limiteconfiavel) {
-    if (elResultado) elResultado.innerText = melhorClasse;
-    if (elProbabilidade) elProbabilidade.innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
+    if (elResultado) {
+      elResultado.innerText = melhorClasse;
+      elResultado.style.display = "block"; // 👈 Exibe o aviso estilizado
+    }
+    if (elProbabilidade) {
+      elProbabilidade.innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
+    }
 
-    if(melhorClasse == "Para-choque"){
+    // Define o link correto com base na classe encontrada
+    if (melhorClasse === "Para-choque") {
       link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=para_choque`;
-    }else{
+    } else {
       link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=${melhorClasse.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
     }
 
-    if(link === ""){
-        botaoinspecao.disabled = true;
-    if(elResultado === "Não é possivel achar algo, tente outra coisa"){
-        botaoinspecao.disabled = true; 
-    }
-    }else{
+    // Gerencia o botão de inspeção baseado no link gerado
+    if (link === "") {
+      botaoinspecao.disabled = true;
+    } else {
       botaoinspecao.disabled = false;
     }
- 
-
-
-
 
     console.log(link);
-    //window.location.href = link;
+
+  // CASO 2: Não atingiu a confiança mínima (FALHA)
   } else {
-    console.log("Não é possível achar algo, tente outra coisa");
-    if (elResultado) elResultado.innerText = "Não é possivel achar algo, tente outra coisa";
-    if (elProbabilidade) elProbabilidade.innerText = "";
+    console.log("Não foi possível encontrar uma peça. Tente novamente.");
+    
+    if (elResultado) {
+      elResultado.innerText = "Não foi possível encontrar uma peça. Tente novamente.";
+      elResultado.style.display = "block"; // 👈 Exibe o aviso estilizado no erro também!
+    }
+    if (elProbabilidade) {
+      elProbabilidade.innerText = "";
+    }
+    
+    // Como falhou, limpa o link e desabilita o botão de avançar página
+    link = "";
+    botaoinspecao.disabled = true;
   }
 }
 
-function mudarpagina(){
-  window.location.href = link;
+function mudarpagina() {
+  if (link !== "") {
+    window.location.href = link;
+  }
 }

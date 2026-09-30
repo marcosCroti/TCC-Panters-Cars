@@ -267,7 +267,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
                     <?php if($erro): ?>
 
-                        <p style="color = 'red'"><?= htmlspecialchars($erro); ?></p>
+                        <p style="color: 'red'><?= htmlspecialchars($erro); ?></p>
                     <?php endif; ?>
                 </div>
 
@@ -297,7 +297,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             </div>
 
  
-
+        </form>
         </div>
       </div>
     </div>
@@ -305,3 +305,4 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     <script src="../Front-end/SCRIPT/script.js"></script>
   </body>
 </html>
+

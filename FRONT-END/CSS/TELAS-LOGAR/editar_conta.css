@@ -1,0 +1,487 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* background: #f0f2f5; */
+    background-color: #930f00;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px; 
+}
+
+.voltar-link {
+  font-family: Arial, Helvetica, sans-serif;
+  display: block; 
+  font-size: 13px; 
+  font-weight: 600; 
+  color: #c0392b; /* Cor da fonte alterada aqui */
+  margin-bottom: 8px; 
+  letter-spacing: 0.8px; 
+  
+}
+
+
+.register-card {
+    background: #f0f2f5;
+    border-radius: 24px;
+    padding: 5px 35px; 
+    box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
+    color: #fff;
+    width: 100%;
+    /* ADICIONE ESTA LINHA: */
+    animation: fadeInUp 0.5s ease both;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    justify-content: center;
+    /* margin-bottom: 20px; */
+}
+
+/* Logo */
+#logo {
+    margin-bottom: 5px;
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    /* ADICIONE ESTA LINHA: */
+    animation: pulse-logo 3.5s infinite;
+}
+
+/* .logo-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: white;
+    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+} */
+
+/* Título */
+.title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: black;
+}
+
+.highlight {
+    color: #e74c3c;
+}
+
+.subtitle {
+    text-align: center;
+    color: #8b96a5;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* Seções do Formulário */
+.form-section { 
+  margin-bottom: 20px; 
+} 
+
+.section-label { 
+  display: block; 
+  font-size: 11px; 
+  font-weight: 600; 
+  color: #090909; /* Cor da fonte alterada aqui */
+  margin-bottom: 8px; 
+  text-transform: uppercase; 
+  letter-spacing: 0.8px; 
+}
+
+/* Opções de Perfil */
+.profile-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+.profile-card {
+    background: #0d0d0d;
+    border: 2px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 18px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-3px);
+    border-color: #e74c3c;
+}
+
+.profile-card:hover::before {
+    opacity: 1;
+}
+
+.profile-card.active {
+    border-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+}
+
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    background: #2a2a2a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 24px;
+    color: #8b96a5;
+    transition: all 0.3s ease;
+}
+
+.profile-card.active .profile-icon {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    transform: scale(1.1);
+}
+
+.profile-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.profile-card.active h3 {
+    color: #e74c3c;
+}
+
+.profile-card p {
+    font-size: 11px;
+    color: #6b7688;
+    line-height: 1.4;
+}
+
+.check-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background: #e74c3c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.profile-card.active .check-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.check-icon i {
+    font-size: 12px;
+    color: white;
+}
+
+/* Form Row (2 colunas) */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.form-row .form-section {
+    margin-bottom: 0;
+}
+
+/* Inputs */
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #040404;
+    font-size: 16px;
+     z-index: 2; /* Mantém o ícone por cima */
+    pointer-events: none; /* Permite clicar através do ícone */
+}
+
+.input-wrapper input, 
+.input-wrapper select {
+    width: 100%;
+    padding: 14px 16px 14px 45px;
+    
+    background-color: #f0f2f5;
+    border: 1px solid rgba(0, 0, 0, 0);
+    box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327); 
+    border-radius: 12px;
+    color: #9c9c9c; /* Cor cinza exata dos placeholders da imagem */
+    font-size: 15px;
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 1; /* Mantém a camada correta para o .input-icon ficar por cima */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.input-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Ícone de seta preta na direita conforme pedido anterior */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 14px;
+    padding-right: 40px;
+}
+
+
+
+
+.input-wrapper input:focus, select:focus {
+    /* outline: none;
+    border-color: #e74c3c;
+    background: #151515; */
+    outline: none; /* Remove a linha preta padrão do navegador */
+    border-color: #e74c3c; /* Muda o contorno para a cor que você escolher (ex: vermelho) */
+    background: #fff; /* Opcional: clareia o fundo para destacar o campo ativo */
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15);
+}
+
+.input-wrapper input::placeholder{
+    color: #9c9c9c;
+}
+
+
+
+/* Toggle de Senha */
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6b7688;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    color: #e74c3c;
+}
+
+/* Força da Senha */
+.password-strength {
+    margin-bottom: 20px;
+}
+
+.strength-bar {
+    width: 100%;
+    height: 4px;
+    /* background: #f0f2f5; */
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    background: #e74c3c;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-text {
+    color: #6b7688;
+    font-size: 11px;
+}
+
+#strengthText {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+/* Botão de Cadastro */
+.btn-register {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.btn-register:active {
+    transform: translateY(0);
+}
+
+/* Link de Login */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #8b96a5;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #ff6b5b;
+}
+
+/* Mensagens de Erro */
+.error-message {
+    color: #e74c3c;
+    font-size: 11px;
+    margin-top: 5px;
+    display: block;
+}
+
+.input-wrapper.error input {
+    border-color: #e74c3c !important;
+}
+
+/* Loading State */
+.btn-register.loading {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Success State */
+.btn-register.success {
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.register-card.shake {
+    animation: shake 0.4s;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .profile-options {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .register-card {
+        padding: 30px 25px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+}
+
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-logo {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+
