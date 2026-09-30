@@ -93,17 +93,17 @@ foreach ($donutResult as$row) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panthers Cars - Dashboard Dinâmico</title>
+    <title>Panthers Cars - Dashboard Gerencial</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../FRONT-END/CSS/TELAS-ADMIN/dashboard.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <style>
         /* Ajuste simples para os botões de filtro no painel superior */
         .filter-header { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tag-btn { padding: 6px 14px; border: 1px solid #e2e8f0; background: #fff; border-radius: 20px; cursor: pointer; text-decoration: none; color: #4a5568; font-size: 14px; transition: 0.2s;}
-        .tag-btn.active { background: #3182ce; color: white; border-color: #3182ce; }
-        .tag-btn:hover { background: #edf2f7; }
-        .tag-btn.active:hover { background: #2b6cb0; }
+        .tag-btn { padding: 6px 14px; border: 1px solid #d3d3d3; background: #fff; border-radius: 20px; cursor: pointer; text-decoration: none; color: #4a5568; font-size: 14px; transition: 0.2s;}
+        .tag-btn.active { background: #e53e3e; color: white; }
+        .tag-btn:hover { background: #e3e3e3; }
+        .tag-btn.active:hover { background: #e53e3e; }
     </style>
 </head>
 <body>
@@ -175,7 +175,7 @@ foreach ($donutResult as$row) {
         <!-- Page Header & Filters -->
         <div class="page-header" style="flex-direction: column; align-items: flex-start; gap: 15px;">
             <div class="filter-header">
-                <span style="font-weight: bold; margin-top: 5px; color: #4a5568;">Filtrar por:</span>
+                <!-- <span style="font-weight: bold; margin-top: 5px; color: #4a5568;">Filtrar por:</span> -->
                 <a href="?meses=" class="tag-btn <?= empty($_GET['meses']) ? 'active' : '' ?>">Todo o período</a>
                 <a href="?meses=1" class="tag-btn <?= ($_GET['meses'] ?? '') == '1' ? 'active' : '' ?>">1 mês</a>
                 <a href="?meses=3" class="tag-btn <?= ($_GET['meses'] ?? '') == '3' ? 'active' : '' ?>">3 meses</a>

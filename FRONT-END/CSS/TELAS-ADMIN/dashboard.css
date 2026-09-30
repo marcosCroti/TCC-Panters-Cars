@@ -83,7 +83,7 @@
   text-decoration: none;
   font-size: 14px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 499;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.25s ease;
   margin-bottom: 3px;
@@ -364,7 +364,7 @@
         .stat-card {
             background: #fff; border-radius: 14px;
             padding: 16px 18px;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 6px rgba(0,0,0,0.327);
             display: flex; align-items: center; gap: 14px;
             position: relative; overflow: hidden;
             transition: all 0.25s; cursor: default;
