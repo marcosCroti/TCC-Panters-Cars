@@ -277,7 +277,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         <div class="strength-fill"></div>
                     </div>
                     <small class="strength-text">Força da senha: <span id="strengthText">Fraca</span></small>
-                </div> -->
+                </div>
 
                 <!-- Botão de Cadastro -->
                 <button type="submit" class="btn-register">
@@ -285,7 +285,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     Salvar
                 </button>
 
-                <a class="link-func" href="./funcionario.php">
+                <a class="link-func" href="./funcionarios.php">
                   Voltar
                 </a>
 

@@ -129,6 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 />
               </div>
             </div>
+
           </div>
 
             <!-- Formulário -->
@@ -268,7 +269,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   <p style="color: red  ;"><?= $erro ?></p>
 
                   <?php endif; ?>
+                <a href="../TELAS-ADMIN/funcionarios.php">Voltar</a>
               </div>
+
             </div>
 
  

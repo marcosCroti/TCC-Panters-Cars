@@ -1,4 +1,4 @@
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; text-decoration: none;}
 
         body { display: flex; height: 100vh; overflow: hidden; background: #f0f2f5; }
 
@@ -188,9 +188,11 @@
             top: 0;
             z-index: 50;
             box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.327);
+            text-decoration: none;
         }
 
         .topbar-menu-btn {
+
             background: none;
             border: none;
             cursor: pointer;
@@ -253,6 +255,7 @@
         .topbar-btn.ghost {
             background: #f3f4f6;
             color: #374151;
+            text-decoration: none;
         }
 
         .topbar-btn.ghost:hover {
