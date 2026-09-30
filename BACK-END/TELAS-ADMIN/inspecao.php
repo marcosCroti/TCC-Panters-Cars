@@ -29,6 +29,11 @@ if ($user) {
     $nome = "Usuário não encontrado";
     $func = "Desconhecido";
 }
+    if($func === "Funcionario"){
+        $dd = "display: none;";
+    }else{
+        $dd = "";
+    }
 
 $inspecoes = [];
 $mapeamento_ids = [
@@ -141,7 +146,7 @@ if ($id_peca) {
     </a>
   </div>
   
-  <div class="sidebar-section">
+  <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.php" 
@@ -151,7 +156,7 @@ if ($id_peca) {
     <i class="fas fa-users"></i> Funcionários
   </a>
   <a
-  href="./editar_inspecao.php"
+  href="./editar_inspe.php"
   class="nav-item"
   onclick="setActive(this, 'Editar Inspeção')"
   >

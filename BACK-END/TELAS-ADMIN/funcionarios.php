@@ -28,6 +28,11 @@ if ($user) {
 } else {
     $nome = "Usuário não encontrado";
 }
+if($func === "Funcionario"){
+        $dd = "display: none;";
+    }else{
+        $dd = "";
+    }
 
 $nome_sessao = $_SESSION["user"] ?? ""; 
 $stmt = $pdo->query("SELECT CPF, usuario_nome, email, isAdmin, ID, setor_Funcionario, telefone FROM first_data.usuarios WHERE isAdmin is null or isAdmin = 0");
@@ -113,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     </a>
   </div>
   
-  <div class="sidebar-section">
+  <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.php" 
@@ -123,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     <i class="fas fa-users"></i> Funcionários
   </a>
   <a
-  href="./editar_inspecao.php"
+  href="./editar_inspe.php"
   class="nav-item"
   onclick="setActive(this, 'Editar Inspeção')"
   >

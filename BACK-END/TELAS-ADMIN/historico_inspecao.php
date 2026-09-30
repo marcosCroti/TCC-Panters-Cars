@@ -16,6 +16,11 @@ if ($user) {
 } else { 
     $nome = 'Usuário não encontrado'; 
 } 
+if($func === "Funcionario"){
+    $dd = "display: none;";
+}else{
+    $dd = "";
+    }
 
 // Captura os parâmetros da URL
 $busca = $_GET['busca'] ?? '';
@@ -112,7 +117,7 @@ $historicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </a>
   </div>
   
-  <div class="sidebar-section">
+  <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.php" 
@@ -122,7 +127,7 @@ $historicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <i class="fas fa-users"></i> Funcionários
   </a>
   <a
-  href="./editar_inspecao.php"
+  href="./editar_inspe.php"
   class="nav-item"
   onclick="setActive(this, 'Editar Inspeção')"
   >

@@ -239,16 +239,15 @@ async function capturarEProcessar() {
   }
 
   const elResultado = document.getElementById("resultado-vencedor");
-  const elProbabilidade = document.getElementById("probabilidade");
+
+
+
 
   // CASO 1: Escaneamento com alta confiança (SUCESSO)
   if (maiorValor >= limiteconfiavel) {
     if (elResultado) {
       elResultado.innerText = melhorClasse;
       elResultado.style.display = "block"; // 👈 Exibe o aviso estilizado
-    }
-    if (elProbabilidade) {
-      elProbabilidade.innerText = (maiorValor * 100).toFixed(1) + "% de certeza";
     }
 
     // Define o link correto com base na classe encontrada
@@ -275,10 +274,7 @@ async function capturarEProcessar() {
       elResultado.innerText = "Não foi possível encontrar uma peça. Tente novamente.";
       elResultado.style.display = "block"; // 👈 Exibe o aviso estilizado no erro também!
     }
-    if (elProbabilidade) {
-      elProbabilidade.innerText = "";
-    }
-    
+
     // Como falhou, limpa o link e desabilita o botão de avançar página
     link = "";
     botaoinspecao.disabled = true;

@@ -27,6 +27,13 @@
     }
 
 
+if($func === "Funcionario"){
+        $dd = "display: none;";
+    }else{
+        $dd = "";
+    }
+
+
     $filtro = $_GET["filtro"] ?? "todos";
 
     $grupos = [
@@ -216,7 +223,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
     </a>
   </div>
   
-  <div class="sidebar-section">
+  <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.php" 
@@ -226,7 +233,7 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
     <i class="fas fa-users"></i> Funcionários
   </a>
   <a
-  href="./editar_inspecao.php"
+  href="./editar_inspe.php"
   class="nav-item"
   onclick="setActive(this, 'Editar Inspeção')"
   >

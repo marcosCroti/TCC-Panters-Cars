@@ -28,6 +28,11 @@ if ($user) {
 } else {
     $nome = "Usuário não encontrado";
 }
+if($func === "Funcionario"){
+    $dd = "display: none;";
+}else{
+    $dd = "";
+};
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +89,7 @@ if ($user) {
     </a>
   </div>
   
-  <div class="sidebar-section">
+  <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
     <div class="sidebar-section-title">Administração</div>
     <a
     href="./funcionarios.php" 
@@ -94,7 +99,7 @@ if ($user) {
     <i class="fas fa-users"></i> Funcionários
   </a>
   <a
-  href="./editar_inspecao.php"
+  href="./editar_inspe.php"
   class="nav-item"
   onclick="setActive(this, 'Editar Inspeção')"
   >
@@ -217,7 +222,6 @@ if ($user) {
             </div>
 
             <p id="resultado-vencedor"></p>
-            <p id="probabilidade"></p>
 
 
         </div>
