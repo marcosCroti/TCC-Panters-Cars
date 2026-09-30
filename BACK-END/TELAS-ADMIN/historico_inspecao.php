@@ -1,47 +1,60 @@
-<?php
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+<?php 
+if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); } 
+require_once __DIR__ . '/../config/db.php'; 
+require_once __DIR__ . '/../config/auth.php'; 
+require_login(); 
+
+$nome_sessao = $_SESSION['user'] ?? ''; 
+
+$stmt = $pdo->prepare("SELECT usuario_nome, isAdmin FROM first_data.usuarios WHERE usuario_nome = ?"); 
+$stmt->execute([$nome_sessao]); 
+$user = $stmt->fetch(PDO::FETCH_ASSOC); 
+
+if ($user) { 
+    $nome = $user['usuario_nome']; 
+    $func = $user['isAdmin'] ? 'Administrador' : 'Funcionario'; 
+} else { 
+    $nome = 'Usuário não encontrado'; 
+} 
+
+// Captura os parâmetros da URL
+$busca = $_GET['busca'] ?? '';
+$meses = $_GET['meses'] ?? ''; 
+
+// Mantemos a sua regra de negócio estrita para remover os testes (!= 0)
+$sql = "SELECT usuario, funcao, nome_tipo, quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, data_insp, id_usuario 
+        FROM first_data.pecas 
+        WHERE usuario IS NOT NULL AND usuario <> '' 
+        AND funcao IS NOT NULL AND funcao <> '' 
+        AND nome_tipo IS NOT NULL AND nome_tipo <> '' 
+        AND quantidade_pecas IS NOT NULL AND quantidade_pecas > 0 
+        AND pecas_aprovadas IS NOT NULL 
+        AND lote IS NOT NULL AND lote > 0 
+        AND data_insp IS NOT NULL 
+        AND id_usuario != 0"; 
+
+$params = [];
+
+if (!empty($busca)) {
+    $sql .= " AND (usuario LIKE :busca OR nome_tipo LIKE :busca)";
+    $params[':busca'] = $busca . '%'; // Removida a '%' do início
 }
-require_once __DIR__ . "/../config/db.php";
-require_once __DIR__ . "/../config/auth.php";
-require_login();
-$nome_sessao = $_SESSION["user"] ?? ""; 
 
-
-
-$stmt = $pdo->prepare("SELECT usuario_nome, isAdmin FROM first_data.usuarios WHERE usuario_nome = ?");
-$stmt->execute([$nome_sessao]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-if ($user) {
-    // CORREÇÃO: Pega o valor real trazido do banco de dados
-    $nome = $user["usuario_nome"]; 
-    if($user["isAdmin"]){
-        $func = "Administrador";
-    }else{
-        $func = "Funcionario";
-    }
-} else {
-    $nome = "Usuário não encontrado";
+// 2. FILTRO DE DATA (Concatenado de forma segura após in_array)
+if (in_array($meses, ['3', '6', '12'])) {
+    $mesesInt = (int)$meses;
+    $sql .= " AND data_insp >= DATE_SUB(NOW(), INTERVAL {$mesesInt} MONTH)";
 }
 
-$sql = "SELECT usuario, funcao, nome_tipo, quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, data_insp, id_usuario
-FROM first_data.pecas 
-WHERE usuario IS NOT NULL AND usuario <> ''
-  AND funcao IS NOT NULL AND funcao <> ''
-  AND nome_tipo IS NOT NULL AND nome_tipo <> ''
-  AND quantidade_pecas IS NOT NULL AND quantidade_pecas > 0
-  AND pecas_aprovadas IS NOT NULL
-  AND lote IS NOT NULL AND lote > 0
-  AND data_insp IS NOT NULL
-  AND id_usuario != 0";
+$stmt = $pdo->prepare($sql);
 
-$stmt = $pdo->query($sql);
+// Bind genérico apenas para os parâmetros restantes (como a busca)
+foreach ($params as $key => $value) {
+    $stmt->bindValue($key, $value, PDO::PARAM_STR);
+}
 
+$stmt->execute();
 $historicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -155,40 +168,46 @@ $historicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
           </button> -->
-            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+            <a class="topbar-btn ghost" href="../AUTH/logout.php">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>
       </header>
 
-
+        <form method="GET">
       <div class="table-card">
+
         <div class="search-bar">
           <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar por nome ou peça..." />
-        </div>
+<input 
+  type="text" 
+  name="busca" 
+  value="<?= htmlspecialchars($busca) ?>" 
+  placeholder="Buscar por nome ou peça..." 
+/>
+</div>
         
       
       
       <!-- FILTER TAGS -->
       <div class="filter-tags">
-        <button class="tag-btn active" onclick="filterTag(this, 'pesquisar')">
+        <button class="tag-btn active" type="submit">
           Pesquisar
           </button>
-        <button class="tag-btn active" onclick="filterTag(this, 'todos')">
-          Todos
-          </button>
-          <button class="tag-btn" onclick="filterTag(this, '3 meses')">
-            3 meses
-          </button>
-          <button class="tag-btn" onclick="filterTag(this, '6 meses')">
-            6 meses
-          </button>
-          <button class="tag-btn" onclick="filterTag(this, '12 meses')">
-            12 meses
-          </button>
+        <div class="filter-tags">
+          <!-- Botão Todos (remove o filtro de meses) -->
+          <a href="?busca=<?= urlencode($busca) ?>" class="tag-btn <?= empty($_GET['meses']) ? 'active' : '' ?>">Todos</a>
           
+          <!-- Botões de meses -->
+          <a href="?busca=<?= urlencode($busca) ?>&meses=3" class="tag-btn <?= ($_GET['meses'] ?? '') == '3' ? 'active' : '' ?>">3 meses</a>
+          <a href="?busca=<?= urlencode($busca) ?>&meses=6" class="tag-btn <?= ($_GET['meses'] ?? '') == '6' ? 'active' : '' ?>">6 meses</a>
+          <a href="?busca=<?= urlencode($busca) ?>&meses=12" class="tag-btn <?= ($_GET['meses'] ?? '') == '12' ? 'active' : '' ?>">12 meses</a>
+      </div>
+          
+                  </form>
+
         </div>
+
     </div>
         
       
