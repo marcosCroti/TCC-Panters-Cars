@@ -155,15 +155,24 @@ if ($id_peca) {
             <a href="./index.php" class="nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="./scanner.php" class="nav-item"><i class="fas fa-qrcode"></i> Scanner</a>
             <a href="./inspecao.php" class="nav-item"><i class="fas fa-clipboard"></i> Inspeção</a>
-            <a href="./editar_inspe.php" class="nav-item active"><i class="fas fa-edit"></i> Editar Inspeção</a>
             <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
         </div>
-
+        
         <div class="sidebar-section">
             <div class="sidebar-section-title">Administração</div>
             <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
+<<<<<<< HEAD
+=======
+            <a href="./editar_inspe.php" class="nav-item active"><i class="fas fa-edit"></i> Editar Inspeção</a>
+>>>>>>> 11cf957fbb7074a0ef28e8ba7ab726ae51c04312
         </div>
-
+        
+        <div class="sidebar-section">
+<div class="sidebar-section-title">Registros Inspeção</div>
+<a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+<i class="fas fa-clock"></i> Histórico Peças
+</a>
+</div>
         <div class="sidebar-footer">
             <div class="avatar"><?= strtoupper($nome[0] ?? 'U') ?></div>
             <div class="user-info">
@@ -171,6 +180,7 @@ if ($id_peca) {
                 <span><?= htmlspecialchars($func) ?></span>
             </div>
         </div>
+
     </aside>
 
     <div class="main">
