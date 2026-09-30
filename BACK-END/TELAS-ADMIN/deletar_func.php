@@ -7,4 +7,4 @@ $id = $_GET["id"];
 $stmt = $pdo->prepare("DELETE FROM usuarios WHERE ID = ?");
 $stmt->execute([$id]);
 
-header("Location: funcionario.php");
+header("Location: funcionarios.php");

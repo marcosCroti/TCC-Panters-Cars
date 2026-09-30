@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             ]);
 
     
-    header("Location: ./funcionario.php");
+    header("Location: ./funcionarios.php");
     exit();
 }  
 } 
