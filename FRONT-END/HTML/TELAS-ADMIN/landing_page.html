@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panthers Cars - Sistema de Produção Automatizada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red-primary: #c0392b;
+            --red-dark: #8B1A1A;
+            --red-medium: #c0392b;
+            --red-light: #e74c3c;
+            --red-accent: #ff6b6b;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --gray-text: #555555;
+            --dark: #1a1a1a;
+            --header-bg: #8B1A1A;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--white);
+            border-bottom: 2px solid var(--gray-medium);
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+
+        .navbar-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-title span {
+            color: var(--red-primary);
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .navbar-links a:hover {
+            color: var(--red-primary);
+        }
+
+        .navbar-cta {
+            background: var(--red-primary);
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            transition: background 0.2s !important;
+        }
+
+        .navbar-cta:hover {
+            background: var(--red-dark) !important;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            padding-top: 64px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(139,26,26,0.03) 0%, rgba(255,255,255,0) 60%);
+            z-index: 0;
+        }
+
+        .hero-accent-circle {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(192,57,43,0.06) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero-accent-circle-2 {
+            position: absolute;
+            bottom: -150px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(192,57,43,0.04) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(192,57,43,0.08);
+            border: 1px solid rgba(192,57,43,0.2);
+            color: var(--red-primary);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--red-primary);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+        }
+
+        .hero-title .highlight {
+            color: var(--red-primary);
+        }
+
+        .hero-description {
+            font-size: 1.05rem;
+            color: var(--gray-text);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--red-primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            border: 2px solid var(--red-primary);
+            box-shadow: 0 4px 15px rgba(192,57,43,0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--red-dark);
+            border-color: var(--red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(192,57,43,0.35);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--dark);
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            border: 2px solid var(--gray-medium);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--red-primary);
+            color: var(--red-primary);
+            transform: translateY(-2px);
+        }
+
+        /* ========== MOCKUP ========== */
+        .hero-mockup {
+            position: relative;
+        }
+
+        .mockup-wrapper {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+            background: white;
+        }
+
+        .app-screenshot {
+            width: 100%;
+            background: #f8f8f8;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .app-header {
+            background: var(--header-bg);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-header-title {
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .app-header-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .app-body {
+            display: flex;
+            min-height: 380px;
+        }
+
+        .app-sidebar {
+            width: 200px;
+            background: white;
+            border-right: 1px solid var(--gray-medium);
+            padding: 16px 0;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 16px 16px;
+            border-bottom: 1px solid var(--gray-medium);
+            margin-bottom: 12px;
+        }
+
+        .app-sidebar-logo {
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-sidebar-logo img {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+        }
+
+        .app-sidebar-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .app-sidebar-name span {
+            color: var(--red-primary);
+        }
+
+        .sidebar-section-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #aaa;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 8px 16px 4px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            color: var(--gray-text);
+            cursor: pointer;
+        }
+
+        .sidebar-item.active {
+            background: var(--red-primary);
+            color: white;
+            border-radius: 8px;
+            margin: 2px 8px;
+            padding: 8px 10px;
+        }
+
+        .sidebar-item i {
+            width: 14px;
+            font-size: 0.7rem;
+        }
+
+        .app-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .scanner-box {
+            width: 100%;
+            max-width: 340px;
+            height: 200px;
+            border: 2px dashed var(--gray-medium);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+        }
+
+        .scanner-icon-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+        }
+
+        .scanner-icon-grid div {
+            width: 18px;
+            height: 18px;
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .scanner-icon-grid div:last-child {
+            background: #e8e8e8;
+        }
+
+        .scanner-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #888;
+        }
+
+        .scanner-subtext {
+            font-size: 0.65rem;
+            color: #aaa;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .app-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .app-btn.green {
+            background: rgba(39,174,96,0.1);
+            color: #27ae60;
+            border: 1px solid rgba(39,174,96,0.2);
+        }
+
+        .app-btn.red {
+            background: var(--red-primary);
+            color: white;
+        }
+
+        .app-btn.orange {
+            background: #e67e22;
+            color: white;
+        }
+
+        .app-btn i {
+            font-size: 0.9rem;
+        }
+
+        .sidebar-user {
+            margin-top: auto;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid var(--gray-medium);
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--red-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .user-info { display: flex; flex-direction: column; }
+        .user-name { font-size: 0.65rem; font-weight: 600; color: var(--dark); }
+        .user-role { font-size: 0.55rem; color: #aaa; }
+
+        /* ========== STATS ========== */
+        .stats-section {
+            background: var(--gray-light);
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--gray-medium);
+            border-bottom: 1px solid var(--gray-medium);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--red-primary);
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray-text);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* ========== FEATURES ========== */
+        .features-section {
+            padding: 6rem 2rem;
+            background: var(--white);
+        }
+
+        .section-container { max-width: 1200px; margin: 0 auto; }
+
+        .section-header { text-align: center; margin-bottom: 4rem; }
+
+        .section-badge {
+            display: inline-block;
+            background: rgba(192,57,43,0.08);
+            color: var(--red-primary);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title span { color: var(--red-primary); }
+
+        .section-description {
+            font-size: 1rem;
+            color: var(--gray-text);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid var(--gray-medium);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--red-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(192,57,43,0.3);
+            box-shadow: 0 10px 40px rgba(192,57,43,0.08);
+            transform: translateY(-4px);
+        }
+
+        .feature-card:hover::before { transform: scaleX(1); }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(192,57,43,0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--red-primary);
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.6rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            line-height: 1.6;
+        }
+
+        /* ========== TECH ========== */
+        .tech-section {
+            padding: 5rem 2rem;
+            background: var(--gray-light);
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .tech-chip {
+            background: white;
+            border: 1px solid var(--gray-medium);
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tech-chip:hover {
+            border-color: var(--red-primary);
+            color: var(--red-primary);
+            box-shadow: 0 4px 15px rgba(192,57,43,0.1);
+            transform: translateY(-2px);
+        }
+
+        .tech-chip-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--red-primary);
+            border-radius: 50%;
+        }
+
+        /* ========== TECH POPUP ========== */
+        .tech-popup-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tech-popup-overlay.show { display: flex; }
+
+        .tech-popup {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+            position: relative;
+            animation: popIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to   { transform: scale(1);    opacity: 1; }
+        }
+
+        .tech-popup-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: var(--gray-light);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--gray-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .tech-popup-close:hover { background: var(--gray-medium); }
+
+        .tech-popup-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            background: rgba(192,57,43,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-popup-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.5px;
+        }
+
+        .tech-popup-category {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--red-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .tech-popup-desc {
+            font-size: 0.92rem;
+            color: var(--gray-text);
+            line-height: 1.7;
+        }
+
+        .tech-popup-bar {
+            height: 3px;
+            background: var(--gray-medium);
+            border-radius: 50px;
+            margin-top: 1.4rem;
+            overflow: hidden;
+        }
+
+        .tech-popup-bar-fill {
+            height: 100%;
+            background: var(--red-primary);
+            border-radius: 50px;
+            transition: width 0.6s ease;
+        }
+
+        .tech-popup-usage {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.4rem;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        /* ========== TEAM ========== */
+        .team-section {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background: white;
+            border: 1px solid var(--gray-medium);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            border-color: rgba(192,57,43,0.3);
+            box-shadow: 0 8px 30px rgba(192,57,43,0.08);
+            transform: translateY(-4px);
+        }
+
+        .team-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--red-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+
+        .team-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .team-role {
+            font-size: 0.75rem;
+            color: var(--red-primary);
+            margin-top: 6px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .team-role i { font-size: 0.65rem; }
+
+        /* ========== CTA ========== */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: var(--header-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-bg-pattern {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+        }
+
+        .cta-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .cta-description {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--red-primary);
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+
+        .footer-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            /* inverte para ficar branca no fundo escuro */
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-brand-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .footer-brand-name span { color: var(--red-primary); }
+
+        .footer-info {
+            text-align: right;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .footer-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-tag {
+            background: rgba(255,255,255,0.08);
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            .hero-container { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-title { font-size: 2.4rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .stats-container { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .navbar-links { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
+            .cta-title { font-size: 2rem; }
+            .stats-container { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: 1fr; }
+            .footer-top { flex-direction: column; gap: 1rem; text-align: center; }
+            .footer-info { text-align: center; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            <div class="navbar-logo">
+                <!-- ✅ TROQUE "logo.png" pelo caminho da sua imagem -->
+                <img src="logo.png.png" alt="Panthers Cars Logo">
+            </div>
+            <span class="navbar-title">Panthers<span>Cars</span></span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="#features">Funcionalidades</a></li>
+            <li><a href="#tech">Tecnologias</a></li>
+            <li><a href="#team">Equipe</a></li>
+            <li>
+                <a href="https://github.com/marcosCroti/TCC-Panters-Cars" target="_blank" class="navbar-cta">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-accent-circle"></div>
+        <div class="hero-accent-circle-2"></div>
+
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <div class="hero-badge-dot"></div>
+                    Controle de peças &amp; ferramentas
+                </div>
+                <h1 class="hero-title">
+                    Gestão automotiva<br>
+                    por <span class="highlight">scanner</span><br>
+                    inteligente
+                </h1>
+                <p class="hero-description">
+                    O Panthers Cars resolve a ineficiência na identificação de autopeças dentro de indústrias, classificando peças por meio de scanner e catalogando informações como nome, lote, quantidade e modelo do produto em tempo real.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/marcosCroti/TCC-Panters-Cars" target="_blank" class="btn-primary">
+                        <i class="fab fa-github"></i> Ver no GitHub
+                    </a>
+                    <a href="#features" class="btn-secondary">
+                        <i class="fas fa-arrow-down"></i> Saiba mais
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-mockup">
+                <!-- Etiquetas foram removidas daqui para um visual mais limpo -->
+                <div class="mockup-wrapper">
+                    <div class="app-screenshot">
+                        <div class="app-header">
+                            <span class="app-header-title">Scanner de Peças</span>
+                            <div class="app-header-icon">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                        </div>
+                        <div class="app-body">
+                            <div class="app-sidebar">
+                                <div class="app-sidebar-brand">
+                                    <div class="app-sidebar-logo">
+                                        <!-- ✅ TROQUE "logo.png" pelo caminho da sua imagem -->
+                                        <img src="logo.png.png" alt="Logo">
+                                    </div>
+                                    <span class="app-sidebar-name">Panthers<span>Cars</span></span>
+                                </div>
+                                <div class="sidebar-section-label">Principal</div>
+                                <div class="sidebar-item"><i class="fas fa-chart-pie"></i> Dashboard</div>
+                                <div class="sidebar-item active"><i class="fas fa-qrcode"></i> Scanner</div>
+                                <div class="sidebar-item"><i class="fas fa-clipboard-check"></i> Inspeção</div>
+                                <div class="sidebar-item"><i class="fas fa-boxes"></i> Inventário</div>
+                                <div class="sidebar-section-label" style="margin-top:8px;">Administração</div>
+                                <div class="sidebar-item"><i class="fas fa-users"></i> Funcionários</div>
+                                <div class="sidebar-item"><i class="fas fa-edit"></i> Editar Inspeção</div>
+                                <div class="sidebar-section-label" style="margin-top:8px;">Registros</div>
+                                <div class="sidebar-item"><i class="fas fa-history"></i> Histórico Peças</div>
+                                <div class="sidebar-user">
+                                    <div class="user-avatar">G</div>
+                                    <div class="user-info">
+                                        <span class="user-name">Gerente Admin</span>
+                                        <span class="user-role">Administrador</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="app-content">
+                                <div class="scanner-box">
+                                    <div class="scanner-icon-grid">
+                                        <div></div><div></div><div></div><div></div>
+                                    </div>
+                                    <span class="scanner-text">Pronto para escanear</span>
+                                    <span class="scanner-subtext">Clique em "Ligar Câmera" abaixo</span>
+                                </div>
+                                <div class="app-buttons">
+                                    <div class="app-btn green"><i class="fas fa-power-off"></i>Ligar Câmera</div>
+                                    <div class="app-btn red"><i class="fas fa-qrcode"></i>Escanear Peça</div>
+                                    <div class="app-btn orange"><i class="fas fa-clipboard"></i>Ir para inspeção</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item fade-in">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Automatizado</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Erros humanos</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Tecnologias integradas</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Peças catalogáveis</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section" id="features">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-badge">Funcionalidades</div>
+                <h2 class="section-title">O que o <span>Panthers Cars</span> resolve</h2>
+                <p class="section-description">
+                    Um sistema completo de gestão automotiva que transforma a identificação de peças em um processo ágil, preciso e inteligente.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="feature-title">Classificação instantânea com IA</h3>
+                    <p class="feature-desc">Classificação instantânea de autopeças utilizando scanner inteligente e Teachable Machine, eliminando identificação manual e garantindo agilidade no processo.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <h3 class="feature-title">Catalogação automática</h3>
+                    <p class="feature-desc">Catalogação automática de informações essenciais como lote, quantidade e modelo do produto, mantendo um registro preciso de cada item identificado.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="feature-title">Redução de falhas humanas</h3>
+                    <p class="feature-desc">Redução de falhas humanas e otimização do tempo na gestão de produção automotiva, garantindo maior confiabilidade nos dados e nos processos industriais.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="feature-title">Controle em tempo real</h3>
+                    <p class="feature-desc">Integração direta com banco de dados MySQL para controle de estoque em tempo real, permitindo visualização e atualização instantânea de todo o inventário.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="tech-section" id="tech">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-badge">Tecnologias</div>
+                <h2 class="section-title">Stack <span>utilizada</span></h2>
+                <p class="section-description">
+                    Clique em cada tecnologia para saber mais sobre o papel dela no projeto.
+                </p>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-chip fade-in" onclick="openTechPopup('js')">
+                    <div class="tech-chip-dot"></div>
+                    <i class="fab fa-js-square" style="color:#f7df1e;font-size:1.1rem;"></i>
+                    JavaScript
+                </div>
+                <div class="tech-chip fade-in" onclick="openTechPopup('tm')">
+                    <div class="tech-chip-dot"></div>
+                    <i class="fas fa-brain" style="color:var(--red-primary);font-size:1rem;"></i>
+                    Teachable Machine
+                </div>
+                <div class="tech-chip fade-in" onclick="openTechPopup('php')">
+                    <div class="tech-chip-dot"></div>
+                    <i class="fab fa-php" style="color:#8993be;font-size:1.1rem;"></i>
+                    PHP
+                </div>
+                <div class="tech-chip fade-in" onclick="openTechPopup('html')">
+                    <div class="tech-chip-dot"></div>
+                    <i class="fab fa-html5" style="color:#e34f26;font-size:1.1rem;"></i>
+                    HTML
+                </div>
+                <div class="tech-chip fade-in" onclick="openTechPopup('mysql')">
+                    <div class="tech-chip-dot"></div>
+                    <i class="fas fa-database" style="color:#00758f;font-size:1rem;"></i>
+                    MySQL
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH POPUP -->
+    <div class="tech-popup-overlay" id="techPopupOverlay" onclick="closeTechPopupOutside(event)">
+        <div class="tech-popup" id="techPopup">
+            <button class="tech-popup-close" onclick="closeTechPopup()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="tech-popup-icon" id="popupIcon"></div>
+            <div class="tech-popup-name" id="popupName"></div>
+            <div class="tech-popup-category" id="popupCategory"></div>
+            <div class="tech-popup-desc" id="popupDesc"></div>
+            <div class="tech-popup-bar">
+                <div class="tech-popup-bar-fill" id="popupBar" style="width:0%"></div>
+            </div>
+            <div class="tech-popup-usage">
+                <span>Uso no projeto</span>
+                <span id="popupUsagePercent"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- EQUIPE -->
+    <section class="team-section" id="team">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-badge">Equipe</div>
+                <h2 class="section-title">Quem está por <span>trás</span></h2>
+                <p class="section-description">
+                    Turma 2IDS-B — desenvolvemos o Panthers Cars com dedicação e trabalho em equipe.
+                </p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card fade-in">
+                    <div class="team-avatar">BL</div>
+                    <div class="team-name">Bruna Letícia Boscoli</div>
+                    <div class="team-role"><i class="fas fa-sync-alt"></i> Scrum Master</div>
+                </div>
+                <div class="team-card fade-in">
+                    <div class="team-avatar">CH</div>
+                    <div class="team-name">Catarina Helena Manarin Massola</div>
+                    <div class="team-role"><i class="fas fa-server"></i> Back-end</div>
+                </div>
+                <div class="team-card fade-in">
+                    <div class="team-avatar">GS</div>
+                    <div class="team-name">Gabriela Santiago Silva</div>
+                    <div class="team-role"><i class="fas fa-palette"></i> Front-end</div>
+                </div>
+                <div class="team-card fade-in">
+                    <div class="team-avatar">GP</div>
+                    <div class="team-name">Gabriely Santos Pérez</div>
+                    <div class="team-role"><i class="fas fa-tasks"></i> Gerente de Projetos</div>
+                </div>
+                <div class="team-card fade-in">
+                    <div class="team-avatar">JF</div>
+                    <div class="team-name">João Fernando Lioni Bergo</div>
+                    <div class="team-role"><i class="fas fa-server"></i> Back-end</div>
+                </div>
+                <div class="team-card fade-in">
+                    <div class="team-avatar">MV</div>
+                    <div class="team-name">Marcos Vinicius Rodrigues Croti</div>
+                    <div class="team-role"><i class="fas fa-layer-group"></i> Full-Stack</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-bg-pattern"></div>
+        <div class="cta-container">
+            <h2 class="cta-title fade-in">Conheça o projeto</h2>
+            <p class="cta-description fade-in">
+                Explore o código-fonte do Panthers Cars no GitHub e veja como construímos um sistema de gestão automotiva inteligente do zero.
+            </p>
+            <div class="cta-buttons fade-in">
+                <a href="https://github.com/marcosCroti/TCC-Panters-Cars" target="_blank" class="btn-white">
+                    <i class="fab fa-github"></i> Ver no GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <!-- ✅ TROQUE "logo.png" pelo caminho da sua imagem -->
+                        <img src="logo.png.png" alt="Panthers Cars Logo">
+                    </div>
+                    <div>
+                        <div class="footer-brand-name">Panthers<span>Cars</span></div>
+                        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:2px;">
+                            Sistema de produção automatizada por scanner
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-info">
+                    <div>Turma 2IDS-B · Equipe 02</div>
+                    <div>Gestão de produção automotiva</div>
+                    <div style="margin-top:6px;">
+                        <a href="https://github.com/marcosCroti/TCC-Panters-Cars" target="_blank"
+                           style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.78rem;
+                                  display:inline-flex;align-items:center;gap:5px;transition:color 0.2s;"
+                           onmouseover="this.style.color='white'"
+                           onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+                            <i class="fab fa-github"></i> github.com/marcosCroti/TCC-Panters-Cars
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Panthers Cars · Todos os direitos reservados</span>
+                <div class="footer-tags">
+                    <span class="footer-tag">JS</span>
+                    <span class="footer-tag">Teachable Machine</span>
+                    <span class="footer-tag">PHP</span>
+                    <span class="footer-tag">HTML</span>
+                    <span class="footer-tag">MySQL</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const techData = {
+            js: {
+                icon: '<i class="fab fa-js-square" style="font-size:2rem;color:#f7df1e;"></i>',
+                name: 'JavaScript',
+                category: 'Linguagem de Programação',
+                desc: 'Responsável por toda a lógica interativa do sistema no lado do cliente. No Panthers Cars, o JavaScript controla a câmera do scanner, processa o retorno da Teachable Machine em tempo real e atualiza a interface dinamicamente sem recarregar a página.',
+                usage: 90
+            },
+            tm: {
+                icon: '<i class="fas fa-brain" style="font-size:2rem;color:#c0392b;"></i>',
+                name: 'Teachable Machine',
+                category: 'Inteligência Artificial · Google',
+                desc: 'Ferramenta do Google utilizada para treinar o modelo de visão computacional que identifica e classifica as autopeças automaticamente. Com ela, o sistema reconhece cada peça pela câmera sem necessidade de código de IA manual.',
+                usage: 75
+            },
+            php: {
+                icon: '<i class="fab fa-php" style="font-size:2rem;color:#8993be;"></i>',
+                name: 'PHP',
+                category: 'Linguagem Back-end',
+                desc: 'Cuida de toda a comunicação entre o front-end e o banco de dados MySQL. No Panthers Cars, o PHP gerencia rotas, autenticação de usuários, cadastro de peças, controle de lotes e todas as operações do servidor.',
+                usage: 85
+            },
+            html: {
+                icon: '<i class="fab fa-html5" style="font-size:2rem;color:#e34f26;"></i>',
+                name: 'HTML',
+                category: 'Linguagem de Marcação',
+                desc: 'Base estrutural de todas as telas do sistema — desde o painel de Scanner até o Inventário e Histórico de Peças. O HTML define a estrutura semântica da interface, garantindo acessibilidade e organização visual.',
+                usage: 80
+            },
+            mysql: {
+                icon: '<i class="fas fa-database" style="font-size:2rem;color:#00758f;"></i>',
+                name: 'MySQL',
+                category: 'Banco de Dados Relacional',
+                desc: 'Armazena todas as informações do sistema: peças, lotes, quantidades, modelos, funcionários e histórico de inspeções. A integração com PHP garante que o estoque seja atualizado em tempo real a cada escaneamento.',
+                usage: 88
+            }
+        };
+
+        function openTechPopup(key) {
+            const data = techData[key];
+            document.getElementById('popupIcon').innerHTML = data.icon;
+            document.getElementById('popupName').textContent = data.name;
+            document.getElementById('popupCategory').textContent = data.category;
+            document.getElementById('popupDesc').textContent = data.desc;
+            document.getElementById('popupUsagePercent').textContent = data.usage + '%';
+            document.getElementById('techPopupOverlay').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('popupBar').style.width = data.usage + '%';
+            }, 50);
+        }
+
+        function closeTechPopup() {
+            document.getElementById('techPopupOverlay').classList.remove('show');
+            document.getElementById('popupBar').style.width = '0%';
+        }
+
+        function closeTechPopupOutside(event) {
+            if (event.target === document.getElementById('techPopupOverlay')) closeTechPopup();
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeTechPopup();
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>

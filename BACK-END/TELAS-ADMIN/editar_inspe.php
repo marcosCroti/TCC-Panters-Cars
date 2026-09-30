@@ -161,10 +161,6 @@ if ($id_peca) {
         <div class="sidebar-section">
             <div class="sidebar-section-title">Administração</div>
             <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
-<<<<<<< HEAD
-=======
-            <a href="./editar_inspe.php" class="nav-item active"><i class="fas fa-edit"></i> Editar Inspeção</a>
->>>>>>> 11cf957fbb7074a0ef28e8ba7ab726ae51c04312
         </div>
         
         <div class="sidebar-section">

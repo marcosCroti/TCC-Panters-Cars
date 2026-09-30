@@ -119,7 +119,7 @@ foreach ($donutResult as$row) {
 
     <div class="sidebar-section">
         <div class="sidebar-section-title">Principal</div>
-        <a href="./dashboard_dinamico.php" class="nav-item active" onclick="setActive(this, 'Dashboard')">
+        <a href="./index.php" class="nav-item active" onclick="setActive(this, 'Dashboard')">
             <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
         <a href="./scanner.php" class="nav-item" onclick="setActive(this, 'Scanner')">
@@ -128,25 +128,25 @@ foreach ($donutResult as$row) {
         <a href="./inspecao.php" class="nav-item" onclick="setActive(this, 'Inspeção')">
             <i class="fas fa-clipboard"></i> Inspeção
         </a>
+    </div>
+    
+    <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
+        <div class="sidebar-section-title">Administração</div>
+        <a href="./editar_inspe.php" class="nav-item" onclick="setActive(this, 'Editar Inspeção')">
+            <i class="fas fa-edit"></i> Editar Inspeção
+        </a>
         <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
             <i class="fas fa-boxes"></i> Inventário
         </a>
     </div>
-  
-    <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
-        <div class="sidebar-section-title">Administração</div>
-        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
-        </a>
-        <a href="./editar_inspe.php" class="nav-item" onclick="setActive(this, 'Editar Inspeção')">
-            <i class="fas fa-edit"></i> Editar Inspeção
-        </a>
-    </div>
-
+    
     <div class="sidebar-section">
         <div class="sidebar-section-title">Registros Inspeção</div>
         <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Histórico')">
             <i class="fas fa-clock"></i> Histórico Peças
+        </a>
+        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+            <i class="fas fa-users"></i> Funcionários
         </a>
     </div>
 
