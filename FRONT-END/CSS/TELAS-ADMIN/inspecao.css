@@ -12,15 +12,35 @@
             background-color: white;
             min-height: 100vh;
         }
+
+
+/* Esconde a barra no Chrome, Safari e Edge */
+.main-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Esconde a barra no Firefox e IE/Edge antigo */
+.main-content {
+    -ms-overflow-style: none;  /* IE e Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+
+
+
         
         .main-content {
+
+            flex: 1;
+            overflow-y: auto; /* A rolagem acontece somente aqui */
             padding: 32px 24px;
             max-width: 900px;
+            width: 100%;
             margin: 0 auto;
-            margin-left: calc(260px + 24px); /* sidebar width + espaçamento */
 }
         
-        .main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: white;}
+        .main { margin-left: 260px; flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; background-color: white;}
 
         /* ===== TOPBAR ===== */
         .topbar {
@@ -32,11 +52,11 @@
             align-items: center;
             border-bottom: 1px solid #e5e7eb;
             gap: 16px;
-            
+            position: sticky;
             top: 0;
             z-index: 50;
             box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-            
+            flex-shrink: 0;
         }
 
         .topbar-menu-btn {
