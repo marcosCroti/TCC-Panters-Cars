@@ -137,42 +137,42 @@ if ($id_peca) {
         >
         <i class="fas fa-clipboard"></i> Inspeção
       </a>
-      <a
-      href="./inventario.php"
-      class="nav-item"
-      onclick="setActive(this, 'Inventário')"
-      >
-      <i class="fas fa-boxes"></i> Inventário
+    </div>
+    
+    <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
+        <div class="sidebar-section-title">Administração</div>
+        <a
+        href="./editar_inspe.php"
+        class="nav-item"
+        onclick="setActive(this, 'Editar Inspeção')"
+        >
+        <i class="fas fa-edit"></i> Editar Inspeção
     </a>
-  </div>
-  
-  <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
-    <div class="sidebar-section-title">Administração</div>
+    
+    <a
+    href="./inventario.php"
+    class="nav-item"
+    onclick="setActive(this, 'Inventário')"
+    >
+    <i class="fas fa-boxes"></i> Inventário
+</a>
+<!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
+    <i class="fas fa-bell"></i> Alertas
+    <span class="badge">3</span>
+</a> -->
+</div>
+
+<div class="sidebar-section">
+    <div class="sidebar-section-title">Registros Inspeção</div>
+    <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+        <i class="fas fa-clock"></i> Histórico Peças
+    </a>
     <a
     href="./funcionarios.php" 
     class="nav-item" onclick="setActive(this, 'Funcionários')"
     
     >
     <i class="fas fa-users"></i> Funcionários
-  </a>
-  <a
-  href="./editar_inspe.php"
-  class="nav-item"
-  onclick="setActive(this, 'Editar Inspeção')"
-  >
-  <i class="fas fa-edit"></i> Editar Inspeção
-</a>
-
-        <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
-          <i class="fas fa-bell"></i> Alertas
-          <span class="badge">3</span>
-        </a> -->
-      </div>
-
-            <div class="sidebar-section">
-    <div class="sidebar-section-title">Registros Inspeção</div>
-    <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-        <i class="fas fa-clock"></i> Histórico Peças
     </a>
     </div>
 
