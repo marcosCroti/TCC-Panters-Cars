@@ -234,7 +234,7 @@ function imagemCard($grupo) {
     <div class="sidebar-section">
         <div class="sidebar-section-title">Administração</div>
         <a
-        href="./editar_inspecao.php"
+        href="./editar_inspe.php"
         class="nav-item"
         onclick="setActive(this, 'Editar Inspeção')"
         >
@@ -392,9 +392,9 @@ function imagemCard($grupo) {
                         <div class="card-banner card-image-container">
                     <img src="<?= h($imagemPeca) ?>" alt="<?= h($grupo) ?>" class="card-img">
                     
-                    <div class="status-badge">
+                    <!-- <div class="status-badge">
                         <span class="status-dot <?= h($status) ?>"></span> <?= h($statusTexto) ?>
-                    </div>
+                    </div> -->
                     <div class="code-badge"><?= h($codigo) ?></div>
                 </div>
                         <div class="card-body">
