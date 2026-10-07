@@ -246,6 +246,45 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(192,57,43,0.35);
         }
+        
+
+        .btn-primary-site {
+            background: var(--red-primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            border: 2px solid var(--red-primary);
+            box-shadow: 0 4px 15px rgba(192,57,43,0.3);
+
+    justify-content: center; /* Centraliza o botão na tela */
+    width: 35%;             /* Ocupa a largura total da seção */
+    margin-top: 3rem;        /* Espaçamento em cima */
+    margin-bottom: 3rem;
+        }
+
+
+
+        .features-cta {
+    display: flex;
+    justify-content: center; /* Centraliza o botão na tela */
+    width: 100%;             /* Ocupa a largura total da seção */
+    margin-top: 3rem;        /* Espaçamento em cima */
+    margin-bottom: 3rem;     /* Espaçamento embaixo igual ao de cima */
+}
+
+        .btn-primary-site:hover {
+            background: var(--red-dark);
+            border-color: var(--red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(192,57,43,0.35);
+        }
 
         .btn-secondary {
             background: transparent;
@@ -774,30 +813,6 @@
             line-height: 1.7;
         }
 
-        .tech-popup-bar {
-            height: 3px;
-            background: var(--gray-medium);
-            border-radius: 50px;
-            margin-top: 1.4rem;
-            overflow: hidden;
-        }
-
-        .tech-popup-bar-fill {
-            height: 100%;
-            background: var(--red-primary);
-            border-radius: 50px;
-            transition: width 0.6s ease;
-        }
-
-        .tech-popup-usage {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 0.4rem;
-            font-size: 0.75rem;
-            color: #aaa;
-        }
-
         /* ========== TEAM ========== */
         .team-section {
             padding: 6rem 2rem;
@@ -1085,7 +1100,7 @@
                     </a>
                 </div>
             </div>
-
+            
             <div class="hero-mockup">
                 <!-- Etiquetas foram removidas daqui para um visual mais limpo -->
                 <div class="mockup-wrapper">
@@ -1109,12 +1124,12 @@
                                 <div class="sidebar-item"><i class="fas fa-chart-pie"></i> Dashboard</div>
                                 <div class="sidebar-item active"><i class="fas fa-qrcode"></i> Scanner</div>
                                 <div class="sidebar-item"><i class="fas fa-clipboard-check"></i> Inspeção</div>
-                                <div class="sidebar-item"><i class="fas fa-boxes"></i> Inventário</div>
                                 <div class="sidebar-section-label" style="margin-top:8px;">Administração</div>
-                                <div class="sidebar-item"><i class="fas fa-users"></i> Funcionários</div>
                                 <div class="sidebar-item"><i class="fas fa-edit"></i> Editar Inspeção</div>
+                                <div class="sidebar-item"><i class="fas fa-users"></i> Funcionários</div>
                                 <div class="sidebar-section-label" style="margin-top:8px;">Registros</div>
                                 <div class="sidebar-item"><i class="fas fa-history"></i> Histórico Peças</div>
+                                <div class="sidebar-item"><i class="fas fa-boxes"></i> Inventário</div>
                                 <div class="sidebar-user">
                                     <div class="user-avatar">G</div>
                                     <div class="user-info">
@@ -1165,7 +1180,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- FEATURES -->
     <section class="features-section" id="features">
         <div class="section-container">
@@ -1198,6 +1213,7 @@
                     <p class="feature-desc">Integração direta com banco de dados MySQL para controle de estoque em tempo real, permitindo visualização e atualização instantânea de todo o inventário.</p>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -1251,13 +1267,6 @@
             <div class="tech-popup-name" id="popupName"></div>
             <div class="tech-popup-category" id="popupCategory"></div>
             <div class="tech-popup-desc" id="popupDesc"></div>
-            <div class="tech-popup-bar">
-                <div class="tech-popup-bar-fill" id="popupBar" style="width:0%"></div>
-            </div>
-            <div class="tech-popup-usage">
-                <span>Uso no projeto</span>
-                <span id="popupUsagePercent"></span>
-            </div>
         </div>
     </div>
 
@@ -1318,6 +1327,7 @@
                 <a href="https://github.com/marcosCroti/TCC-Panters-Cars" target="_blank" class="btn-white">
                     <i class="fab fa-github"></i> Ver no GitHub
                 </a>
+   
             </div>
         </div>
     </section>
@@ -1371,36 +1381,31 @@
                 icon: '<i class="fab fa-js-square" style="font-size:2rem;color:#f7df1e;"></i>',
                 name: 'JavaScript',
                 category: 'Linguagem de Programação',
-                desc: 'Responsável por toda a lógica interativa do sistema no lado do cliente. No Panthers Cars, o JavaScript controla a câmera do scanner, processa o retorno da Teachable Machine em tempo real e atualiza a interface dinamicamente sem recarregar a página.',
-                usage: 90
+                desc: 'Responsável por toda a lógica interativa do sistema no lado do cliente. No Panthers Cars, o JavaScript controla a câmera do scanner, processa o retorno da Teachable Machine em tempo real e atualiza a interface dinamicamente sem recarregar a página.'
             },
             tm: {
                 icon: '<i class="fas fa-brain" style="font-size:2rem;color:#c0392b;"></i>',
                 name: 'Teachable Machine',
                 category: 'Inteligência Artificial · Google',
-                desc: 'Ferramenta do Google utilizada para treinar o modelo de visão computacional que identifica e classifica as autopeças automaticamente. Com ela, o sistema reconhece cada peça pela câmera sem necessidade de código de IA manual.',
-                usage: 75
+                desc: 'Ferramenta do Google utilizada para treinar o modelo de visão computacional que identifica e classifica as autopeças automaticamente. Com ela, o sistema reconhece cada peça pela câmera sem necessidade de código de IA manual.'
             },
             php: {
                 icon: '<i class="fab fa-php" style="font-size:2rem;color:#8993be;"></i>',
                 name: 'PHP',
                 category: 'Linguagem Back-end',
-                desc: 'Cuida de toda a comunicação entre o front-end e o banco de dados MySQL. No Panthers Cars, o PHP gerencia rotas, autenticação de usuários, cadastro de peças, controle de lotes e todas as operações do servidor.',
-                usage: 85
+                desc: 'Cuida de toda a comunicação entre o front-end e o banco de dados MySQL. No Panthers Cars, o PHP gerencia rotas, autenticação de usuários, cadastro de peças, controle de lotes e todas as operações do servidor.'
             },
             html: {
                 icon: '<i class="fab fa-html5" style="font-size:2rem;color:#e34f26;"></i>',
                 name: 'HTML',
                 category: 'Linguagem de Marcação',
-                desc: 'Base estrutural de todas as telas do sistema — desde o painel de Scanner até o Inventário e Histórico de Peças. O HTML define a estrutura semântica da interface, garantindo acessibilidade e organização visual.',
-                usage: 80
+                desc: 'Base estrutural de todas as telas do sistema — desde o painel de Scanner até o Inventário e Histórico de Peças. O HTML define a estrutura semântica da interface, garantindo acessibilidade e organização visual.'
             },
             mysql: {
                 icon: '<i class="fas fa-database" style="font-size:2rem;color:#00758f;"></i>',
                 name: 'MySQL',
                 category: 'Banco de Dados Relacional',
-                desc: 'Armazena todas as informações do sistema: peças, lotes, quantidades, modelos, funcionários e histórico de inspeções. A integração com PHP garante que o estoque seja atualizado em tempo real a cada escaneamento.',
-                usage: 88
+                desc: 'Armazena todas as informações do sistema: peças, lotes, quantidades, modelos, funcionários e histórico de inspeções. A integração com PHP garante que o estoque seja atualizado em tempo real a cada escaneamento.'
             }
         };
 
@@ -1410,16 +1415,11 @@
             document.getElementById('popupName').textContent = data.name;
             document.getElementById('popupCategory').textContent = data.category;
             document.getElementById('popupDesc').textContent = data.desc;
-            document.getElementById('popupUsagePercent').textContent = data.usage + '%';
             document.getElementById('techPopupOverlay').classList.add('show');
-            setTimeout(() => {
-                document.getElementById('popupBar').style.width = data.usage + '%';
-            }, 50);
         }
 
         function closeTechPopup() {
             document.getElementById('techPopupOverlay').classList.remove('show');
-            document.getElementById('popupBar').style.width = '0%';
         }
 
         function closeTechPopupOutside(event) {
@@ -1441,10 +1441,15 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+                const target = document.querySelector(href);
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     </script>
 </body>
 </html>
+apps-fileview.texmex_20260924.00_p0
+index (5).html
+Exibindo index (5).html…
