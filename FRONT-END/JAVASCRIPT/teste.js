@@ -117,7 +117,9 @@ async function init() {
     console.log("ligando...");
     
     // Carrega o modelo e metadados
+    console.log("etapa1 concluida");
     model = await tmImage.load(modelURL, metadataURL);
+    console.log("etapa2 concluida");
     maxPredictions = model.getTotalClasses();
 
     // Configura a Webcam
@@ -127,7 +129,9 @@ async function init() {
     if (logo) logo.style.display = "none";
 
     await webcam.setup();
+    console.log("etapa3 concluida");
     await webcam.play();
+    console.log("etapa4 concluida");
 
     // Adiciona o canvas da webcam na interface
     document.getElementById("webcam-container").appendChild(webcam.canvas);

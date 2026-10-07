@@ -52,7 +52,8 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                 nome_tipo,
                 grupo_peca,
                 SUM(quantidade_pecas) AS quantidade_pecas,
-                SUM(pecas_reprovadas) AS pecas_reprovadas
+                SUM(pecas_reprovadas) AS pecas_reprovadas,
+                MAX(imagem) AS imagem
             FROM first_data.pecas 
             WHERE grupo_peca = ? 
             GROUP BY nome_tipo, grupo_peca
@@ -67,7 +68,8 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
                 nome_tipo,
                 grupo_peca,
                 SUM(quantidade_pecas) AS quantidade_pecas,
-                SUM(pecas_reprovadas) AS pecas_reprovadas
+                SUM(pecas_reprovadas) AS pecas_reprovadas,
+                MAX(imagem) AS imagem
             FROM first_data.pecas 
             GROUP BY nome_tipo, grupo_peca
             ORDER BY MIN(id_pecas) ASC
@@ -162,32 +164,15 @@ if ($filtro !== "todos" && isset($grupos[$filtro])) {
 
         return "grad-red";
     }
-function imagemCard($grupo) {
-    if ($grupo === "Motor e Transmissão") {
-        return "https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png";
-    }
-    if ($grupo === "Freios") {
-        return "https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg";
-    }
-    if ($grupo === "Suspensão e Direção") {
-        return "https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp";
-    }
-    if ($grupo === "Elétrica") {
-        return "https://www.empresasdebaterias.com.br/imagens/bateria-amperes/bateria-amperes-02.jpg";
-    }
-    if ($grupo === "Carroceria/Acabamento") {
-        return "https://bite.vtexassets.com/arquivos/ids/180037/34290.png";
-    }
-    if ($grupo === "Componentes de Segurança") {
-        return "https://blog.nakata.com.br/storage/uploads/2018/08/229649-manual-definitivo-do-cinto-de-seguranca-tudo-que-voce-precisa-saber.jpg";
-    }
-    
-    // Imagem padrão caso não encontre nenhuma das anteriores
-    return "../../FRONT-END/IMG/PECAS/default.png";
-}
+
     function codigoPeca($id) {
         return "PEC-" . str_pad((string)$id, 3, "0", STR_PAD_LEFT);
     }
+
+
+    
+
+
     ?>
 
     <!DOCTYPE html>
@@ -385,7 +370,7 @@ function imagemCard($grupo) {
                     $status = statusPeca($quantidade);
                     $statusTexto = textoStatus($status);
                     $cat = categoriaCard($grupo);
-                    $imagemPeca = imagemCard($grupo);
+                    $imagemPeca = $peca["imagem"];
                     $codigo = codigoPeca($id);
 
                     $modalArgs = [

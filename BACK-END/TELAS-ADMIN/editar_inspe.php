@@ -29,15 +29,19 @@ if ($user) {
 // Opção de peça selecionada (GET ou POST)
 $opcao_selecionada = $_REQUEST['opicao'] ?? '';
 
-// Mapeamento de Peças -> ID
-$mapeamento_ids = [
-    'pistao'      => 1,
-    'pastilha'    => 2,
-    'bateria'     => 5,
-    'amortecedor' => 3,
-    'para_choque' => 4
-];
+// 1. Busca todas as peças usando PREPARE (evita o erro HY093 e 1064)
+$stmt_pecas = $pdo->prepare("SELECT DISTINCT nome_tipo, id_pecas FROM first_data.pecas");
+$stmt_pecas->execute();
+$todas_pecas = $stmt_pecas->fetchAll(PDO::FETCH_ASSOC);
 
+
+// 2. Mapeia [nome_tipo => id_pecas]
+$mapeamento_ids = [];
+foreach ($todas_pecas as $peca) {
+    $mapeamento_ids[$peca['nome_tipo']] = $peca['id_pecas'];
+}
+
+// 3. Define o ID da peça selecionada
 $id_peca = $mapeamento_ids[$opcao_selecionada] ?? null;
 
 // ==========================================
@@ -70,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $texto_editado = trim($_POST["instrucao_editada"] ?? "");
 
         if (!empty($id_instrucao) && !empty($texto_editado)) {
-            // Nota: ajuste a chave primária 'id' da tabela 'instrucao' caso o nome da coluna seja diferente no seu banco (ex: id_instrucao)
             $stmt = $pdo->prepare("UPDATE first_data.instrucao SET instrucao = ? WHERE id = ?");
             if ($stmt->execute([$texto_editado, $id_instrucao])) {
                 $_SESSION["mensagem_sucesso"] = "Instrução atualizada com sucesso!";
@@ -82,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // Redireciona para evitar reenvio do formulário no F5
     header("Location: editar_inspe.php?opicao=" . urlencode($opcao_selecionada));
     exit();
 }
@@ -111,7 +113,6 @@ if (isset($_GET["action"]) && $_GET["action"] === "deletar") {
 // ==========================================
 $inspecoes = [];
 if ($id_peca) {
-    // Se a chave primária da tabela 'instrucao' tiver outro nome, altere 'id' na query abaixo
     $stmt = $pdo->prepare("SELECT id, id_peca, instrucao FROM first_data.instrucao WHERE id_peca = ? ORDER BY id ASC");
     $stmt->execute([$id_peca]);
     $inspecoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -127,7 +128,6 @@ if ($id_peca) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Estilos auxiliares para os Modais de Edição e Mensagens */
         .alert-success { background-color: #d4edda; color: #155724; padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #c3e6cb; }
         .alert-danger { background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #f5c6cb; }
         .btn-action { background: none; border: none; cursor: pointer; font-size: 1.1rem; margin: 0 4px; }
@@ -159,25 +159,16 @@ if ($id_peca) {
         
         <div class="sidebar-section">
             <div class="sidebar-section-title">Administração</div>
-                    <a
-        href="./editar_inspe.php"
-        class="nav-item active"
-        onclick="setActive(this, 'Editar Inspeção')"
-        >
-        <i class="fas fa-edit"></i> Editar Inspeção
-    </a>
-
+            <a href="./editar_inspe.php" class="nav-item active"><i class="fas fa-edit"></i> Editar Inspeção</a>
             <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
         </div>
         
         <div class="sidebar-section">
             <div class="sidebar-section-title">Registros Inspeção</div>
-            <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-                <i class="fas fa-clock"></i> Histórico Peças
-            </a>
+            <a href="historico_inspecao.php" class="nav-item"><i class="fas fa-clock"></i> Histórico Peças</a>
             <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
+        </div>
 
-</div>
         <div class="sidebar-footer">
             <div class="avatar"><?= strtoupper($nome[0] ?? 'U') ?></div>
             <div class="user-info">
@@ -185,11 +176,9 @@ if ($id_peca) {
                 <span><?= htmlspecialchars($func) ?></span>
             </div>
         </div>
-
     </aside>
 
     <div class="main">
-        <!-- TOPBAR -->
         <header class="topbar">
             <h2 id="topbar-title">Editar Inspeção</h2>
             <div class="topbar-actions">
@@ -199,10 +188,7 @@ if ($id_peca) {
             </div>
         </header>
 
-        <!-- MAIN CONTENT -->
         <div class="main-content">
-            
-            <!-- EXIBIÇÃO DE ALERTAS -->
             <?php if (!empty($mensagem_sucesso)): ?>
                 <div class="alert-success">
                     <i class="fas fa-check-circle"></i> <?= htmlspecialchars($mensagem_sucesso) ?>
@@ -220,12 +206,12 @@ if ($id_peca) {
                 <div class="filter-bar">
                     <label>Item:</label>
                     <select name="opicao">
-                        <option value="" disabled <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>Selecione</option>
-                        <option value="pistao" <?= ($opcao_selecionada === 'pistao') ? 'selected' : '' ?>>Pistão</option>
-                        <option value="pastilha" <?= ($opcao_selecionada === 'pastilha') ? 'selected' : '' ?>>Pastilha</option>
-                        <option value="bateria" <?= ($opcao_selecionada === 'bateria') ? 'selected' : '' ?>>Bateria</option>
-                        <option value="amortecedor" <?= ($opcao_selecionada === 'amortecedor') ? 'selected' : '' ?>>Amortecedor</option>
-                        <option value="para_choque" <?= ($opcao_selecionada === 'para_choque') ? 'selected' : '' ?>>Para Choque</option>
+                        <option value="">-- Selecione uma peça --</option>
+                        <?php foreach($todas_pecas as $peca): ?>
+                            <option value="<?= htmlspecialchars($peca["nome_tipo"]) ?>" <?= ($opcao_selecionada === $peca["nome_tipo"]) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars(ucfirst(str_replace('_', ' ', $peca["nome_tipo"]))) ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                     
                     <button type="submit" class="btn-reload">
@@ -252,7 +238,7 @@ if ($id_peca) {
                 </div>
             </form>
 
-            <!-- LISTA DE INSTRUÇÕES DA PEÇA -->
+            <!-- LISTA DE INSTRUÇÕES -->
             <div class="checklist-card">
                 <div class="checklist-header">
                     <i class="fas fa-clipboard-list"></i>
@@ -269,12 +255,14 @@ if ($id_peca) {
                                 <div class="item-number"><?= $contador++; ?></div>
                                 <span class="item-text"><?= htmlspecialchars($inspecao["instrucao"]); ?></span>
                                 <div class="actions-cell">
-                                    <!-- Botão Editar -->
-                                    <button class="btn-action" title="Editar" onclick="abrirModalEdicao('<?= $inspecao['id'] ?>', '<?= htmlspecialchars(addslashes($inspecao['instrucao'])) ?>')">
+                                    <button class="btn-action btn-edit" title="Editar" 
+                                            data-id="<?= $inspecao['id'] ?>" 
+                                            data-texto="<?= htmlspecialchars($inspecao['instrucao'], ENT_QUOTES) ?>">
                                         ✏️
                                     </button>
-                                    <!-- Botão Excluir -->
-                                    <a class="btn-action" title="Excluir" href="editar_inspe.php?action=deletar&id=<?= $inspecao['id'] ?>&opicao=<?= urlencode($opcao_selecionada) ?>" onclick="return confirm('Deseja realmente excluir esta instrução?');">
+                                    <a class="btn-action" title="Excluir" 
+                                       href="editar_inspe.php?action=deletar&id=<?= $inspecao['id'] ?>&opicao=<?= urlencode($opcao_selecionada) ?>" 
+                                       onclick="return confirm('Deseja realmente excluir esta instrução?');">
                                         🗑️
                                     </a>
                                 </div>
@@ -307,6 +295,14 @@ if ($id_peca) {
     </div>
 
     <script>
+        document.querySelectorAll('.btn-edit').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const texto = this.getAttribute('data-texto');
+                abrirModalEdicao(id, texto);
+            });
+        });
+
         function abrirModalEdicao(id, texto) {
             document.getElementById('edit_id').value = id;
             document.getElementById('edit_texto').value = texto;

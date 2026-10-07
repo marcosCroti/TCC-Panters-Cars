@@ -90,7 +90,13 @@ if ($id_peca) {
     $stmt = $pdo->prepare("SELECT id_peca, instrucao FROM first_data.instrucao WHERE id_peca = ?");
     $stmt->execute([$id_peca]);
     $inspecoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 }
+
+    $stmt3 = $pdo->query("SELECT DISTINCT nome_tipo FROM first_data.pecas");
+    $nome_peca = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -193,14 +199,18 @@ if ($id_peca) {
             <form action="inspecao.php" method="GET">
                 <div class="filter-bar">
                     <label>Item:</label>
-                    <select name="opicao">
-                        <option value="" disabled <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>Selecione uma opção</option>
-                        <option value="pistao" <?= ($opcao_selecionada === 'pistao') ? 'selected' : '' ?>>Pistão</option>
-                        <option value="pastilha" <?= ($opcao_selecionada === 'pastilha') ? 'selected' : '' ?>>Pastilha</option>
-                        <option value="bateria" <?= ($opcao_selecionada === 'bateria') ? 'selected' : '' ?>>Bateria</option>
-                        <option value="amortecedor" <?= ($opcao_selecionada === 'amortecedor') ? 'selected' : '' ?>>Amortecedor</option>
-                        <option value="para_choque" <?= ($opcao_selecionada === 'para_choque') ? 'selected' : '' ?>>Para Choque</option>
-                    </select>
+                    <select name="opicao" id="opicao" onchange="this.form.submit()">
+                    <option value="" disabled <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>
+                        Selecione uma opção
+                    </option>
+                    <?php if (!empty($nome_peca)): ?>
+                        <?php foreach($nome_peca as $nome_pecas): ?>
+                            <option value="<?= htmlspecialchars($nome_pecas["nome_tipo"]) ?>" <?= ($opcao_selecionada === $nome_pecas["nome_tipo"]) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars(ucfirst(str_replace('_', ' ', $nome_pecas["nome_tipo"]))) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+        </select>
 
                     <button type="submit" class="btn-reload">
                         <i class="fas fa-rotate-right"></i> Recarregar
