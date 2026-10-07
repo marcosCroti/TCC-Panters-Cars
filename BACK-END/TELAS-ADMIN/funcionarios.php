@@ -120,13 +120,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     >
     <i class="fas fa-edit"></i> Editar Inspeção
   </a>
-  <a
-  href="./inventario.php"
-  class="nav-item"
-  onclick="setActive(this, 'Inventário')"
-  >
-  <i class="fas fa-boxes"></i> Inventário
+
+<a
+href="./funcionarios.php" 
+class="nav-item active" onclick="setActive(this, 'Funcionários')">
+<i class="fas fa-users"></i> Funcionários
 </a>
+
 
 <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
           <i class="fas fa-bell"></i> Alertas
@@ -139,13 +139,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
           <i class="fas fa-clock"></i> Histórico Peças
         </a>
-        <a
-        href="./funcionarios.php" 
-        class="nav-item active" onclick="setActive(this, 'Funcionários')"
-        
-        >
-        <i class="fas fa-users"></i> Funcionários
-        </a>
+
+  <a
+  href="./inventario.php"
+  class="nav-item"
+  onclick="setActive(this, 'Inventário')"
+  >
+  <i class="fas fa-boxes"></i> Inventário
+</a>
     </div>
 
     <div class="sidebar-footer">
@@ -220,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         <div class="employee-cell">
                             <div class="employee-avatar"><?php echo strtoupper($user["usuario_nome"][0]) ?></div>
                             <div>
-                                <div class="employee-name"><?php echo $user["usuario_nome"];?></div>
+                                <div class="employee-name"><?php echo ucfirst($user["usuario_nome"]);?></div>
                                 <div class="employee-id">ID: <?php echo $user["ID"]; ?></div>
                             </div>
                         </div>

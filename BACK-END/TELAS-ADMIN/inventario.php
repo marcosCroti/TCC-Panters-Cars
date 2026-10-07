@@ -14,6 +14,8 @@
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     $func = "";
 
+
+
     if ($user) {
         // CORREÇÃO: Pega o valor real trazido do banco de dados
         $nome = $user["usuario_nome"]; 
@@ -25,7 +27,11 @@
     } else {
         $nome = "Usuário não encontrado";
     }
-
+    if($func === "Funcionario"){
+    $dd = "display: none;";
+}else{
+    $dd = "";
+}
 
     $filtro = $_GET["filtro"] ?? "todos";
 
@@ -231,7 +237,7 @@ function imagemCard($grupo) {
       </a>
     </div>
     
-    <div class="sidebar-section">
+    <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
         <div class="sidebar-section-title">Administração</div>
         <a
         href="./editar_inspe.php"
@@ -240,13 +246,14 @@ function imagemCard($grupo) {
         >
         <i class="fas fa-edit"></i> Editar Inspeção
     </a>
-    <a
-    href="./inventario.php"
-    class="nav-item active"
-    onclick="setActive(this, 'Inventário')"
+      <a
+    href="./funcionarios.php" 
+    class="nav-item" onclick="setActive(this, 'Funcionários')"
+    
     >
-    <i class="fas fa-boxes"></i> Inventário
-</a>
+    <i class="fas fa-users"></i> Funcionários
+    </a>
+
 
 <!-- <a href="#" class="nav-item" onclick="setActive(this, 'Alertas')">
     <i class="fas fa-bell"></i> Alertas
@@ -259,13 +266,15 @@ function imagemCard($grupo) {
     <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
         <i class="fas fa-clock"></i> Histórico Peças
     </a>
-    <a
-    href="./funcionarios.php" 
-    class="nav-item" onclick="setActive(this, 'Funcionários')"
-    
+
+
+  <a
+    href="./inventario.php"
+    class="nav-item active"
+    onclick="setActive(this, 'Inventário')"
     >
-    <i class="fas fa-users"></i> Funcionários
-    </a>
+    <i class="fas fa-boxes"></i> Inventário
+</a>
     </div>
 
     <div class="sidebar-footer">
@@ -388,7 +397,7 @@ function imagemCard($grupo) {
                         $status
                     ];
                 ?>
-                    <div class="card" data-cat="<?= h($cat) ?>" data-name="<?= h($nome) ?>" data-qty="<?= h($quantidade) ?>" data-status="<?= h($status) ?>">
+                    <div class="card" data-cat="<?= h($cat) ?>" data-name="<?= h($nome) ?>" data-qty="<?= h($quantidade) ?>" data-status="<?= h($status) ?>" data-img="<?= h($imagemPeca) ?>">
                         <div class="card-banner card-image-container">
                     <img src="<?= h($imagemPeca) ?>" alt="<?= h($grupo) ?>" class="card-img">
                     
@@ -546,16 +555,25 @@ function imagemCard($grupo) {
                 const status = card.dataset.status;
                 const grad = card.querySelector('.card-banner').className.split(' ').find(c => c.startsWith('grad-'));
                 const item = document.createElement('div');
+                const imgUrl = card.dataset.img;
                 item.className = 'list-item';
                 item.dataset.cat = cat;
                 item.dataset.name = name;
                 item.dataset.qty = qty;
                 item.dataset.status = status;
-                item.innerHTML = `
-                    <div class="list-thumb ${grad}"><i class="fas fa-cog"></i></div>
-                    <div class="list-info"><h4>${name}</h4><p>${cat}</p></div>
-                    <div class="list-qty"><span>${qty}</span><p>unid.</p></div>
-                `;
+item.innerHTML = `
+    <div class="list-thumb">
+        <img src="${imgUrl}" alt="${name}">
+    </div>
+    <div class="list-info">
+        <h4>${name}</h4>
+        <p>${cat}</p>
+    </div>
+    <div class="list-qty">
+        <span>${qty}</span>
+        <p>unid.</p>
+    </div>
+`;
                 container.appendChild(item);
             });
 

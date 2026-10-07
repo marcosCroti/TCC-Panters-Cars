@@ -106,17 +106,26 @@ $historicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="./inspecao.php" class="nav-item"><i class="fas fa-clipboard"></i> Inspeção</a>
       </div>
       
-      <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
+ <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
         <div class="sidebar-section-title">Administração</div>
-        <a href="./editar_inspe.php" class="nav-item"><i class="fas fa-edit"></i> Editar Inspeção</a>
-        <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
-      </div>
-      
-      <div class="sidebar-section">
+        <a href="./editar_inspe.php" class="nav-item" onclick="setActive(this, 'Editar Inspeção')">
+            <i class="fas fa-edit"></i> Editar Inspeção
+        </a>
+        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+            <i class="fas fa-users"></i> Funcionários
+        </a>
+    </div>
+    
+    <div class="sidebar-section">
         <div class="sidebar-section-title">Registros Inspeção</div>
-        <a href="historico_inspecao.php" class="nav-item active"><i class="fas fa-clock"></i> Histórico Peças</a>
-        <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
-      </div>
+        <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Histórico')">
+            <i class="fas fa-clock"></i> Histórico Peças
+        </a>
+
+                <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
+            <i class="fas fa-boxes"></i> Inventário
+        </a>
+    </div>
 
       <div class="sidebar-footer">
         <div class="avatar"><?= strtoupper($nome[0] ?? 'U') ?></div>

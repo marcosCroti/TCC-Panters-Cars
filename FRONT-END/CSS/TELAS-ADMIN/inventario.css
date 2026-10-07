@@ -898,6 +898,12 @@ body {
   color: rgba(255, 255, 255, 0.8);
   flex-shrink: 0;
 }
+.list-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem preencher o quadrado de 48x48 sem distorcer */
+  border-radius: 10px; /* Garante que a imagem também acompanhe os cantos arredondados */
+}
 
 .list-info {
   flex: 1;

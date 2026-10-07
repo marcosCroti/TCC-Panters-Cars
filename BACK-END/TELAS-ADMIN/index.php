@@ -135,8 +135,8 @@ foreach ($donutResult as$row) {
         <a href="./editar_inspe.php" class="nav-item" onclick="setActive(this, 'Editar Inspeção')">
             <i class="fas fa-edit"></i> Editar Inspeção
         </a>
-        <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
-            <i class="fas fa-boxes"></i> Inventário
+        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
+            <i class="fas fa-users"></i> Funcionários
         </a>
     </div>
     
@@ -145,8 +145,9 @@ foreach ($donutResult as$row) {
         <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Histórico')">
             <i class="fas fa-clock"></i> Histórico Peças
         </a>
-        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
+
+                <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
+            <i class="fas fa-boxes"></i> Inventário
         </a>
     </div>
 

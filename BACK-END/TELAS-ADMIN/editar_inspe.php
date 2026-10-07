@@ -166,7 +166,8 @@ if ($id_peca) {
         >
         <i class="fas fa-edit"></i> Editar Inspeção
     </a>
-            <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
+
+            <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
         </div>
         
         <div class="sidebar-section">
@@ -174,7 +175,8 @@ if ($id_peca) {
             <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
                 <i class="fas fa-clock"></i> Histórico Peças
             </a>
-            <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
+            <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
+
 </div>
         <div class="sidebar-footer">
             <div class="avatar"><?= strtoupper($nome[0] ?? 'U') ?></div>
