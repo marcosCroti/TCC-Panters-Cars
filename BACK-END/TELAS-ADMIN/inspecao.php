@@ -35,45 +35,37 @@ if ($user) {
         $dd = "";
     }
 
-$inspecoes = [];
-$mapeamento_ids = [
-    'pistao'      => 1,
-    'pastilha'    => 2,
-    'bateria'     => 5,
-    'amortecedor' => 3,
-    'para_choque' => 4
-];
+$stmt_pecas = $pdo->query("SELECT id_pecas, nome_tipo, grupo_peca FROM first_data.pecas"); 
+$pecas_banco = $stmt_pecas->fetchAll(PDO::FETCH_ASSOC);
+$mapeamento_pecas = [];
+foreach ($pecas_banco as $item) {
+    // Usa o nome do tipo como chave (ex: 'pistao', 'bateria')
+    $mapeamento_pecas[$item['nome_tipo']] = [
+        'id'    => $item['id_pecas'],
+        'grupo' => $item['grupo_peca'] ?? ''
+    ];
+}
 
-$id_peca = $mapeamento_ids[$opcao_selecionada] ?? null;
+$id_peca = $mapeamento_pecas[$opcao_selecionada]['id'] ?? null;
+$grupo   = $mapeamento_pecas[$opcao_selecionada]['grupo'] ?? '';
  $erro = "";
 // Lógica de Atualização (POST)
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $total = $_POST["total"] ?? "";
+    $total     = $_POST["total"] ?? "";
     $aprovadas = $_POST["aprovadas"] ?? "";
-    $lote = $_POST["lote"] ?? "";
+    $lote      = $_POST["lote"] ?? "";
     $rejeitadas = (int)$total - (int)$aprovadas;
-    $grupo = "";
 
-    // Mapeamento de grupos
-    $grupos = [
-        "pistao"      => "Motor e Transmissão",
-        "pastilha"    => "Freios",
-        "bateria"     => "Elétrica",
-        "para_choque" => "Carroceria/Acabamento",
-        "amortecedor" => "Suspensão e Direção"
-    ];
-
-    if (empty($opcao_selecionada) || !isset($grupos[$opcao_selecionada])) {
-        $erro = "Escolha o tipo da peça!";
-    } else {
-        $grupo = $grupos[$opcao_selecionada];
+    // Validação dinâmica: verifica se a opção enviada existe no banco
+    if (empty($opcao_selecionada) || !isset($mapeamento_pecas[$opcao_selecionada])) {
+        $erro = "Escolha um tipo de peça válido!";
     }
 
-    if($aprovadas < 0 || $total < 0 || $lote < 0){
-        $erro = "Escolha um valor Existente!";
+    if ($aprovadas < 0 || $total < 0 || $lote < 0) {
+        $erro = "Escolha um valor existente!";
     }
 
-    // Só executa se NÃO houver erros
+    // Executa a gravação se não houver erro
     if (empty($erro)) {
         $stmt = $pdo->prepare("INSERT INTO pecas (quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, id_pecas, grupo_peca, nome_tipo, usuario, funcao, id_usuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
