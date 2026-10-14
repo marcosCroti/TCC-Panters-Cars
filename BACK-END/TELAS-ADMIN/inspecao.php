@@ -3,43 +3,39 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-
 require_once __DIR__ . "/../config/db.php";
 require_once __DIR__ . "/../config/auth.php";
 require_login();
 
-// Recupera a mensagem da sessão (se houver) e limpa para não repetir nas próximas atualizações
+// Recupera e limpa a mensagem de sucesso
 $mensagem_sucesso = $_SESSION["mensagem_sucesso"] ?? "";
 unset($_SESSION["mensagem_sucesso"]);
 
 $nome_sessao = $_SESSION["user"] ?? ""; 
-// Unifica o recebimento da opção tanto por GET quanto por POST
 $opcao_selecionada = $_REQUEST['opicao'] ?? '';
 
+// Busca informações do usuário
 $stmt = $pdo->prepare("SELECT usuario_nome, isAdmin, ID FROM first_data.usuarios WHERE usuario_nome = ?");
 $stmt->execute([$nome_sessao]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$id_usuario = $user["ID"];
-
 if ($user) {
+    $id_usuario = $user["ID"];
     $nome = $user["usuario_nome"]; 
     $func = $user["isAdmin"] ? "Administrador" : "Funcionario";
 } else {
+    $id_usuario = null;
     $nome = "Usuário não encontrado";
     $func = "Desconhecido";
 }
-    if($func === "Funcionario"){
-        $dd = "display: none;";
-    }else{
-        $dd = "";
-    }
 
+$dd = ($func === "Funcionario") ? "display: none;" : "";
+
+// Mapeamento das peças
 $stmt_pecas = $pdo->query("SELECT id_pecas, nome_tipo, grupo_peca FROM first_data.pecas"); 
 $pecas_banco = $stmt_pecas->fetchAll(PDO::FETCH_ASSOC);
 $mapeamento_pecas = [];
 foreach ($pecas_banco as $item) {
-    // Usa o nome do tipo como chave (ex: 'pistao', 'bateria')
     $mapeamento_pecas[$item['nome_tipo']] = [
         'id'    => $item['id_pecas'],
         'grupo' => $item['grupo_peca'] ?? ''
@@ -48,47 +44,48 @@ foreach ($pecas_banco as $item) {
 
 $id_peca = $mapeamento_pecas[$opcao_selecionada]['id'] ?? null;
 $grupo   = $mapeamento_pecas[$opcao_selecionada]['grupo'] ?? '';
- $erro = "";
-// Lógica de Atualização (POST)
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $total     = $_POST["total"] ?? "";
-    $aprovadas = $_POST["aprovadas"] ?? "";
-    $lote      = $_POST["lote"] ?? "";
-    $rejeitadas = (int)$total - (int)$aprovadas;
+$erro    = "";
 
-    // Validação dinâmica: verifica se a opção enviada existe no banco
+// Processamento do Formulário (POST)
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $total     = filter_input(INPUT_POST, 'total', FILTER_VALIDATE_INT);
+    $aprovadas = filter_input(INPUT_POST, 'aprovadas', FILTER_VALIDATE_INT);
+    $lote      = filter_input(INPUT_POST, 'lote', FILTER_SANITIZE_SPECIAL_CHARS) ?? "";
+
     if (empty($opcao_selecionada) || !isset($mapeamento_pecas[$opcao_selecionada])) {
         $erro = "Escolha um tipo de peça válido!";
+    } elseif ($total === false || $aprovadas === false || $total < 0 || $aprovadas < 0) {
+        $erro = "Informe valores numéricos válidos e positivos!";
+    } elseif ($aprovadas > $total) {
+        $erro = "O número de peças aprovadas não pode ser maior que o total!";
     }
 
-    if ($aprovadas < 0 || $total < 0 || $lote < 0) {
-        $erro = "Escolha um valor existente!";
-    }
-
-    // Executa a gravação se não houver erro
     if (empty($erro)) {
+        $rejeitadas = $total - $aprovadas;
+
         $stmt = $pdo->prepare("INSERT INTO pecas (quantidade_pecas, pecas_aprovadas, pecas_reprovadas, lote, id_pecas, grupo_peca, nome_tipo, usuario, funcao, id_usuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
         if ($stmt->execute([$total, $aprovadas, $rejeitadas, $lote, $id_peca, $grupo, $opcao_selecionada, $nome, $func, $id_usuario])) {
-            $_SESSION["mensagem_sucesso"] = "Inspeção concluída";
+            $_SESSION["mensagem_sucesso"] = "Inspeção concluída com sucesso!";
             header("Location: inspecao.php?opicao=" . urlencode($opcao_selecionada));
             exit();
+        } else {
+            $erro = "Erro ao gravar a inspeção no banco de dados.";
         }
     }
 }
 
-// Busca as instruções de verificação da peça
+// Busca as instruções de verificação
+$inspecoes = [];
 if ($id_peca) {
     $stmt = $pdo->prepare("SELECT id_peca, instrucao FROM first_data.instrucao WHERE id_peca = ?");
     $stmt->execute([$id_peca]);
     $inspecoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 }
 
-    $stmt3 = $pdo->query("SELECT DISTINCT nome_tipo FROM first_data.pecas");
-    $nome_peca = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+// Opções do Select
+$stmt3 = $pdo->query("SELECT DISTINCT nome_tipo FROM first_data.pecas");
+$nome_peca = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -102,80 +99,50 @@ if ($id_peca) {
 </head>
 <body>
     <div class="main">
-   <!-- ===== SIDEBAR ===== -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-logo">
-        <!-- <div class="logo-icon">🚗</div> -->
-         <div class="logo" id="logo-icon">
-             <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
-         </div>
-        <span class="logo-text">Panthers<span>Cars</span></span>
-      </div>
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo" id="logo-icon">
+                    <img src="../../FRONT-END/LOGIN/IMG/LOGO.png" alt="logo" id="logo">
+                </div>
+                <span class="logo-text">Panthers<span>Cars</span></span>
+            </div>
 
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">Principal</div>
-        <a
-          href="./index.php"
-          class="nav-item"
-          onclick="setActive(this, 'Dashboard')"
-        >
-          <i class="fas fa-tachometer-alt"></i> Dashboard
-        </a>
-        <a
-          href="./scanner.php"
-          class="nav-item"
-          onclick="setActive(this, 'Scanner')"
-        >
-          <i class="fas fa-qrcode"></i> Scanner
-        </a>
-        <a
-        href="./inspecao.php"
-        class="nav-item active"
-        onclick="setActive(this, 'Inspeção')"
-        >
-        <i class="fas fa-clipboard"></i> Inspeção
-      </a>
-    </div>
-    
- <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
-        <div class="sidebar-section-title">Administração</div>
-        <a href="./editar_inspe.php" class="nav-item" onclick="setActive(this, 'Editar Inspeção')">
-            <i class="fas fa-edit"></i> Editar Inspeção
-        </a>
-        <a href="./funcionarios.php" class="nav-item" onclick="setActive(this, 'Funcionários')">
-            <i class="fas fa-users"></i> Funcionários
-        </a>
-    </div>
-    
-    <div class="sidebar-section">
-        <div class="sidebar-section-title">Registros Inspeção</div>
-        <a href="historico_inspecao.php" class="nav-item" onclick="setActive(this, 'Histórico')">
-            <i class="fas fa-clock"></i> Histórico Peças
-        </a>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Principal</div>
+                <a href="./index.php" class="nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="./scanner.php" class="nav-item"><i class="fas fa-qrcode"></i> Scanner</a>
+                <a href="./inspecao.php" class="nav-item active"><i class="fas fa-clipboard"></i> Inspeção</a>
+            </div>
+            
+            <div class="sidebar-section" style="<?= htmlspecialchars($dd) ?>">
+                <div class="sidebar-section-title">Administração</div>
+                <a href="./editar_inspe.php" class="nav-item"><i class="fas fa-edit"></i> Editar Inspeção</a>
+                <a href="./funcionarios.php" class="nav-item"><i class="fas fa-users"></i> Funcionários</a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Registros Inspeção</div>
+                <a href="historico_inspecao.php" class="nav-item"><i class="fas fa-clock"></i> Histórico Peças</a>
+                <a href="./inventario.php" class="nav-item"><i class="fas fa-boxes"></i> Inventário</a>
+            </div>
 
-                <a href="./inventario.php" class="nav-item" onclick="setActive(this, 'Inventário')">
-            <i class="fas fa-boxes"></i> Inventário
-        </a>
-    </div>
-
-    <div class="sidebar-footer">
-        <div class="avatar"><?= strtoupper($nome[0]) ?></div>
-        <div class="user-info">
-            <p><?= $nome ?></p>
-            <span><?= $func ?></span>
-        </div>
-    </div>
+            <div class="sidebar-footer">
+                <div class="avatar"><?= htmlspecialchars(strtoupper($nome[0] ?? 'U')) ?></div>
+                <div class="user-info">
+                    <p><?= htmlspecialchars($nome) ?></p>
+                    <span><?= htmlspecialchars($func) ?></span>
+                </div>
+            </div>
         </aside>
 
-    <header class="topbar">
-        <!-- <button class="topbar-menu-btn" onclick="toggleSidebar()">
-          <i class="fas fa-bars"></i>
-        </button> -->
-        <h2 id="topbar-title">Inspeção</h2>
-        <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
-        <i class="fas fa-sign-out-alt"></i>
-        </a>
-    </header>
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <h2 id="topbar-title">Inspeção</h2>
+            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </header>
 
         <div class="main-content">
             <?php if (!empty($mensagem_sucesso)): ?>
@@ -185,33 +152,34 @@ if ($id_peca) {
                 </div>
             <?php endif; ?>
 
-  
+            <?php if (!empty($erro)): ?>
+                <div style="background-color: #f8d7da; color: #721c24; padding: 12px 20px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f5c6cb; font-weight: 500;">
+                    <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($erro) ?>
+                </div>
+            <?php endif; ?>
 
-            <!-- FORMULÁRIO GET: Seleção/Filtro -->
+            <!-- FILTRO DE ITEM -->
             <form action="inspecao.php" method="GET">
                 <div class="filter-bar">
-                    <label>Item:</label>
+                    <label for="opicao">Item:</label>
                     <select name="opicao" id="opicao" onchange="this.form.submit()">
-                    <option value="" disabled <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>
-                        Selecione uma opção
-                    </option>
-                    <?php if (!empty($nome_peca)): ?>
-                        <?php foreach($nome_peca as $nome_pecas): ?>
+                        <option value="" disabled <?= ($opcao_selecionada === '') ? 'selected' : '' ?>>
+                            Selecione uma opção
+                        </option>
+                        <?php foreach ($nome_peca as $nome_pecas): ?>
                             <option value="<?= htmlspecialchars($nome_pecas["nome_tipo"]) ?>" <?= ($opcao_selecionada === $nome_pecas["nome_tipo"]) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars(ucfirst(str_replace('_', ' ', $nome_pecas["nome_tipo"]))) ?>
                             </option>
                         <?php endforeach; ?>
-                    <?php endif; ?>
-        </select>
+                    </select>
 
                     <button type="submit" class="btn-reload">
                         <i class="fas fa-rotate-right"></i> Recarregar
                     </button>
 
-                <a href="./scanner.php" class="btn-back">
-                    <i class="fas fa-arrow-left"></i> Voltar ao Scanner
-                </a>
-
+                    <a href="./scanner.php" class="btn-back">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Scanner
+                    </a>
                 </div>
             </form>
 
@@ -222,31 +190,32 @@ if ($id_peca) {
                     <h3>Itens de Verificação</h3>
                 </div>
                 <div class="checklist-body">
-                    <?php 
-                    $contador = 1; 
-                    foreach ($inspecoes as $inspecao): 
-                    ?>
-                        <div class="checklist-item">
-                            <div class="item-number"><?= $contador++; ?></div>
-                            <span class="item-text"><?= htmlspecialchars($inspecao["instrucao"]); ?></span>
-                            <div class="item-check"></div>
-                        </div>
-                    <?php endforeach; ?>
+                    <?php if (!empty($inspecoes)): ?>
+                        <?php $contador = 1; foreach ($inspecoes as $inspecao): ?>
+                            <div class="checklist-item">
+                                <div class="item-number"><?= $contador++; ?></div>
+                                <span class="item-text"><?= htmlspecialchars($inspecao["instrucao"]); ?></span>
+                                <div class="item-check"></div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p style="padding: 15px; color: #666;">Selecione um item para carregar as instruções de inspeção.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
-            <!-- FORMULÁRIO POST: Envio do Relatório -->
+            <!-- FORMULÁRIO DE ENVIO -->
             <form method="POST">
                 <input type="hidden" name="opicao" value="<?= htmlspecialchars($opcao_selecionada) ?>">
                 
                 <div class="stats-row">
                     <div class="stat-card total">
                         <div class="stat-label">Total</div>
-                        <input class="stat-input" type="text" placeholder="0" name="total"  maxlength="10" required id="total">
+                        <input class="stat-input" type="number" min="0" placeholder="0" name="total" id="total" required>
                     </div>
                     <div class="stat-card aprovadas">
                         <div class="stat-label">Aprovadas</div>
-                        <input class="stat-input" type="text" placeholder="0" name="aprovadas"  maxlength="10" id="aprovadas">
+                        <input class="stat-input" type="number" min="0" placeholder="0" name="aprovadas" id="aprovadas" required>
                     </div>
                     <div class="stat-card lote">
                         <div class="stat-label">Lote</div>
@@ -254,7 +223,7 @@ if ($id_peca) {
                     </div>
                     <div class="stat-card reprovadas">
                         <div class="stat-label">Reprovadas</div>
-                        <label class="stat-input" type="number" placeholder="0" name="reprovadas" id="reprovadas">0</label>
+                        <span class="stat-input" id="reprovadas">0</span>
                     </div>
                 </div>
 
@@ -263,35 +232,26 @@ if ($id_peca) {
                         <i class="fas fa-check-circle" style="margin-right:8px;"></i>
                         Finalizar Inspeção
                     </button>
-
-
                 </div>
-            </form> 
-                                <?php if($erro): ?>
-
-                       <p class="erro" style="color: red;"><?= htmlspecialchars($erro)?></p>
-                    <?php endif; ?>
+            </form>
         </div>
     </div>
-</body>
-<script>
-let totalInput = document.getElementById("total");
-let aprovadasInput = document.getElementById("aprovadas");
-let reprovadasElement = document.getElementById("reprovadas");
 
-// Função responsável por calcular e atualizar a tela
+<script>
+const totalInput = document.getElementById("total");
+const aprovadasInput = document.getElementById("aprovadas");
+const reprovadasElement = document.getElementById("reprovadas");
+
 function calcularReprovadas() {
-    let total = Number(totalInput.value) || 0;
-    let aprovadas = Number(aprovadasInput.value) || 0;
+    const total = Math.max(0, parseInt(totalInput.value) || 0);
+    const aprovadas = Math.max(0, parseInt(aprovadasInput.value) || 0);
     
-    let resultado = total - aprovadas;
-    
-    // Atualiza o texto na tela
-    reprovadasElement.innerText = resultado;
+    const resultado = total - aprovadas;
+    reprovadasElement.innerText = resultado < 0 ? 0 : resultado;
 }
 
-// Adiciona os eventos para executar o cálculo automaticamente ao alterar os campos
 totalInput.addEventListener("input", calcularReprovadas);
 aprovadasInput.addEventListener("input", calcularReprovadas);
 </script>
+</body>
 </html>
