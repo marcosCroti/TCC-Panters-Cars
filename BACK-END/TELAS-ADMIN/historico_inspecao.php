@@ -142,7 +142,7 @@ $historicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <header class="topbar">
         <h2 id="topbar-title">Histórico Inspeções</h2>
         <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="../AUTH/logout.php">
+            <a class="topbar-btn ghost" href="../AUTH/logout.php" onclick="return confirm('Deseja mesmo sair?');">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>

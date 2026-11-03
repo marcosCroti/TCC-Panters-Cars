@@ -165,7 +165,7 @@ foreach ($donutResult as$row) {
     <header class="topbar">
         <h2 id="topbar-title">Dashboard Gerencial</h2>
         <div class="topbar-actions">
-            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
+            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php" onclick="return confirm('Deseja mesmo sair?');">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>

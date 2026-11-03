@@ -139,7 +139,7 @@ $nome_peca = $stmt3->fetchAll(PDO::FETCH_ASSOC);
         <!-- TOPBAR -->
         <header class="topbar">
             <h2 id="topbar-title">Inspeção</h2>
-            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php">
+            <a class="topbar-btn ghost" href="../../BACK-END/AUTH/logout.php"  onclick="return confirm('Deseja mesmo sair?');">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </header>

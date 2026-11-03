@@ -175,7 +175,7 @@ class="nav-item active" onclick="setActive(this, 'Funcionários')">
             <i class="fas fa-bell"></i>
             <span class="notif-dot"></span>
           </button> -->
-            <a class="topbar-btn ghost" href="../../LOGIN/login_admin.html">
+            <a class="topbar-btn ghost" href="../AUTH/logout.php" onclick="return confirm('Deseja mesmo sair?');">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>

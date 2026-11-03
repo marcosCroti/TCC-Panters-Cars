@@ -128,7 +128,7 @@ if($func === "Funcionario"){
                 <i class="fas fa-bell"></i>
                 <span class="notif-dot"></span>
             </button> -->
-            <a href="../../BACK-END/AUTH/logout.php" class="topbar-btn ghost" style="text-decoration: none;"><i class="fas fa-sign-out-alt" ></i></a>
+            <a href="../../BACK-END/AUTH/logout.php" class="topbar-btn ghost" style="text-decoration: none;"  onclick="return confirm('Deseja mesmo sair?');"><i class="fas fa-sign-out-alt" ></i></a>
         </div>
     </header>
 
