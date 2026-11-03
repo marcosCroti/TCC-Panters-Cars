@@ -99,7 +99,7 @@ require_once __DIR__ . "/../CONFIG/auth.php";
                                 name='cpf'
                                 id="cpf" 
                                 placeholder="000.000.000-00"
-                                maxlength="14"
+                                maxlength="11"
                                 
                             >
                         </div>
