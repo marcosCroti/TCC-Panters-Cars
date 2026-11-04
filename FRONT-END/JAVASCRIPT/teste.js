@@ -1,6 +1,3 @@
-console.log("trolha games");
-console.log("PERRY O ORNITORRINCO");
-
 // Elementos da DOM
 const botaoscan = document.getElementById("btn-scan");
 const gerenciarBotao = document.getElementById("btn-cancel");
@@ -13,6 +10,8 @@ const logo = document.getElementById("qrIdle");
 let icone = document.querySelector(".fas");
 const spin = document.getElementById("spinner");
 
+
+
 if (spin) spin.style.display = "none";
 if (loading) loading.style.display = "none";
 
@@ -21,8 +20,8 @@ if (botaoscan) botaoscan.addEventListener("click", capturarEProcessar);
 if (gerenciarBotao) gerenciarBotao.addEventListener("click", ligaDesliga);
 if (botaoinspecao) botaoinspecao.addEventListener("click", mudarpagina);
 
-// URL do modelo
-const URL = "https://teachablemachine.withgoogle.com/models/Tj6G-iKq6/";
+// URL do novo modelo exportado
+const URL = "https://teachablemachine.withgoogle.com/models/Z2I7haSr4/";
 
 let model, webcam, labelContainer, maxPredictions;
 let isModelReady = false;
@@ -120,7 +119,7 @@ async function init() {
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
 
-    // Configuração da Webcam conforme standard TM (200x200 ou personalizável)
+    // Configuração da Webcam mantendo suas dimensões customizadas (680x440)
     const flip = true;
     webcam = new tmImage.Webcam(680, 440, flip);
 
@@ -146,7 +145,7 @@ async function init() {
 
     isModelReady = true;
 
-    // Inicia o loop continuo de renderização
+    // Inicia o loop contínuo de renderização
     animationFrameId = window.requestAnimationFrame(loop);
 
     return true;
@@ -159,11 +158,8 @@ async function init() {
 
 async function loop() {
   if (webcam && isModelReady) {
-    webcam.update();
-    // Atualização contínua das porcentagens caso exista o labelContainer
-    if (labelContainer && labelContainer.childNodes.length > 0) {
-      await predictLoop();
-    }
+    webcam.update(); // Atualiza o frame da webcam
+    await predictLoop(); // Realiza a predição contínua
   }
   animationFrameId = window.requestAnimationFrame(loop);
 }
@@ -175,7 +171,7 @@ async function predictLoop() {
   for (let i = 0; i < maxPredictions; i++) {
     const classPrediction =
       prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-    if (labelContainer.childNodes[i]) {
+    if (labelContainer && labelContainer.childNodes[i]) {
       labelContainer.childNodes[i].innerHTML = classPrediction;
     }
   }
@@ -190,7 +186,7 @@ async function capturarEProcessar() {
 
   let melhorClasse = "";
   let maiorValor = 0;
-  let limiteconfiavel = 0.95; // 90% de confiança mínima
+  let limiteconfiavel = 0.95; // 95% de confiança mínima
 
   for (let i = 0; i < maxPredictions; i++) {
     if (prediction[i].probability > maiorValor) {
@@ -213,6 +209,7 @@ async function capturarEProcessar() {
     } else {
       link = `http://localhost/Progama%C3%A7%C3%A3o%20Back-End/TCC2/BACK-END/TELAS-ADMIN/inspecao.php?opicao=${melhorClasse.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
     }
+
 
     if (botaoinspecao) {
       botaoinspecao.disabled = link === "";
@@ -241,3 +238,15 @@ function mudarpagina() {
     window.location.href = link;
   }
 }
+
+// Adicione este trecho dentro da função capturarEProcessar após obter `prediction`:
+
+console.group("🔍 --- RESULTADOS DA ESCANAGEM ---");
+console.table(
+  prediction.map((p) => ({
+    Classe: p.className,
+    Probabilidade: p.probability.toFixed(4),
+    Porcentagem: (p.probability * 100).toFixed(2) + "%"
+  }))
+);
+console.groupEnd();

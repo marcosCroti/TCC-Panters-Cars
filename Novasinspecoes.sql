@@ -1,0 +1,173 @@
+-- MySQL dump 10.13  Distrib 8.0.45, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: first_data
+-- ------------------------------------------------------
+-- Server version	8.0.45
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `funcionario`
+--
+
+DROP TABLE IF EXISTS `funcionario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `funcionario` (
+  `nome_fun` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `CPF` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `setor` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `quantidade_pecas_no_dia` int NOT NULL,
+  `status_fun` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `funcionario`
+--
+
+LOCK TABLES `funcionario` WRITE;
+/*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
+INSERT INTO `funcionario` VALUES ('João Silva',1,'111.111.111-11','joao@empresa.com','Montagem',47,'Ativo'),('Maria Santos',2,'222.222.222-22','maria@empresa.com','Qualidade',35,'Ativo'),('Carlos Ramos',3,'333.333.333-33','carlos@empresa.com','Expedição',52,'Ativo'),('Ana Gabriela',4,'444.444.444-44','ana@empresa.com','Inspeção',28,'Inativo'),('Pedro Pimenteira',5,'555.555.555-55','pedro@empresa.com','Montagem',61,'Ativo');
+/*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `instrucao`
+--
+
+DROP TABLE IF EXISTS `instrucao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `instrucao` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `instrucao` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_peca` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `instrucao`
+--
+
+LOCK TABLES `instrucao` WRITE;
+/*!40000 ALTER TABLE `instrucao` DISABLE KEYS */;
+INSERT INTO `instrucao` VALUES (1,'Verifique sinais de engripamento, atrito excessivo ou falta de lubrificação.','1'),(2,'Observe se o revestimento brilhante protetor está soltando em lascas, o que criará atrito excessivo.','1'),(3,'Procure arranhões verticais profundos no corpo do pistão, capazes de cortar o anel de vedação','1'),(4,'Verificar espessura do material de atrito.','2'),(5,'Inspecionar trincas ou trincamentos na superfície.','2'),(6,'Conferir assentamento das placas antirruído.','2'),(7,'Verificar desgaste uniforme das sapatas.','2'),(8,'Verificar curso e velocidade de retorno da haste.','3'),(9,'Checar vazamento de fluido hidráulico.','3'),(10,'Conferir estado e desgaste das buchas de fixação.','3'),(11,'Inspecionar alinhamento da coifa e do batente.','3'),(12,'Verificar alinhamento e fixação das presilhas.','4'),(13,'Checar pintura, tonalidade e acabamento externo.','4'),(14,'Conferir absorvedor de impacto interno.','4'),(15,'Verificar encaixe das grades e faróis de milha.','4'),(31,'Verificar carga e tensão da bateria.','5'),(32,'Conferir nível do eletrólito nas células.','5'),(33,'Checar vedação e ausência de corrosão nos bornes.','5'),(34,'Testar corrente de partida a frio (CCA).','5'),(35,'Verificar carga e tensão da bateria.','5'),(36,'Conferir nível do eletrólito nas células.','5'),(37,'Checar vedação e ausência de corrosão nos bornes.','5'),(38,'Testar corrente de partida a frio (CCA).','5'),(40,'Avalie se a superfície lisa possui ranhuras profundas cravadas por mecânicos','1'),(43,'teste','7'),(44,'Verifique a presença de fissuras visíveis na área crítica (ponte) entre as sedes das válvulas de admissão e escape, muito comum por choque térmico.','8'),(45,'Verifique se há furos, trincas ou pontos de ferrugem penetrante ao longo de toda a extensão do tubo e nos silenciosos.','9'),(46,'Inspecione os furos de passagem do líquido de arrefecimento na face do cabeçote em busca de oxidação ou corrosão por cavitação que comprometa a vedação.','8'),(47,'Observe a face plana de contato com o bloco em busca de áreas escuras ou ranhuras, indicando que a compressão ou a água estavam escapando pela junta.','8'),(48,'Procure por áreas derretidas ou bordas erodidas nas câmaras de combustão, sinais claros de superaquecimento ou detonação (batida de pino) extrema.','8'),(49,'Inspecione os alojamentos (berços) onde o eixo de comando de válvulas gira em busca de arranhões profundos, azulamento ou desgaste por falta de óleo.','8'),(50,'Inspecione a superfície metálica em busca de pontos de oxidação ou descascamento do revestimento protetor.','9'),(51,'Avalie visualmente os cordões de solda (junções das tubulações e abafadores) quanto a rachaduras, porosidades ou pontos de ruptura.','9');
+/*!40000 ALTER TABLE `instrucao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pecas`
+--
+
+DROP TABLE IF EXISTS `pecas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pecas` (
+  `nome_tipo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `grupo_peca` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `quantidade_pecas` int NOT NULL,
+  `pecas_aprovadas` int DEFAULT NULL,
+  `lote` int DEFAULT NULL,
+  `pecas_reprovadas` int DEFAULT NULL,
+  `id_pecas` int DEFAULT NULL,
+  `data_insp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `usuario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `funcao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_usuario` int NOT NULL,
+  `imagem` varchar(2048) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `id_pecas` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pecas`
+--
+
+LOCK TABLES `pecas` WRITE;
+/*!40000 ALTER TABLE `pecas` DISABLE KEYS */;
+INSERT INTO `pecas` VALUES ('cinto_de_seguranca','Componentes de Segurança',6,0,NULL,NULL,NULL,6,'2026-09-09 15:27:28','','',0,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpaMIP1NsKdYPI3Y4BHDvyIPPehzS6OfomQG4yySORMQ&s=10'),('pistao','Motor e Transmissão',7,100,70,3,30,1,'2026-09-09 16:09:43','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pistao','Motor e Transmissão',8,100,50,3,50,1,'2026-09-09 16:09:57','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pistao','Motor e Transmissão',9,300,299,5,1,1,'2026-09-09 16:10:51','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('amortecedor','Suspensão e Direção',10,500,300,1,200,3,'2026-09-09 16:11:11','','',0,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('amortecedor','Suspensão e Direção',11,500,300,1,200,3,'2026-09-09 16:17:13','','',0,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('amortecedor','Suspensão e Direção',12,500,300,1,200,3,'2026-09-09 16:17:21','','',0,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('amortecedor','Suspensão e Direção',13,500,300,1,200,3,'2026-09-09 16:17:34','','',0,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('amortecedor','Suspensão e Direção',14,500,300,1,200,3,'2026-09-09 16:22:51','','',0,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('amortecedor','Suspensão e Direção',15,500,300,1,200,3,'2026-09-09 16:22:54','','',0,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('para_choque','Carroceria/Acabamento',16,100,70,386,30,4,'2026-09-09 16:24:04','','',0,'https://bite.vtexassets.com/arquivos/ids/180037/34290.png'),('pastilha','Freios',17,22,13,3,9,2,'2026-09-09 16:29:49','','',0,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('pastilha','Freios',18,22,13,3,9,2,'2026-09-09 16:35:56','','',0,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('pistao','Motor e Transmissão',19,100,200,3,-100,1,'2026-09-09 16:36:32','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pistao','Motor e Transmissão',20,100,200,3,-100,1,'2026-09-09 16:36:50','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pistao','Motor e Transmissão',21,100,200,3,-100,1,'2026-09-09 16:37:30','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pastilha','Freios',22,33,33,33,0,2,'2026-09-09 16:38:32','','',0,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('pastilha','Freios',23,33,33,33,0,2,'2026-09-09 16:39:05','','',0,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('pistao','Motor e Transmissão',24,200,150,3,50,1,'2026-09-09 16:39:45','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pistao','Motor e Transmissão',25,200,150,3,50,1,'2026-09-09 16:39:56','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pistao','Motor e Transmissão',26,200,150,3,50,1,'2026-09-09 16:41:38','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pastilha','Freios',27,100,50,22,50,2,'2026-09-09 16:41:57','','',0,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('bateria','Elétrica',28,0,0,0,0,4,'2026-09-16 14:20:00','','',0,'https://www.empresasdebaterias.com.br/imagens/bateria-amperes/bateria-amperes-02.jpg'),('bateria','Elétrica',29,0,0,0,0,4,'2026-09-16 14:20:04','','',0,'https://www.empresasdebaterias.com.br/imagens/bateria-amperes/bateria-amperes-02.jpg'),('bateria','Elétrica',30,300,250,4,50,4,'2026-09-16 14:36:10','','',0,'https://www.empresasdebaterias.com.br/imagens/bateria-amperes/bateria-amperes-02.jpg'),('pastilha','Freios',36,23,23,23,0,2,'2026-09-16 14:53:08','','',0,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('pastilha','Freios',37,23,23,23,0,2,'2026-09-16 14:59:26','','',0,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('para_choque','Carroceria/Acabamento',38,100,100,10,0,4,'2026-09-16 15:00:10','','',0,'https://bite.vtexassets.com/arquivos/ids/180037/34290.png'),('pistao','Motor e Transmissão',39,23,22,3,1,1,'2026-09-16 16:04:15','','',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('para_choque','Carroceria/Acabamento',40,10,10,3,0,4,'2026-09-16 16:19:57','Ana','',0,'https://bite.vtexassets.com/arquivos/ids/180037/34290.png'),('para_choque','Carroceria/Acabamento',41,21,20,5,1,4,'2026-09-16 16:24:06','Ana','Administrador',0,'https://bite.vtexassets.com/arquivos/ids/180037/34290.png'),('pistao','Motor e Transmissão',42,56,12,564,44,1,'2026-09-23 08:15:21','Ana','Administrador',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('para_choque','Carroceria/Acabamento',43,100,90,3,10,4,'2026-09-23 11:56:01','Ana','Administrador',0,'https://bite.vtexassets.com/arquivos/ids/180037/34290.png'),('para_choque','Carroceria/Acabamento',44,100,70,4,30,4,'2026-09-23 12:00:49','Ana','Administrador',0,'https://bite.vtexassets.com/arquivos/ids/180037/34290.png'),('pistao','Motor e Transmissão',45,386,386,386,0,1,'2026-09-29 11:53:18','AdalbertoBerto','Administrador',0,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('amortecedor','Suspensão e Direção',46,386,100,333,286,3,'2026-09-29 12:14:42','AdalbertoBerto','Administrador',4,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('amortecedor','Suspensão e Direção',47,233,222,12,11,3,'2026-09-29 13:57:48','marlon jacksin','Funcionario',27,'https://cdn.prod.website-files.com/63bdbbd2c764e88f730a8673/65887eca0c4ccd26815359a2_amortecedor-carro.webp'),('pistao','Motor e Transmissão',48,400,400,4,0,1,'2026-09-30 08:38:38','Ana','Administrador',9,'https://www.zapautopecas.com.br/wp-content/uploads/2020/03/pistao-886x443.png'),('pastilha','Freios',97,100,70,386,30,2,'2025-12-09 15:27:28','teste1','funcionario',386,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('pastilha','Freios',98,100,70,387,30,2,'2026-03-09 15:27:28','teste1','funcionario',386,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('pastilha','Freios',99,100,70,386,30,2,'2026-06-09 15:27:28','teste1','funcionario',386,'https://cdn.autopapo.com.br/box/uploads/2019/03/25183222/pastilha-freio-bosch-divulgacao.jpg'),('cinto_de_seguranca','Componentes de Segurança',100,300,244,9,56,6,'2026-10-28 16:11:29','Ana','Administrador',9,NULL),('pistao','Motor e Transmissão',101,386,386,386,0,1,'2026-10-28 16:15:22','Ana','Administrador',9,NULL),('biela','Motor e Transmissão',102,0,0,0,0,7,NULL,' ',' ',0,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqc8CT2Mu1DzNSSY3pTvW7Gm1IaJZtcCz9lWyUJ2zsP5TUX8nihn0npkA&s=10'),('cabecote','Carroceria',103,0,0,0,0,8,NULL,'','',0,'https://images.tcdn.com.br/img/img_prod/1343130/cabecote_motor_nissan_k25_completo_15757_1_19696ff01415b2dceedaa4d06ae885a9.jpeg'),('escapamento','Carroceria/Acabamento',104,0,0,0,0,9,'2026-11-03 17:13:25',' ',' ',0,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Kg32ZBeuaeFvTWBwi8DgMkojYGQ0rPekebLJbfiquBhJkO9EL56YK-0&s=10'),('cabecote','Carroceria',105,33333,33322,33,11,8,'2026-11-03 17:14:42','Ana','Administrador',9,NULL);
+/*!40000 ALTER TABLE `pecas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_peca`
+--
+
+DROP TABLE IF EXISTS `tipo_peca`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tipo_peca` (
+  `nome_tipo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_pecas` int DEFAULT NULL,
+  `ima_peca` blob NOT NULL,
+  PRIMARY KEY (`nome_tipo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_peca`
+--
+
+LOCK TABLES `tipo_peca` WRITE;
+/*!40000 ALTER TABLE `tipo_peca` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipo_peca` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `usuarios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `CPF` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `usuario_nome` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password_hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `isAdmin` tinyint(1) DEFAULT NULL,
+  `telefone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `setor_Funcionario` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'0','admin','admin@email.com','$2y$10$ftT51sdnNjQatR6q3XjhaOf7IYoRn3bWAiVS3BswR/lUZdkmX14su',1,'0',''),(4,'12332112332','AdalbertoBerto','adalberto@gmail.com','$2y$10$UC9wbmVOoLhyooquG46J9.JY/oTIIsS.mG0teb/z3hRl6II1BEas2',1,'12332112332',''),(5,'12345676543','Tonykillrecords','tony@gmail.com','$2y$10$PysbqBCzaI6BcTdOe2hApOn6.LpwlQK5xLzvnYzH8nqRWldhsxzZa',1,'23454323454',''),(9,'76543456765','Ana','ana@H.com.br','$2y$10$BjgaMn9RgP1VQxYuP.bHLeEoBOsRbIaVq1kw.oyTcEWV0Jo1/v3W.',1,'65434567654',''),(12,'12332131333','arlete silva gomes','arlete@gmail.com','$2y$10$t1cnOqIFgcvtwOuiIUzPUuagsa6WptILMeBcOA4aEMNGS9PfkAi1C',1,'12332112332',''),(36,'11111111111','Funcionário01','funcionario01@gmail.com','$2y$10$Q9kogtfG5KE97xJN.H1lduRtYv166qo7xPNGEO8Iu3ZdAxWNKQCse',NULL,'11111111111','montagem'),(37,'22222222222','funcionario02','funcionario02@gmail.com','$2y$10$5/XzYSYAs0awP69isTPCROQ5o6D55JOadLBNVlhJwAcHj2rf7kfSK',NULL,'22222222222','qualidade');
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-11-04  8:25:53

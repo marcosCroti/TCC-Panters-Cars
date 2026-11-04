@@ -280,6 +280,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
     </div>
 
-    <script src="../Front-end/SCRIPT/script.js"></script>
+    <script src="../../FRONT-END/JAVASCRIPT/script.js"></script>
   </body>
 </html>
